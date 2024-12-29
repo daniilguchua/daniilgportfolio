@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Questrial&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap");
 
-/* Basic Reset & Font */
+/* RESET & FONT */
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ body {
   min-height: 200vh;
 }
 
-/* Vanta BG container behind everything */
+/* Vanta BG */
 #vanta-bg {
   position: fixed;
   width: 100%;
@@ -34,7 +34,7 @@ body {
   z-index: -1;
 }
 
-/* Navbar */
+/* NAVBAR */
 .navbar {
   background-color: rgba(218, 38, 38, 0);
   backdrop-filter: blur(8px);
@@ -74,7 +74,7 @@ body {
   color: #00796b;
 }
 
-/* Hero Section */
+/* HERO */
 .hero {
   display: flex;
   align-items: center;
@@ -128,7 +128,7 @@ body {
   transform: scale(1.10);
 }
 
-/* About Section */
+/* ABOUT */
 .about-content {
   display: flex;
   flex-wrap: wrap;
@@ -164,7 +164,7 @@ body {
   justify-content: center;
 }
 
-/* Projects */
+/* PROJECTS */
 .projects h2 {
   text-align: center;
   color: #ffffff;
@@ -197,7 +197,7 @@ body {
   color: #555;
 }
 
-/* Skills Section */
+/* SKILLS */
 .skills h2 {
   text-align: center;
   color: #ffffff;
@@ -229,7 +229,7 @@ body {
   line-height: 1.7;
 }
 
-/* Contact Section */
+/* CONTACT */
 .contact {
   display: flex;
   flex-direction: column;
@@ -251,7 +251,7 @@ body {
   color: #ffffff;
 }
 
-/* Contact Button */
+/* CONTACT SUBMIT BUTTON */
 .container {
   align-items: center;
   border-radius: 26px;
@@ -442,7 +442,7 @@ body {
   width: 100%;
 }
 
-/* Footer */
+/* FOOTER */
 .footer {
   text-align: center;
   padding: 3rem 0;
@@ -451,4 +451,54 @@ body {
   margin-top: 5rem;
   font-size: 0.9rem;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* DISCO BALL MUSIC PLAYER */
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 230px;
+  background-color: rgba(0,0,0,0.5);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.disco-ball {
+  width: 50px;
+  height: 50px;
+  background: url('https://media.giphy.com/media/kEhO6AzGBMrZm/giphy.gif') no-repeat center center;
+  background-size: cover;
+  border-radius: 50%;
+  animation: spin 3s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.controls button {
+  background-color: #d81b60;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+.controls button:hover {
+  background-color: #ff4081;
+}
+.controls input[type="range"] {
+  width: 80px;
 }

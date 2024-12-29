@@ -1,12 +1,13 @@
-/* main.js - Cleaned Up Version (No ES Modules, Just Plain JS) */
+/* main.js - No 3D text, but we kept the scramble effect, 
+             and we added a disco ball music player. */
 
-// Make sure AOS is initialized
+// INIT AOS
 AOS.init({
   duration: 1000,
   once: false,
 });
 
-// GSAP Animation for Navbar
+// GSAP Navbar Animation
 const navbar = document.querySelector("#navbar");
 gsap.from(navbar, {
   duration: 1,
@@ -15,7 +16,7 @@ gsap.from(navbar, {
   ease: "power2.out",
 });
 
-// Smooth Scrolling for Nav Links
+// Smooth Scrolling for Nav
 document.querySelectorAll("[data-link]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -32,49 +33,43 @@ document.querySelectorAll("[data-link]").forEach((link) => {
 });
 
 /* =========================================
-   Dynamic Title Cycle with Scramble Effect
+   Animated Title Cycle with Scramble
 ========================================= */
 const dynamicTitle = document.getElementById("dynamicTitle");
 const titles = ["Software Engineer", "Computer Scientist", "Security Enthusiast"];
 const letterColors = ["#80d8f7", "#f8a7c1", "#c69ef5", "#fcb58a", "#d7f28c"];
 let currentIndex = 0;
 
-/**
- * Displays the current title with letter-by-letter animations.
- */
 function displayTitle() {
   if (!dynamicTitle) return;
-
   dynamicTitle.innerHTML = "";
+
   const text = titles[currentIndex];
   const characters = text.split("");
   const spans = [];
 
-  characters.forEach((char, index) => {
+  characters.forEach((char, i) => {
     if (char === " ") {
       dynamicTitle.appendChild(document.createTextNode(" "));
     } else {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.display = "inline-block";
-      span.style.color = letterColors[index % letterColors.length];
+      span.style.color = letterColors[i % letterColors.length];
       dynamicTitle.appendChild(span);
       spans.push(span);
 
-      // Fade/slide each letter in
       gsap.from(span, {
         duration: 0.1,
         y: -20,
         opacity: 0,
         ease: "power2.out",
-        delay: index * 0.05,
+        delay: i * 0.05,
       });
-
-      // Mild color pulsing
       gsap.to(span, {
         duration: 0.6,
-        color: letterColors[(index + 1) % letterColors.length],
-        delay: index * 0.05,
+        color: letterColors[(i + 1) % letterColors.length],
+        delay: i * 0.05,
         repeat: -1,
         yoyo: true,
         ease: "power1.inOut",
@@ -82,15 +77,11 @@ function displayTitle() {
     }
   });
 
-  // Run scramble after the letters appear
   gsap.delayedCall(2, () => {
     textScrambleEffect(spans, 6, 0.8);
   });
 }
 
-/**
- * Scramble effect on each letter, then move on.
- */
 function textScrambleEffect(spans, scrambleCount = 8, duration = 0.8) {
   const chars = "!<>-_\\/[]{}—=+*^?#@&$%";
   let iteration = 0;
@@ -112,9 +103,6 @@ function textScrambleEffect(spans, scrambleCount = 8, duration = 0.8) {
   }, intervalTime);
 }
 
-/**
- * Transition to the next title.
- */
 function transitionToNextTitle() {
   gsap.to(dynamicTitle, {
     duration: 0,
@@ -126,12 +114,10 @@ function transitionToNextTitle() {
     },
   });
 }
-
-// Initialize the text cycle
 displayTitle();
 
 /* =========================================
-   Initialize Vanta WAVES background
+   Vanta.js Waves
 ========================================= */
 window.addEventListener('DOMContentLoaded', () => {
   VANTA.WAVES({
@@ -149,95 +135,66 @@ window.addEventListener('DOMContentLoaded', () => {
     waveSpeed: 0.5,
     zoom: 0.7
   });
-
-  initThreeJS(); // 3D text
 });
 
 /* =========================================
-   Three.js 3D Text Setup
+   Disco Ball Music Player
 ========================================= */
-function initThreeJS() {
-  // Create a canvas for Three.js
-  const canvas = document.createElement('canvas');
-  canvas.id = 'three-canvas';
-  // Position/size it absolutely behind hero content
-  canvas.style.position = 'absolute';
-  canvas.style.top = '50%';
-  canvas.style.left = '50%';
-  canvas.style.transform = 'translate(-50%, -50%)';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  canvas.style.pointerEvents = 'none';
-  canvas.style.zIndex = '0';
-  document.querySelector('.hero').appendChild(canvas);
+const player = document.getElementById("musicPlayer");
+const prevBtn = document.getElementById("prevBtn");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const nextBtn = document.getElementById("nextBtn");
+const volumeSlider = document.getElementById("volumeSlider");
 
-  // Set up renderer
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+// Example playlist with 3 songs (public domain or free samples)
+const playlist = [
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+];
+let currentSongIndex = 0;
+let audio = new Audio(playlist[currentSongIndex]);
 
-  // Scene + Camera
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
+// Listen for track end => auto-next
+audio.addEventListener('ended', () => {
+  nextTrack();
+});
 
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  scene.add(ambientLight);
-  const pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.set(10, 10, 10);
-  scene.add(pointLight);
+// Buttons
+playPauseBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    playPauseBtn.textContent = "Pause";
+  } else {
+    audio.pause();
+    playPauseBtn.textContent = "Play";
+  }
+});
+prevBtn.addEventListener('click', () => {
+  currentSongIndex--;
+  if (currentSongIndex < 0) currentSongIndex = playlist.length - 1;
+  switchTrack();
+});
+nextBtn.addEventListener('click', () => {
+  nextTrack();
+});
 
-  // Load font & create 3D text
-  const loader = new THREE.FontLoader();
-  loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-    const geometry = new THREE.TextGeometry('Daniil', {
-      font: font,
-      size: 1,
-      height: 0.2,
-      curveSegments: 12,
-      bevelEnabled: true,
-      bevelThickness: 0.05,
-      bevelSize: 0.02,
-      bevelSegments: 3,
-    });
-    geometry.center();
+// Volume
+volumeSlider.addEventListener('input', () => {
+  audio.volume = volumeSlider.value;
+});
 
-    const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
-    const textMesh = new THREE.Mesh(geometry, material);
-    scene.add(textMesh);
-
-    // Rotate 360 deg (2π rad) continuously
-    gsap.to(textMesh.rotation, {
-      y: "+=6.28319",
-      duration: 10,
-      repeat: -1,
-      ease: "linear",
-    });
-
-    // Slight pulsing scale
-    gsap.to(textMesh.scale, {
-      x: 1.2,
-      y: 1.2,
-      z: 1.2,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-    });
-
-    // Render loop
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
-    animate();
-  });
-
-  // Handle window resizing
-  window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-  });
+/* Helper to switch track and keep state */
+function switchTrack() {
+  audio.pause();
+  audio = new Audio(playlist[currentSongIndex]);
+  audio.volume = volumeSlider.value;
+  audio.play();
+  playPauseBtn.textContent = "Pause";
+  audio.addEventListener('ended', nextTrack);
+}
+function nextTrack() {
+  currentSongIndex++;
+  if (currentSongIndex >= playlist.length) currentSongIndex = 0;
+  switchTrack();
 }
