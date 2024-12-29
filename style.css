@@ -14,7 +14,7 @@ body {
   min-height: 200vh;
 }
 
-/* Vanta BG */
+/* VANTA BACKGROUND */
 #vanta-bg {
   position: fixed;
   width: 100%;
@@ -36,7 +36,6 @@ body {
 
 /* NAVBAR */
 .navbar {
-  background-color: rgba(218, 38, 38, 0);
   backdrop-filter: blur(8px);
   padding: 1rem 0;
   position: sticky;
@@ -127,7 +126,7 @@ body {
   transform: scale(1.10);
 }
 
-/* WAVE DIVIDERS */
+/* WAVY DIVIDERS */
 .wave-divider {
   position: relative;
   overflow: hidden;

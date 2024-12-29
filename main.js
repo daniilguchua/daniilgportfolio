@@ -1,5 +1,3 @@
-/* main.js - Scrambled hero text, no 3D rotation, disco ball fixed. */
-
 // AOS for scroll animations
 AOS.init({
   duration: 1000,
@@ -15,16 +13,16 @@ gsap.from(navbar, {
   ease: "power2.out",
 });
 
-// Smooth-scrolling for nav links
+// Smooth scroll for nav links
 document.querySelectorAll("[data-link]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    const targetSelector = e.currentTarget.getAttribute("href");
-    const target = document.querySelector(targetSelector);
-    if (target) {
+    const targetSelector = link.getAttribute("href");
+    const targetElem = document.querySelector(targetSelector);
+    if (targetElem) {
       gsap.to(window, {
         duration: 1,
-        scrollTo: { y: target.offsetTop - 60 },
+        scrollTo: { y: targetElem.offsetTop - 60 },
         ease: "power2.inOut",
       });
     }
@@ -32,7 +30,7 @@ document.querySelectorAll("[data-link]").forEach((link) => {
 });
 
 /* =========================================
-   Animated Title Cycle with Scramble
+   Title cycle with scramble
 ========================================= */
 const dynamicTitle = document.getElementById("dynamicTitle");
 const titles = ["Software Engineer", "Computer Scientist", "Security Enthusiast"];
@@ -44,10 +42,10 @@ function displayTitle() {
   dynamicTitle.innerHTML = "";
 
   const text = titles[currentIndex];
-  const characters = text.split("");
+  const chars = text.split("");
   const spans = [];
 
-  characters.forEach((char, i) => {
+  chars.forEach((char, i) => {
     if (char === " ") {
       dynamicTitle.appendChild(document.createTextNode(" "));
     } else {
@@ -58,7 +56,6 @@ function displayTitle() {
       dynamicTitle.appendChild(span);
       spans.push(span);
 
-      // Fade/slide each letter in
       gsap.from(span, {
         duration: 0.1,
         y: -20,
@@ -66,7 +63,6 @@ function displayTitle() {
         ease: "power2.out",
         delay: i * 0.05,
       });
-      // Mild color pulsing
       gsap.to(span, {
         duration: 0.6,
         color: letterColors[(i + 1) % letterColors.length],
@@ -78,13 +74,11 @@ function displayTitle() {
     }
   });
 
-  // After 2s, scramble the text
-  gsap.delayedCall(2, () => {
-    textScrambleEffect(spans, 6, 0.8);
-  });
+  // After 2s, scramble
+  gsap.delayedCall(2, () => textScramble(spans, 6, 0.8));
 }
 
-function textScrambleEffect(spans, scrambleCount = 8, duration = 0.8) {
+function textScramble(spans, scrambleCount, duration) {
   const chars = "!<>-_\\/[]{}—=+*^?#@&$%";
   let iteration = 0;
   const intervalTime = (duration / scrambleCount) * 1000;
@@ -100,26 +94,27 @@ function textScrambleEffect(spans, scrambleCount = 8, duration = 0.8) {
       iteration++;
     } else {
       clearInterval(interval);
-      transitionToNextTitle();
+      nextTitle();
     }
   }, intervalTime);
 }
 
-function transitionToNextTitle() {
+function nextTitle() {
   gsap.to(dynamicTitle, {
     duration: 0,
     opacity: 0,
     onComplete: () => {
-      dynamicTitle.style.opacity = "1";
+      dynamicTitle.style.opacity = 1;
       currentIndex = (currentIndex + 1) % titles.length;
       displayTitle();
     },
   });
 }
+
 displayTitle();
 
 /* =========================================
-   Vanta Waves (Background)
+   Vanta Waves
 ========================================= */
 window.addEventListener('DOMContentLoaded', () => {
   VANTA.WAVES({
@@ -127,28 +122,28 @@ window.addEventListener('DOMContentLoaded', () => {
     mouseControls: true,
     touchControls: true,
     gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
+    minHeight: 200.0,
+    minWidth: 200.0,
+    scale: 1.0,
+    scaleMobile: 1.0,
     color: 0x70714,
-    shininess: 100.00,
-    waveHeight: 19.50,
+    shininess: 100.0,
+    waveHeight: 19.5,
     waveSpeed: 0.5,
-    zoom: 0.7
+    zoom: 0.7,
   });
 });
 
 /* =========================================
    Disco Ball Music Player
 ========================================= */
-const player = document.getElementById("musicPlayer");
+const musicPlayer = document.getElementById("musicPlayer");
 const prevBtn = document.getElementById("prevBtn");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
 const volumeSlider = document.getElementById("volumeSlider");
 
-// Example playlist (public domain sample MP3s):
+// Example playlist (public domain samples)
 const playlist = [
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
@@ -157,12 +152,12 @@ const playlist = [
 let currentSongIndex = 0;
 let audio = new Audio(playlist[currentSongIndex]);
 
-audio.addEventListener('ended', () => {
+audio.addEventListener("ended", () => {
   nextTrack();
 });
 
 // Buttons
-playPauseBtn.addEventListener('click', () => {
+playPauseBtn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
     playPauseBtn.textContent = "Pause";
@@ -171,28 +166,26 @@ playPauseBtn.addEventListener('click', () => {
     playPauseBtn.textContent = "Play";
   }
 });
-prevBtn.addEventListener('click', () => {
+prevBtn.addEventListener("click", () => {
   currentSongIndex--;
   if (currentSongIndex < 0) currentSongIndex = playlist.length - 1;
   switchTrack();
 });
-nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener("click", () => {
   nextTrack();
 });
-
-// Volume
-volumeSlider.addEventListener('input', () => {
+volumeSlider.addEventListener("input", () => {
   audio.volume = volumeSlider.value;
 });
 
-/* Helper: switch track */
+// Helpers
 function switchTrack() {
   audio.pause();
   audio = new Audio(playlist[currentSongIndex]);
   audio.volume = volumeSlider.value;
   audio.play();
   playPauseBtn.textContent = "Pause";
-  audio.addEventListener('ended', nextTrack);
+  audio.addEventListener("ended", nextTrack);
 }
 function nextTrack() {
   currentSongIndex++;
