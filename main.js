@@ -1,13 +1,12 @@
-/* main.js - No 3D text, but we kept the scramble effect, 
-             and we added a disco ball music player. */
+/* main.js - Scrambled hero text, no 3D rotation, disco ball fixed. */
 
-// INIT AOS
+// AOS for scroll animations
 AOS.init({
   duration: 1000,
   once: false,
 });
 
-// GSAP Navbar Animation
+// GSAP: fade-in navbar
 const navbar = document.querySelector("#navbar");
 gsap.from(navbar, {
   duration: 1,
@@ -16,7 +15,7 @@ gsap.from(navbar, {
   ease: "power2.out",
 });
 
-// Smooth Scrolling for Nav
+// Smooth-scrolling for nav links
 document.querySelectorAll("[data-link]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -59,6 +58,7 @@ function displayTitle() {
       dynamicTitle.appendChild(span);
       spans.push(span);
 
+      // Fade/slide each letter in
       gsap.from(span, {
         duration: 0.1,
         y: -20,
@@ -66,6 +66,7 @@ function displayTitle() {
         ease: "power2.out",
         delay: i * 0.05,
       });
+      // Mild color pulsing
       gsap.to(span, {
         duration: 0.6,
         color: letterColors[(i + 1) % letterColors.length],
@@ -77,6 +78,7 @@ function displayTitle() {
     }
   });
 
+  // After 2s, scramble the text
   gsap.delayedCall(2, () => {
     textScrambleEffect(spans, 6, 0.8);
   });
@@ -117,7 +119,7 @@ function transitionToNextTitle() {
 displayTitle();
 
 /* =========================================
-   Vanta.js Waves
+   Vanta Waves (Background)
 ========================================= */
 window.addEventListener('DOMContentLoaded', () => {
   VANTA.WAVES({
@@ -146,7 +148,7 @@ const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
 const volumeSlider = document.getElementById("volumeSlider");
 
-// Example playlist with 3 songs (public domain or free samples)
+// Example playlist (public domain sample MP3s):
 const playlist = [
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
@@ -155,7 +157,6 @@ const playlist = [
 let currentSongIndex = 0;
 let audio = new Audio(playlist[currentSongIndex]);
 
-// Listen for track end => auto-next
 audio.addEventListener('ended', () => {
   nextTrack();
 });
@@ -184,7 +185,7 @@ volumeSlider.addEventListener('input', () => {
   audio.volume = volumeSlider.value;
 });
 
-/* Helper to switch track and keep state */
+/* Helper: switch track */
 function switchTrack() {
   audio.pause();
   audio = new Audio(playlist[currentSongIndex]);

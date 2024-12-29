@@ -42,7 +42,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
 }
 .nav-container {
   width: 90%;
@@ -126,6 +125,18 @@ body {
 .btn:hover {
   background-color: #3e55bd;
   transform: scale(1.10);
+}
+
+/* WAVE DIVIDERS */
+.wave-divider {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+}
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ABOUT */
@@ -251,7 +262,7 @@ body {
   color: #ffffff;
 }
 
-/* CONTACT SUBMIT BUTTON */
+/* CONTACT BUTTON */
 .container {
   align-items: center;
   border-radius: 26px;
@@ -472,7 +483,8 @@ body {
 .disco-ball {
   width: 50px;
   height: 50px;
-  background: url('https://media.giphy.com/media/kEhO6AzGBMrZm/giphy.gif') no-repeat center center;
+  background: url('https://media.giphy.com/media/kEhO6AzGBMrZm/giphy.gif') 
+              no-repeat center center;
   background-size: cover;
   border-radius: 50%;
   animation: spin 3s linear infinite;
