@@ -1,4 +1,6 @@
-// AOS for scroll animations
+/* main.js */
+
+/* AOS for scroll animations */
 AOS.init({
   duration: 1000,
   once: false,
@@ -13,7 +15,7 @@ gsap.from(navbar, {
   ease: "power2.out",
 });
 
-// Smooth scroll for nav links
+// Smooth-scrolling for nav links
 document.querySelectorAll("[data-link]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -130,7 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
     shininess: 100.0,
     waveHeight: 19.5,
     waveSpeed: 0.5,
-    zoom: 0.7,
+    zoom: 0.7
   });
 });
 
@@ -143,7 +145,7 @@ const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
 const volumeSlider = document.getElementById("volumeSlider");
 
-// Example playlist (public domain samples)
+// Example playlist (public domain)
 const playlist = [
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
