@@ -1,0 +1,13 @@
+/* divider.css
+   Now just styles a thick horizontal rule (hr) to separate sections
+*/
+
+/* Basic thick divider with a nice gradient */
+.divider {
+  border: 0;
+  height: 8px; /* how thick the line is */
+  background: linear-gradient(to right, #ffb347, #ff7e5f);
+  margin: 4rem auto; /* space around the divider */
+  width: 90%;        /* or 80%, etc. */
+  border-radius: 4px;
+}

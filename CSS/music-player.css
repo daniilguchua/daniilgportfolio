@@ -1,0 +1,143 @@
+/* music-player.css */
+
+/* Position the entire player at bottom-right */
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 240px; /* smaller */
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* The “light glow” behind disco ball */
+#discoBallLight {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  border-radius: 100%;
+  background-color: white;
+  opacity: 0.2;
+  filter: blur(16px);
+  top: 10px;
+  left: calc(50% - 35px);
+}
+
+/* DISCO BALL: smaller (70x70) */
+#discoBall {
+  transform-style: preserve-3d;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 35px);
+  animation: rotateDiscoBall 14s linear infinite;
+}
+
+#discoBallMiddle {
+  height: 100%;
+  border-radius: 100%;
+  /* We'll update background via JS each skip */
+  background: linear-gradient(to bottom, #111, #333);
+  animation: rotateDiscoBallMiddle 14s linear infinite;
+}
+
+/* The squares we generate */
+.square {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+}
+
+@keyframes rotateDiscoBall {
+  0% { transform: rotateX(90deg) rotateZ(0deg) rotate(0deg); }
+  100% { transform: rotateX(90deg) rotateZ(360deg) rotate(0deg); }
+}
+@keyframes rotateDiscoBallMiddle {
+  0% { transform: rotateX(90deg) rotateY(0deg) rotate(0deg); }
+  100% { transform: rotateX(90deg) rotateY(-360deg) rotate(0deg); }
+}
+@keyframes reflect {
+  0% {opacity: 1;}
+  50% {opacity: 0.35;}  
+  100% {opacity: 1;}  
+}
+
+/* The music controls container (below disco ball) */
+.mp-controls {
+  margin-top: 80px; /* push under smaller disco ball */
+  text-align: center;
+  color: #fff;
+}
+
+/* Track Title + Artist */
+#trackTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.4rem 0 0.2rem;
+  color: #ffa726;
+}
+#trackArtist {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 0.6rem;
+}
+
+/* Progress bar styling */
+#progressBar {
+  width: 90%;
+  -webkit-appearance: none;
+  height: 5px;
+  background: #444;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 0.6rem;
+}
+#progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #ffa726;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  margin-top: -4px;
+}
+
+/* Controls row */
+.controls-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+/* Round buttons */
+.btn-round {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #d81b60;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.btn-round:hover {
+  transform: scale(0.95);
+}
+
+.larger {
+  width: 36px;
+  height: 36px;
+  background: #ff4081; 
+  font-size: 1rem;
+}

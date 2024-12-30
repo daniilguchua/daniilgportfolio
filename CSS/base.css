@@ -1,8 +1,6 @@
 /* base.css */
-/* Google font import can stay here, or in index.html head */
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap");
 
-/* Reset + universal */
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +8,7 @@
   font-family: "Fira Code", monospace;
 }
 
-/* Body style */
+/* Body base style */
 body {
   color: #333;
   overflow-x: hidden;
@@ -35,4 +33,21 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
   z-index: -1;
+}
+
+/* 
+  We'll also have a container for the tsParticles canvas. 
+  By default, tsParticles uses a fullScreen approach, 
+  so we won't add a specific #tsparticles-canvas in the HTML. 
+*/
+
+/* If you want a fallback in case tsParticles doesn't load: */
+#tsparticles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999; 
+  pointer-events: none;
 }

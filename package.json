@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "description": "Daniil's Portfolio - No bundler version",
     "scripts": {
-      "dev": "live-server ."
+        "dev": "live-server ."
     },
     "devDependencies": {
-      "live-server": "^1.2.2"
+        "live-server": "^1.2.2"
     }
-  }
+}
