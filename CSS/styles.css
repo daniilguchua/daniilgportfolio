@@ -11,33 +11,33 @@
     --accent-color3: #CF6679;           /* Coral */
     --hover-accent: #3700B3;            /* Darker Purple */
     --background-overlay: rgba(26, 26, 46, 0.8); /* Semi-transparent Dark Purple Overlay */
-  }
-  
-  /* Import Open Sans Font */
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-  
-  /* =========================================
-     2) Global Styles
-  ========================================= */
-  
-  * {
+}
+
+/* Import Open Sans Font */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* =========================================
+   2) Global Styles
+========================================= */
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Open Sans", sans-serif;
-  }
-  
-  body {
+}
+
+body {
     color: var(--secondary-color);
     overflow-x: hidden;
     overflow-y: scroll; /* Ensure vertical scroll is always visible */
     min-height: 100vh;
     background-color: var(--primary-color); /* Fallback Background */
     cursor: default; /* Restore default cursor */
-  }
-  
-  /* Full-Height Sections */
-  section {
+}
+
+/* Full-Height Sections */
+section {
     position: relative; /* Establish a containing block for absolute positioning */
     min-height: 100vh;
     display: flex;
@@ -48,10 +48,10 @@
     box-sizing: border-box;
     background-color: transparent; /* Remove any global background */
     overflow: hidden; /* Prevent child overflow */
-  }
-  
-  /* Vanta Section Styling */
-  .vanta-section {
+}
+
+/* Vanta Section Styling */
+.vanta-section {
     position: fixed; /* Fixed for a single background */
     top: 0;
     left: 0;
@@ -59,87 +59,26 @@
     height: 100%;
     z-index: -2; /* Ensure Vanta effect stays behind all content */
     background-color: var(--primary-color); /* Fallback background */
-  }
-  
-  /* Responsive Media Queries */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
     section {
-      padding: 1rem;
+        padding: 1rem;
     }
-  }
-  
-  /* AOS Animations */
-  [data-aos] {
+}
+
+/* AOS Animations */
+[data-aos] {
     opacity: 0;
     transition-property: opacity, transform;
-  }
-  
-  .aos-animate {
+}
+
+.aos-animate {
     opacity: 1 !important;
     transform: translateY(0) !important;
-  }
-/* =========================================
-   4) Future Goals Section Styles (List Format)
-========================================= */
+}
 
-/* Future Goals List */
-.future-goals-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: 1200px;
-    width: 100%;
-    padding: 0 1rem;
-    list-style: none; /* Remove default list styling */
-    align-items: center; /* Center items horizontally */
-  }
-  
-  .goal-item {
-    background-color: var(--background-overlay);
-    border: 2px solid var(--accent-color1);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    backdrop-filter: blur(5px); /* Subtle frosted glass effect */
-    width: 100%;
-    max-width: 800px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .goal-item:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    background-color: var(--background-overlay);
-  }
-  
-  .goal-item h3 {
-    color: var(--accent-color1);
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    border-bottom: 2px solid var(--accent-color1);
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .goal-item p {
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: var(--secondary-color);
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .goal-item h3 {
-      font-size: 1.5rem;
-    }
-  }
-
-  
 /* =========================================
    3) Navbar Styles (Updated for Full-Width and Centering)
 ========================================= */
@@ -156,10 +95,10 @@ nav {
     display: flex;
     justify-content: center; /* Center the nav content horizontally */
     align-items: center; /* Center the nav content vertically */
-  }
-  
-  /* Apply mask-image and existing gradient to the navigation links container */
-  nav ul {
+}
+
+/* Apply mask-image and existing gradient to the navigation links container */
+nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,14 +109,14 @@ nav {
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
     border-radius: 0; /* Remove border-radius for full-width */
-  }
-  
-  /* Navigation links */
-  nav ul li {
+}
+
+/* Navigation links */
+nav ul li {
     margin: 0 15px; /* Increased spacing for better spread */
-  }
-  
-  nav ul li a {
+}
+
+nav ul li a {
     padding: 18px;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
@@ -187,17 +126,17 @@ nav {
     display: block;
     transition: background 0.3s, color 0.3s;
     border-radius: 4px; /* Optional: Slight rounding for hover effect */
-  }
-  
-  nav ul li a:hover,
-  nav ul li a:focus {
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.1);
     color: rgba(0, 35, 122, 0.7);
-  }
-  
-  /* Hamburger Menu Styles */
-  .hamburger {
+}
+
+/* Hamburger Menu Styles */
+.hamburger {
     display: none; /* Hidden by default */
     position: absolute;
     right: 20px;
@@ -208,43 +147,105 @@ nav {
     color: rgba(0, 35, 122, 0.5);
     background: none;
     border: none;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
     nav ul {
-      flex-direction: column;
-      align-items: center;
-      background: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background for mobile */
-      position: absolute;
-      top: 60px; /* Height of the navbar */
-      left: 0;
-      right: 0;
-      display: none; /* Hidden by default */
+        flex-direction: column;
+        align-items: center;
+        background: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background for mobile */
+        position: absolute;
+        top: 60px; /* Height of the navbar */
+        left: 0;
+        right: 0;
+        display: none; /* Hidden by default */
     }
-  
+
     nav ul.active {
-      display: flex;
+        display: flex;
     }
-  
+
     nav ul li {
-      margin: 10px 0;
+        margin: 10px 0;
     }
-  
+
     .hamburger {
-      display: block; /* Show hamburger on mobile */
+        display: block; /* Show hamburger on mobile */
     }
-  
+
     /* Adjust nav padding on mobile if necessary */
     nav {
-      padding: 15px 0;
+        padding: 15px 0;
     }
-  }
-  /* =========================================
-     4) Hero Section Styles
-  ========================================= */
-  
-  .hero {
+}
+
+/* =========================================
+   4) Future Goals Section Styles (List Format)
+========================================= */
+
+/* Future Goals List */
+.future-goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1rem;
+    list-style: none; /* Remove default list styling */
+    align-items: center; /* Center items horizontally */
+}
+
+.goal-item {
+    background-color: var(--background-overlay);
+    border: 2px solid var(--accent-color1);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    backdrop-filter: blur(5px); /* Subtle frosted glass effect */
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+}
+
+.goal-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-overlay);
+}
+
+.goal-item h3 {
+    color: var(--accent-color1);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--accent-color1);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.goal-item p {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--secondary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .goal-item h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* =========================================
+   5) Hero Section Styles
+========================================= */
+
+.hero {
     position: relative;
     display: flex;
     flex-direction: column; /* Stack content vertically */
@@ -256,42 +257,42 @@ nav {
     color: var(--secondary-color);
     z-index: 1;
     padding: 2rem;
-  }
-  
-  .hero-text {
+}
+
+.hero-text {
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
     position: relative;
     z-index: 1;
     text-align: center;
-  }
-  
-  .intro-heading {
+}
+
+.intro-heading {
     font-size: 2.8rem;
     margin-bottom: 1.5rem;
     line-height: 1.4;
     color: var(--secondary-color);
-  }
-  
-  .highlight {
+}
+
+.highlight {
     color: var(--accent-color1);
-  }
-  
-  .title-animated {
+}
+
+.title-animated {
     font-size: 2.8rem;
     margin-bottom: 2rem;
     text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     color: var(--accent-color1);
-  }
-  
-  .hero-text p {
+}
+
+.hero-text p {
     font-size: 1.3rem;
     margin-bottom: 2rem;
     color: var(--secondary-color);
-  }
-  
-  .btn {
+}
+
+.btn {
     display: inline-block;
     background-color: var(--accent-color1);
     color: var(--primary-color);
@@ -303,32 +304,32 @@ nav {
     font-size: 1rem;
     text-decoration: none;
     margin-top: 1rem; /* Add some spacing from the paragraph */
-  }
-  
-  .btn:hover,
-  .btn:focus {
+}
+
+.btn:hover,
+.btn:focus {
     background-color: var(--hover-accent);
     transform: scale(1.05);
-  }
-  
-  /* =========================================
-     5) Divider Styles
-  ========================================= */
-  
-  .divider {
+}
+
+/* =========================================
+   6) Divider Styles
+========================================= */
+
+.divider {
     border: 0;
     height: 12px; /* Thickness of the divider */
     background: linear-gradient(to right, var(--accent-color2), var(--accent-color3)); /* Vibrant gradient */
     width: 100%;        /* Full width of the section */
     border-radius: 6px; /* Rounded edges */
     margin: 0; /* Remove vertical spacing */
-  }
-  
-  /* =========================================
-     6) About Section Styles
-  ========================================= */
-  
-  .section-title {
+}
+
+/* =========================================
+   7) About Section Styles
+========================================= */
+
+.section-title {
     align-self: center; /* Center the title horizontally */
     margin-bottom: 1.5rem;
     font-size: 2.5rem;
@@ -336,9 +337,9 @@ nav {
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
-  
-  .about-content {
+}
+
+.about-content {
     display: flex;
     flex-direction: column; /* Stack content vertically */
     align-items: center;    /* Center horizontally */
@@ -347,23 +348,23 @@ nav {
     max-width: 1200px; /* Limits the maximum width */
     width: 100%;
     padding: 0 1rem;
-  }
-  
-  .about-text {
+}
+
+.about-text {
     font-size: 1.15rem;
     line-height: 1.7;
     color: var(--secondary-color);
     max-width: 800px;
     text-align: center;
-  }
-  
-  .about-image {
+}
+
+.about-image {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .img-placeholder {
+}
+
+.img-placeholder {
     width: 250px;
     height: 250px;
     background-color: rgba(255, 255, 255, 0.1);
@@ -375,37 +376,37 @@ nav {
     color: var(--accent-color1);
     font-size: 1rem;
     overflow: hidden;
-  }
-  
-  .img-placeholder img {
+}
+
+.img-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 6px;
-  }
-  
-  /* =========================================
-     7) Skills Section Styles
-  ========================================= */
-  
-  .skills .section-title {
+}
+
+/* =========================================
+   8) Skills Section Styles
+========================================= */
+
+.skills .section-title {
     /* Inherited from .section-title */
-  }
-  
-  .skills h2::after {
+}
+
+.skills h2::after {
     /* Already defined in .section-title */
-  }
-  
-  .skillset-grid {
+}
+
+.skillset-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2.5rem;
     width: 100%;
     max-width: 1200px;
     padding: 0 1rem;
-  }
-  
-  .skillset-card {
+}
+
+.skillset-card {
     background-color: var(--background-overlay);
     border: 2px solid var(--accent-color1);
     border-radius: 12px;
@@ -415,9 +416,9 @@ nav {
     backdrop-filter: blur(5px); /* Subtle frosted glass effect */
     position: relative;
     overflow: hidden;
-  }
-  
-  .skillset-card::before {
+}
+
+.skillset-card::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -427,19 +428,19 @@ nav {
     background: radial-gradient(circle, rgba(187, 134, 252, 0.3), transparent 70%);
     opacity: 0;
     transition: opacity 0.3s ease;
-  }
-  
-  .skillset-card:hover::before {
+}
+
+.skillset-card:hover::before {
     opacity: 1;
-  }
-  
-  .skillset-card:hover {
+}
+
+.skillset-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     background-color: var(--background-overlay);
-  }
-  
-  .skillset-card h3 {
+}
+
+.skillset-card h3 {
     color: var(--accent-color1);
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -449,59 +450,59 @@ nav {
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
-  
-  .skillset-card ul {
+}
+
+.skillset-card ul {
     list-style-type: none; /* Remove default list styling */
     padding-left: 0;
     text-align: left;
     line-height: 1.8;
     color: var(--secondary-color);
-  }
-  
-  .skillset-card ul li {
+}
+
+.skillset-card ul li {
     position: relative;
     padding-left: 1.2rem;
     margin-bottom: 0.8rem;
-  }
-  
-  .skillset-card ul li::before {
+}
+
+.skillset-card ul li::before {
     content: '▹';
     position: absolute;
     left: 0;
     color: var(--accent-color1);
     font-size: 1rem;
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
     .skillset-card h3 {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
-  }
-  
-  /* =========================================
-     8) Projects Section Styles
-  ========================================= */
-  
-  .projects .section-title {
+}
+
+/* =========================================
+   9) Projects Section Styles
+========================================= */
+
+.projects .section-title {
     /* Inherited from .section-title */
-  }
-  
-  .projects h2::after {
+}
+
+.projects h2::after {
     /* Already defined in .section-title */
-  }
-  
-  .project-grid {
+}
+
+.project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2.5rem;
     width: 100%;
     max-width: 1200px; /* Limits the width */
     padding: 0 1rem;
-  }
-  
-  .project-card {
+}
+
+.project-card {
     background-color: var(--background-overlay);
     border: 2px solid var(--accent-color1);
     border-radius: 12px;
@@ -513,44 +514,44 @@ nav {
     flex-direction: column;
     height: 100%;
     backdrop-filter: blur(5px); /* Subtle frosted glass effect */
-  }
-  
-  .project-image {
+}
+
+.project-image {
     width: 100%;
     height: 200px;
     overflow: hidden;
-  }
-  
-  .project-image img {
+}
+
+.project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
-  }
-  
-  .project-content {
+}
+
+.project-content {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-  }
-  
-  .project-content h3 {
+}
+
+.project-content h3 {
     margin-bottom: 0.75rem;
     color: var(--accent-color1);
     font-size: 1.5rem;
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
-  
-  .project-content p {
+}
+
+.project-content p {
     flex-grow: 1;
     color: var(--secondary-color);
     margin-bottom: 1.5rem;
-  }
-  
-  .project-content .btn {
+}
+
+.project-content .btn {
     align-self: flex-start;
     padding: 0.5rem 1rem;
     background-color: var(--accent-color1);
@@ -560,90 +561,90 @@ nav {
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s ease;
-  }
-  
-  .project-content .btn:hover,
-  .project-content .btn:focus {
+}
+
+.project-content .btn:hover,
+.project-content .btn:focus {
     background-color: var(--hover-accent);
-  }
-  
-  .project-card:hover {
+}
+
+.project-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     background-color: var(--background-overlay);
-  }
-  
-  .project-card:hover .project-image img {
+}
+
+.project-card:hover .project-image img {
     transform: scale(1.1);
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
     .project-image {
-      height: 180px;
+        height: 180px;
     }
-  
+
     .projects .section-title {
-      font-size: 2rem;
+        font-size: 2rem;
     }
-  }
-  
-  /* =========================================
-     9) Contact Section Styles
-  ========================================= */
-  
-  .contact .section-title {
+}
+
+/* =========================================
+   10) Contact Section Styles
+========================================= */
+
+.contact .section-title {
     /* Inherited from .section-title */
-  }
-  
-  .contact h2::after {
+}
+
+.contact h2::after {
     /* Already defined in .section-title */
-  }
-  
-  .contact p {
+}
+
+.contact p {
     margin: 1rem 0;
     font-size: 1rem;
     color: var(--secondary-color);
-  }
-  
-  /* Contact Form Styles */
-  .contact-form {
+}
+
+/* Contact Form Styles */
+.contact-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
     max-width: 600px;
     margin-top: 2rem;
-  }
-  
-  .contact-form label {
+}
+
+.contact-form label {
     font-size: 1rem;
     color: var(--secondary-color);
-  }
-  
-  .contact-form input,
-  .contact-form textarea {
+}
+
+.contact-form input,
+.contact-form textarea {
     padding: 0.8rem;
     border: 2px solid var(--accent-color1);
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--secondary-color);
     font-size: 1rem;
-  }
-  
-  .contact-form input::placeholder,
-  .contact-form textarea::placeholder {
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
     color: var(--secondary-color);
-  }
-  
-  .contact-form input:focus,
-  .contact-form textarea:focus {
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
     outline: none;
     border-color: var(--accent-color2);
     box-shadow: 0 0 5px var(--accent-color2);
-  }
-  
-  .contact-form button {
+}
+
+.contact-form button {
     align-self: flex-start;
     padding: 0.8rem 1.5rem;
     background-color: var(--accent-color1);
@@ -653,204 +654,19 @@ nav {
     cursor: pointer;
     transition: background 0.3s, transform 0.3s;
     font-weight: bold;
-  }
-  
-  .contact-form button:hover,
-  .contact-form button:focus {
+}
+
+.contact-form button:hover,
+.contact-form button:focus {
     background-color: var(--hover-accent);
     transform: scale(1.05);
-  }
-  
-  /* =========================================
-   10) Music Player Styles (Updated)
+}
+
+/* =========================================
+   11) Footer Styles
 ========================================= */
 
-/* 
-  The main container for the disco ball + player.
-  Positioned fixed at bottom-right of the screen.
-*/
-.music-player {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 240px; 
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: rgba(26, 26, 46, 0.9); /* Dark Purple Background */
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    z-index: 999;  /* Ensure it’s above other site elements */
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: width 0.3s ease, opacity 0.5s ease;
-    opacity: 0; /* Initially hidden */
-    visibility: hidden; /* Prevent it from taking up space when hidden */
-  }
-  
-  /* Visible state */
-  .music-player.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  /* Glow behind the disco ball (a blurred dark circle) */
-  #discoBallLight {
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    border-radius: 100%;
-    background-color: #BB86FC; /* Soft Purple Glow */
-    opacity: 0.6;
-    filter: blur(16px);
-    top: 10px;
-    left: calc(50% - 40px);
-  }
-  
-  /* The disco ball container itself, 80x80 */
-  #discoBall {
-    transform-style: preserve-3d;
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    top: 10px;
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%);
-    animation: rotateDiscoBall 14s linear infinite;
-  }
-  
-  /* The sphere in the center that appears dark */
-  #discoBallMiddle {
-    opacity: 0.3;
-    height: 100%;
-    border-radius: 100%;
-    background: linear-gradient(to bottom, #BB86FC, #3700B3); /* Soft Purple Gradient */
-    animation: rotateDiscoBallMiddle 14s linear infinite;
-    position: absolute;   
-    z-index: 1;           
-  }
-  
-  /* Each square mirror tile */
-  .square {
-    transform-style: preserve-3d;
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    animation: reflect 2s linear infinite;
-    animation-delay: calc(-2s / 40 * var(--tile-index));
-  }
-  
-  /* Keyframe for the ball’s outer rotation */
-  @keyframes rotateDiscoBall {
-    0%   { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-  }
-  
-  /* Keyframe for the “middle” rotating in a different direction */
-  @keyframes rotateDiscoBallMiddle {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
-  }
-  
-  /* Reflection flicker on each square */
-  @keyframes reflect {
-    0% {opacity: 1;}
-    50% {opacity: 0.5;}  
-    100% {opacity: 1;}  
-  }
-  
-  /* Row containing next/prev/play buttons */
-  .controls-row {
-    display: flex;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-top: 1rem;
-  }
-  
-  /* Basic round button styles for next/prev, plus hover scaling */
-  .btn-round {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--accent-color2);
-    color: var(--primary-color);
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-  
-  /* Hover and focus states for buttons */
-  .btn-round:hover,
-  .btn-round:focus {
-    transform: scale(1.1); /* Slight scaling on hover for better UX */
-    background: var(--hover-accent);
-  }
-  
-  /* Slightly bigger “play/pause” button */
-  .larger {
-    width: 42px;
-    height: 42px;
-    background: var(--accent-color3); 
-    font-size: 1.1rem;
-  }
-  
-  .larger:hover,
-  .larger:focus {
-    background: var(--hover-accent);
-  }
-  
-  /* Player Controls */
-  .mp-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: 100px; /* Space for the disco ball */
-  }
-  
-  /* Progress Bar Styling */
-  #progressBar {
-    width: 100%;
-    cursor: pointer;
-    appearance: none;
-    height: 5px;
-    background: #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: background 0.3s;
-  }
-  
-  #progressBar::-webkit-slider-thumb {
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--accent-color1);
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  #progressBar::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--accent-color1);
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  #progressBar:hover {
-    background: var(--accent-color2);
-  }
-  
-  /* =========================================
-     11) Footer Styles
-  ========================================= */
-  
-  .footer {
+.footer {
     text-align: center;
     padding: 2rem 1rem;
     background-color: var(--primary-color);
@@ -860,15 +676,15 @@ nav {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-  }
-  
-  .footer .footer-links {
+}
+
+.footer .footer-links {
     display: flex;
     gap: 1rem;
     margin-top: 0.5rem;
-  }
-  
-  .footer .footer-links a {
+}
+
+.footer .footer-links a {
     color: var(--secondary-color);
     text-decoration: none;
     font-size: 1rem;
@@ -876,52 +692,41 @@ nav {
     display: flex;
     align-items: center;
     gap: 0.3rem;
-  }
-  
-  .footer .footer-links a:hover,
-  .footer .footer-links a:focus {
+}
+
+.footer .footer-links a:hover,
+.footer .footer-links a:focus {
     color: var(--hover-accent);
-  }
-  
-  .footer .footer-links i {
+}
+
+.footer .footer-links i {
     font-size: 1.2rem; /* Slightly larger icons */
-  }
-  
-  /* =========================================
-     12) Additional Accessibility Styles
-  ========================================= */
-  
-  /* Focus States for Better Accessibility */
-  a:focus, button:focus, input:focus, textarea:focus {
+}
+
+/* =========================================
+   12) Additional Accessibility Styles
+========================================= */
+
+/* Focus States for Better Accessibility */
+a:focus, button:focus, input:focus, textarea:focus {
     outline: 2px solid var(--accent-color1);
     outline-offset: 2px;
-  }
-  
-  /* =========================================
-     13) Responsive Enhancements
-  ========================================= */
-  
-  @media (max-width: 600px) {
-    .music-player {
-      width: 200px;
-      padding: 0.8rem;
-    }
-  
+}
+
+/* =========================================
+   13) Responsive Enhancements
+========================================= */
+
+@media (max-width: 600px) {
+    /* Removed music player styles, no changes needed here */
+
     .btn {
-      padding: 0.6rem 1.5rem;
-      font-size: 0.9rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
     }
-  
+
     .footer .footer-links {
-      flex-direction: column;
-      gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
     }
-  }
-  
-  .hamburger {
-    display: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-  }
-  
+}
