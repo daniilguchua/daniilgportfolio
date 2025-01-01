@@ -1,5 +1,3 @@
-// main.js
-
 /* =========================================
    1) Initialize AOS (Scroll Animations)
 ========================================= */
@@ -205,15 +203,11 @@ async function initHeroAnimation() {
   const introHeading = document.querySelector(".intro-heading");
   const studentP = document.querySelector(".hero-text p");
   const exploreBtn = document.querySelector(".hero-text .btn");
-  const musicPrompt = document.querySelector(".music-prompt");
-  const musicPlayerSmall = document.getElementById("musicPlayerSmall");
 
-  // Hide dynamicTitle, paragraph, button, and music player initially
+  // Hide dynamicTitle, paragraph, and button initially
   gsap.set(dynamicTitle, { opacity: 0 });
   gsap.set(studentP, { opacity: 0 });
   gsap.set(exploreBtn, { opacity: 0 });
-  gsap.set(musicPrompt, { opacity: 0 });
-  gsap.set(musicPlayerSmall, { opacity: 0 });
 
   // Animate the intro heading
   await scrambleText("Hello! I'm Daniel, and I Am a", introHeading, 2400);
@@ -224,30 +218,16 @@ async function initHeroAnimation() {
     opacity: 1,
     onComplete: () => {
       displayTitle();
-      // Fade in music prompt
-      gsap.to(musicPrompt, {
+      // Fade in paragraph
+      gsap.to(studentP, {
         duration: 0.5,
         opacity: 1,
         delay: 0.5,
         onComplete: () => {
-          // Fade in music player
-          gsap.to(musicPlayerSmall, {
-            duration: 0.5,
+          // Fade in the button
+          gsap.to(exploreBtn, {
+            duration: 1,
             opacity: 1,
-            delay: 0.3,
-          });
-          // Fade in paragraph
-          gsap.to(studentP, {
-            duration: 0.5,
-            opacity: 1,
-            delay: 0.8,
-            onComplete: () => {
-              // Fade in the button
-              gsap.to(exploreBtn, {
-                duration: 1,
-                opacity: 1,
-              });
-            },
           });
         },
       });
@@ -259,100 +239,7 @@ async function initHeroAnimation() {
 document.addEventListener("DOMContentLoaded", initHeroAnimation);
 
 /* =========================================
-   7) Music Player Logic - Small Version
-========================================= */
-const audioPlayerSmall = document.getElementById("audioPlayerSmall");
-const progressBarSmall = document.getElementById("progressBarSmall");
-const trackTitleSmall = document.getElementById("trackTitleSmall");
-const trackArtistSmall = document.getElementById("trackArtistSmall");
-const controlIconSmall = document.getElementById("controlIconSmall");
-const playPauseBtnSmall = document.getElementById("playPauseBtnSmall");
-const nextBtnSmall = document.getElementById("nextBtnSmall");
-const prevBtnSmall = document.getElementById("prevBtnSmall");
-
-/* Playlist of songs */
-const playlist = [
-  {
-    src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
-    title: "Instant Crush",
-    artist: "Daft Punk",
-  },
-  {
-    src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Harry-Styles-As-It-Was.mp3",
-    title: "As It Was",
-    artist: "Harry Styles",
-  },
-  {
-    src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Dua-Lipa-Physical.mp3",
-    title: "Physical",
-    artist: "Dua Lipa",
-  },
-];
-
-let currentSongIndexSmall = 0;
-let isPlayingSmall = false;
-
-/* Load a specific track */
-function loadTrackSmall(index) {
-  audioPlayerSmall.src = playlist[index].src;
-  trackTitleSmall.textContent = playlist[index].title;
-  trackArtistSmall.textContent = playlist[index].artist;
-  audioPlayerSmall.load();
-  progressBarSmall.value = 0;
-}
-
-/* Toggle play/pause */
-function togglePlayPauseSmall() {
-  if (!isPlayingSmall) {
-    audioPlayerSmall.play();
-    controlIconSmall.classList.replace("fa-play", "fa-pause");
-  } else {
-    audioPlayerSmall.pause();
-    controlIconSmall.classList.replace("fa-pause", "fa-play");
-  }
-  isPlayingSmall = !isPlayingSmall;
-}
-
-/* Update progress bar during playback */
-audioPlayerSmall.addEventListener("timeupdate", () => {
-  if (audioPlayerSmall.duration) {
-    progressBarSmall.max = audioPlayerSmall.duration;
-    progressBarSmall.value = audioPlayerSmall.currentTime;
-  }
-});
-
-/* Seek to a specific time */
-progressBarSmall.addEventListener("input", () => {
-  audioPlayerSmall.currentTime = progressBarSmall.value;
-});
-
-/* Play the next track */
-function nextTrackSmall() {
-  currentSongIndexSmall = (currentSongIndexSmall + 1) % playlist.length;
-  loadTrackSmall(currentSongIndexSmall);
-  if (isPlayingSmall) audioPlayerSmall.play();
-}
-
-/* Play the previous track */
-function prevTrackSmall() {
-  currentSongIndexSmall = (currentSongIndexSmall - 1 + playlist.length) % playlist.length;
-  loadTrackSmall(currentSongIndexSmall);
-  if (isPlayingSmall) audioPlayerSmall.play();
-}
-
-/* Automatically play next track when current ends */
-audioPlayerSmall.addEventListener("ended", nextTrackSmall);
-
-/* Attach button event listeners */
-playPauseBtnSmall.addEventListener("click", togglePlayPauseSmall);
-nextBtnSmall.addEventListener("click", nextTrackSmall);
-prevBtnSmall.addEventListener("click", prevTrackSmall);
-
-/* Load the first track initially */
-loadTrackSmall(currentSongIndexSmall);
-
-/* =========================================
-   8) Hamburger Menu for Mobile Navigation (Updated)
+   7) Hamburger Menu for Mobile Navigation (Updated)
 ========================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.querySelector(".hamburger");
@@ -382,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================================
-   9) Active Link Highlighting
+   8) Active Link Highlighting
 ========================================= */
 const sections = document.querySelectorAll("section, header");
 const navItems = document.querySelectorAll("nav ul li a");
@@ -411,7 +298,7 @@ sections.forEach(section => {
 });
 
 /* =========================================
-   10) Change Navbar Style on Scroll
+   9) Change Navbar Style on Scroll
 ========================================= */
 window.addEventListener("scroll", () => {
   const navbar = document.querySelector("nav");
