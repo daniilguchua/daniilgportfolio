@@ -1,13 +1,11 @@
-/* divider.css
-   Now just styles a thick horizontal rule (hr) to separate sections
-*/
+/* CSS/divider.css */
 
-/* Basic thick divider with a nice gradient */
+/* Thick divider with no space/margin between sections */
 .divider {
   border: 0;
-  height: 8px; /* how thick the line is */
-  background: linear-gradient(to right, #ffb347, #ff7e5f);
-  margin: 4rem auto; /* space around the divider */
-  width: 90%;        /* or 80%, etc. */
-  border-radius: 4px;
+  height: 12px; /* Thickness of the divider */
+  background: linear-gradient(to right, #3498DB, #2ECC71); /* Vibrant gradient */
+  width: 100%;        /* Full width of the section */
+  border-radius: 6px; /* Rounded edges */
+  margin: 0; /* Remove vertical spacing */
 }

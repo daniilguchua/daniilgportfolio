@@ -1,4 +1,5 @@
-/* hero.css */
+/* CSS/hero.css */
+
 .hero {
   position: relative;
   display: flex;
@@ -6,12 +7,11 @@
   align-items: center;    /* Center horizontally */
   justify-content: center;/* Center vertically */
   width: 100%;
-  min-height: 100vh;      /* Make hero fill most of the screen */
+  min-height: 100vh;      /* Make hero fill the viewport */
   text-align: center;
-  color: white;
+  color: var(--secondary-color);
   z-index: 1;
   padding: 2rem;
-  margin: 0 auto;         /* Center in page */
 }
 
 .hero-text {
@@ -27,26 +27,30 @@
   font-size: 2.4rem;
   margin-bottom: 1.5rem;
   line-height: 1.4;
-  color: #ffffff;
+  color: var(--secondary-color);
 }
+
 .highlight {
-  color: #ffffff;
+  color: var(--accent-color1);
 }
+
 .title-animated {
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   margin-bottom: 2rem;
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  color: #ffffff;
+  color: var(--accent-color1);
 }
+
 .hero-text p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: #ffffff;
+  color: var(--secondary-color);
 }
+
 .btn {
   display: inline-block;
-  background-color: #ffa726;
-  color: #fff;
+  background-color: var(--accent-color1);
+  color: var(--primary-color);
   padding: 0.8rem 1.7rem;
   border-radius: 30px;
   cursor: pointer;
@@ -55,9 +59,19 @@
   font-size: 1rem;
   text-decoration: none;
   margin-top: 1rem; /* Add some spacing from the paragraph */
-  margin-bottom: 7rem
 }
+
 .btn:hover {
-  background-color: #3e55bd;
-  transform: scale(1.1);
+  background-color: var(--hover-accent);
+  transform: scale(1.05);
+}
+
+/* Basic thick divider with a subtle gradient */
+.divider {
+  border: 0;
+  height: 12px; /* Thickness of the divider */
+  background: linear-gradient(to right, #3498DB, #2ECC71); /* Vibrant gradient */
+  width: 100%;        /* Full width of the section */
+  border-radius: 6px; /* Rounded edges */
+  margin: 0; /* Remove vertical spacing */
 }

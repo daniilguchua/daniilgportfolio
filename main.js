@@ -1,45 +1,77 @@
-/* main.js */
+// main.js
 
 /* =========================================
-   1) AOS (Scroll Animations)
+   1) Initialize AOS (Scroll Animations)
 ========================================= */
 AOS.init({
-  duration: 1000,
-  once: false,
+  duration: 1000, // Animation duration in milliseconds
+  once: true, // Whether animation should happen only once - while scrolling down
+  easing: 'ease-in-out', // Default easing for AOS animations
+  offset: 100, // Offset (in px) from the original trigger point
+  mirror: false, // Whether elements should animate out while scrolling past them
 });
 
 /* =========================================
-   2) GSAP: fade-in navbar
+   2) Initialize Vanta.js Background with Optimized Performance
 ========================================= */
-gsap.from("#navbar", {
-  duration: 1,
-  y: -70,
-  opacity: 0,
-  ease: "power2.out",
+
+/* Initialize Vanta.js Fog once the DOM is loaded */
+document.addEventListener("DOMContentLoaded", () => {
+  VANTA.FOG({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    highlightColor: 0xBB86FC, // Soft Purple Highlights
+    midtoneColor: 0x9b59b6,   // Amethyst
+    lowlightColor: 0xbb86fc,  // Soft Purple
+    baseColor: 0x1a1a2e,       // Darker Purple
+    blurFactor: 0.8,
+    speed: 1.5,
+    zoom: 0.1
+  });
 });
 
-/* Smooth-scrolling for nav links */
-document.querySelectorAll("[data-link]").forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const targetSelector = link.getAttribute("href");
-    const targetElem = document.querySelector(targetSelector);
-    if (targetElem) {
+/* =========================================
+   3) GSAP Smooth Scroll for Navbar Links
+========================================= */
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger, MotionPathPlugin);
+
+/* Consolidated Smooth Scroll Listener */
+document.querySelectorAll('a[data-link]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default anchor behavior
+
+    const targetId = this.getAttribute('href').substring(1); // Extract ID without '#'
+    const targetSection = document.getElementById(targetId);
+
+    if (targetSection) {
+      const navbarHeight = document.querySelector('nav').offsetHeight; // Get navbar height
+      const sectionRect = targetSection.getBoundingClientRect();
+      const sectionTop = window.pageYOffset + sectionRect.top;
+      const scrollToPosition = sectionTop - navbarHeight - 20; // 20px padding
+
       gsap.to(window, {
         duration: 1,
-        scrollTo: { y: targetElem.offsetTop - 60 },
-        ease: "power2.inOut",
+        scrollTo: {
+          y: scrollToPosition,
+          autoKill: false
+        },
+        ease: "power2.inOut"
       });
     }
   });
 });
 
 /* =========================================
-   3) Minimal Scramble Function
+   4) Minimal Scramble Function
 ========================================= */
+// scrambleText() gradually reveals real letters from random characters
 function scrambleText(text, container, durationMs) {
   return new Promise((resolve) => {
-    const intervalTime = 25;
+    const intervalTime = 25; // how fast we swap chars
     const totalSteps = durationMs / intervalTime;
     let currentStep = 0;
 
@@ -73,29 +105,22 @@ function scrambleText(text, container, durationMs) {
 
       if (currentStep >= totalSteps) {
         clearInterval(timer);
-        container.textContent = text; // finalize
-        resolve();
+        container.textContent = text; 
+        resolve(); 
       }
     }, intervalTime);
   });
 }
 
 /* =========================================
-   4) Title cycle with color animation
+   5) Title Cycle with Color Animation
 ========================================= */
 const dynamicTitle = document.getElementById("dynamicTitle");
-const titles = ["Software Engineer", "Computer Scientist", "Security Enthusiast"];
-
-const letterColors = [
-  "#80d8f7",
-  "#f8a7c1",
-  "#c69ef5",
-  "#fcb58a",
-  "#d7f28c",
-];
+const titles = ["Software Engineer", "Full-Stack Developer", "Cybersecurity Enthusiast"];
 
 let currentIndex = 0;
 
+// Displays the rotating title with color cycling
 function displayTitle() {
   if (!dynamicTitle) return;
   dynamicTitle.innerHTML = "";
@@ -111,7 +136,7 @@ function displayTitle() {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.display = "inline-block";
-      span.style.color = letterColors[i % letterColors.length];
+      span.style.color = getRandomAccentColor();
       dynamicTitle.appendChild(span);
       spans.push(span);
 
@@ -123,10 +148,10 @@ function displayTitle() {
         delay: i * 0.05,
       });
 
-      // Color cycling
+      // Color cycling 
       gsap.to(span, {
-        duration: 0.6,
-        color: letterColors[(i + 1) % letterColors.length],
+        duration: 1,
+        color: getRandomAccentColor(),
         delay: i * 0.05,
         repeat: -1,
         yoyo: true,
@@ -139,7 +164,7 @@ function displayTitle() {
   gsap.delayedCall(2, () => textScramble(spans, 6, 0.8));
 }
 
-// Scramble for rotating titles
+// This random scramble triggers after 2s, then calls nextTitle
 function textScramble(spans, scrambleCount, duration) {
   const chars = "!<>-_\\/[]{}—=+*^?#@&$%";
   let iteration = 0;
@@ -161,179 +186,91 @@ function textScramble(spans, scrambleCount, duration) {
   }, intervalTime);
 }
 
+// Move to next title in the array
 function nextTitle() {
   currentIndex = (currentIndex + 1) % titles.length;
   displayTitle();
 }
 
+// Utility function to get a random accent color
+function getRandomAccentColor() {
+  const accents = ["#BB86FC", "#03DAC6", "#CF6679"]; // Soft Purple, Teal, Coral
+  return accents[Math.floor(Math.random() * accents.length)];
+}
+
 /* =========================================
-   5) Hero Sequence
+   6) Hero Sequence Animation
 ========================================= */
 async function initHeroAnimation() {
   const introHeading = document.querySelector(".intro-heading");
   const studentP = document.querySelector(".hero-text p");
-  const seeMyWorkBtn = document.querySelector(".hero-text .btn");
+  const exploreBtn = document.querySelector(".hero-text .btn");
+  const musicPrompt = document.querySelector(".music-prompt");
+  const musicPlayerSmall = document.getElementById("musicPlayerSmall");
 
-  // Hide dynamicTitle, paragraph, button
+  // Hide dynamicTitle, paragraph, button, and music player initially
   gsap.set(dynamicTitle, { opacity: 0 });
   gsap.set(studentP, { opacity: 0 });
-  gsap.set(seeMyWorkBtn, { opacity: 0 });
+  gsap.set(exploreBtn, { opacity: 0 });
+  gsap.set(musicPrompt, { opacity: 0 });
+  gsap.set(musicPlayerSmall, { opacity: 0 });
 
-  // Force heading invisible on load to prevent flash
-  gsap.set(introHeading, { opacity: 0 });
-  introHeading.textContent = "";
+  // Animate the intro heading
+  await scrambleText("Hello! I'm Daniel, and I Am a", introHeading, 2400);
 
-  // 1) Show heading, scramble
-  gsap.set(introHeading, { opacity: 1 });
-  await scrambleText("Hi! My Name Is Daniil! And I Am A", introHeading, 2400);
-
-  // 2) After scramble, short wait → fade in #dynamicTitle
-  setTimeout(() => {
-    gsap.to(dynamicTitle, {
-      duration: 0.4,
-      opacity: 1,
-      onComplete: () => {
-        displayTitle();
-        // Fade in paragraph
-        gsap.to(studentP, {
-          duration: 0.5,
-          opacity: 1,
-          delay: 0.8,
-          onComplete: () => {
-            // Finally fade in the button
-            gsap.to(seeMyWorkBtn, {
-              duration: 1,
-              opacity: 1,
-            });
-          },
-        });
-      },
-    });
-  }, 500);
+  // Fade in the rotating title
+  gsap.to(dynamicTitle, {
+    duration: 0.4,
+    opacity: 1,
+    onComplete: () => {
+      displayTitle();
+      // Fade in music prompt
+      gsap.to(musicPrompt, {
+        duration: 0.5,
+        opacity: 1,
+        delay: 0.5,
+        onComplete: () => {
+          // Fade in music player
+          gsap.to(musicPlayerSmall, {
+            duration: 0.5,
+            opacity: 1,
+            delay: 0.3,
+          });
+          // Fade in paragraph
+          gsap.to(studentP, {
+            duration: 0.5,
+            opacity: 1,
+            delay: 0.8,
+            onComplete: () => {
+              // Fade in the button
+              gsap.to(exploreBtn, {
+                duration: 1,
+                opacity: 1,
+              });
+            },
+          });
+        },
+      });
+    },
+  });
 }
 
-// Kick off once DOM loads
+// Once DOM is ready, start the hero animation
 document.addEventListener("DOMContentLoaded", initHeroAnimation);
 
 /* =========================================
-   6) Vanta Waves (Background)
+   7) Music Player Logic - Small Version
 ========================================= */
-window.addEventListener("DOMContentLoaded", () => {
-  VANTA.WAVES({
-    el: "#vanta-bg",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.0,
-    minWidth: 200.0,
-    color: 0x1d2951,
-    shininess: 40.0,
-    waveHeight: 15.0,
-    waveSpeed: 1.3,
-    zoom: 1.05,
-  });
-});
+const audioPlayerSmall = document.getElementById("audioPlayerSmall");
+const progressBarSmall = document.getElementById("progressBarSmall");
+const trackTitleSmall = document.getElementById("trackTitleSmall");
+const trackArtistSmall = document.getElementById("trackArtistSmall");
+const controlIconSmall = document.getElementById("controlIconSmall");
+const playPauseBtnSmall = document.getElementById("playPauseBtnSmall");
+const nextBtnSmall = document.getElementById("nextBtnSmall");
+const prevBtnSmall = document.getElementById("prevBtnSmall");
 
-/* =========================================
-   7) Particle Trail Cursor
-========================================= */
-new cursoreffects.fairyDustCursor({
-  colors: ["#ff7f50", "#ffb347", "#ffd700"],
-  elementCount: 15,
-  clearCheckInterval: 2000,
-});
-
-/* =========================================
-   8) Disco Ball + Music Player
-========================================= */
-
-// 1) Generate squares for smaller disco ball
-var radius = 35;
-var squareSize = 5;
-var prec = 19.55;
-var fuzzy = 0.001;
-var inc = (Math.PI - fuzzy) / prec;
-var discoBall = document.getElementById("discoBall");
-let squaresArray = [];
-
-for (let t = fuzzy; t < Math.PI; t += inc) {
-  let z = radius * Math.cos(t);
-  let currentRadius = Math.abs(
-    (radius * Math.cos(0) * Math.sin(t)) -
-    (radius * Math.cos(Math.PI) * Math.sin(t))
-  ) / 2.5;
-
-  let circumference = Math.abs(2 * Math.PI * currentRadius);
-  let squaresThatFit = Math.floor(circumference / squareSize);
-  let angleInc = (Math.PI * 2 - fuzzy) / squaresThatFit;
-
-  for (let i = angleInc / 2 + fuzzy; i < Math.PI * 2; i += angleInc) {
-    let square = document.createElement("div");
-    let squareTile = document.createElement("div");
-    squareTile.style.width = squareSize + "px";
-    squareTile.style.height = squareSize + "px";
-    squareTile.style.transformOrigin = "0 0 0";
-    squareTile.style.transform = `rotate(${i}rad) rotateY(${t}rad)`;
-
-    // Slightly random gray
-    squareTile.style.backgroundColor = randomGrayColor();
-
-    square.className = "square";
-    squareTile.style.animation = "reflect 2s linear infinite";
-    squareTile.style.animationDelay = String(randomNumber(0, 20) / 10) + "s";
-    squareTile.style.backfaceVisibility = "hidden";
-
-    let x = radius * Math.cos(i) * Math.sin(t);
-    let y = radius * Math.sin(i) * Math.sin(t);
-    square.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px)`;
-
-    square.appendChild(squareTile);
-    discoBall.appendChild(square);
-    squaresArray.push(squareTile);
-  }
-}
-
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function randomGrayColor() {
-  let c = randomNumber(130, 220);
-  return `rgb(${c}, ${c}, ${c})`;
-}
-
-// We have 5 darkish color combos for the disco ball
-const discoColors = [
-  ["#4a148c","#333"],   // deep purple
-  ["#311b92","#333"],   // indigo
-  ["#1a237e","#333"],   // dark blue
-  ["#6a1b9a","#333"],   // purple
-  ["#4527a0","#333"],   // deep indigo
-];
-
-// This changes the disco ball’s “shader” (the main sphere gradient + squares color)
-function changeDiscoBallShader() {
-  const choice = discoColors[Math.floor(Math.random() * discoColors.length)];
-  // Update discoBallMiddle
-  const discoBallMiddle = document.getElementById("discoBallMiddle");
-  discoBallMiddle.style.background = `linear-gradient(to bottom, ${choice[0]}, ${choice[1]})`;
-
-  // Recolor squares to match or be random dark
-  squaresArray.forEach(tile => {
-    tile.style.backgroundColor = choice[0];
-  });
-}
-
-// 2) Basic Music Player
-const audioPlayer = document.getElementById("audioPlayer");
-const progressBar = document.getElementById("progressBar");
-const trackTitle = document.getElementById("trackTitle");
-const trackArtist = document.getElementById("trackArtist");
-const controlIcon = document.getElementById("controlIcon");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
-
+/* Playlist of songs */
 const playlist = [
   {
     src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
@@ -352,77 +289,135 @@ const playlist = [
   },
 ];
 
-let currentSongIndex = 0;
-let isPlaying = false;
+let currentSongIndexSmall = 0;
+let isPlayingSmall = false;
 
-// Load the initial track
-loadTrack(currentSongIndex);
-
-function loadTrack(index) {
-  audioPlayer.src = playlist[index].src;
-  trackTitle.textContent = playlist[index].title;
-  trackArtist.textContent = playlist[index].artist;
-  audioPlayer.load();
-  progressBar.value = 0;
+/* Load a specific track */
+function loadTrackSmall(index) {
+  audioPlayerSmall.src = playlist[index].src;
+  trackTitleSmall.textContent = playlist[index].title;
+  trackArtistSmall.textContent = playlist[index].artist;
+  audioPlayerSmall.load();
+  progressBarSmall.value = 0;
 }
 
-function togglePlayPause() {
-  if (!isPlaying) {
-    audioPlayer.play();
-    controlIcon.classList.remove("fa-play");
-    controlIcon.classList.add("fa-pause");
+/* Toggle play/pause */
+function togglePlayPauseSmall() {
+  if (!isPlayingSmall) {
+    audioPlayerSmall.play();
+    controlIconSmall.classList.replace("fa-play", "fa-pause");
   } else {
-    audioPlayer.pause();
-    controlIcon.classList.remove("fa-pause");
-    controlIcon.classList.add("fa-play");
+    audioPlayerSmall.pause();
+    controlIconSmall.classList.replace("fa-pause", "fa-play");
   }
-  isPlaying = !isPlaying;
+  isPlayingSmall = !isPlayingSmall;
 }
 
-// Update progress bar
-audioPlayer.addEventListener("timeupdate", () => {
-  if (audioPlayer.duration) {
-    progressBar.max = audioPlayer.duration;
-    progressBar.value = audioPlayer.currentTime;
+/* Update progress bar during playback */
+audioPlayerSmall.addEventListener("timeupdate", () => {
+  if (audioPlayerSmall.duration) {
+    progressBarSmall.max = audioPlayerSmall.duration;
+    progressBarSmall.value = audioPlayerSmall.currentTime;
   }
 });
 
-// Seek
-progressBar.addEventListener("input", () => {
-  audioPlayer.currentTime = progressBar.value;
+/* Seek to a specific time */
+progressBarSmall.addEventListener("input", () => {
+  audioPlayerSmall.currentTime = progressBarSmall.value;
 });
 
-// On track end → next track
-audioPlayer.addEventListener("ended", () => {
-  nextTrack();
-  audioPlayer.play();
-  isPlaying = true;
-  controlIcon.classList.add("fa-pause");
-  controlIcon.classList.remove("fa-play");
-});
-
-// Next / Prev
-function nextTrack() {
-  currentSongIndex = (currentSongIndex + 1) % playlist.length;
-  loadTrack(currentSongIndex);
-  // Each skip → random disco color
-  changeDiscoBallShader();
+/* Play the next track */
+function nextTrackSmall() {
+  currentSongIndexSmall = (currentSongIndexSmall + 1) % playlist.length;
+  loadTrackSmall(currentSongIndexSmall);
+  if (isPlayingSmall) audioPlayerSmall.play();
 }
 
-function prevTrack() {
-  currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-  loadTrack(currentSongIndex);
-  // Each skip → random disco color
-  changeDiscoBallShader();
+/* Play the previous track */
+function prevTrackSmall() {
+  currentSongIndexSmall = (currentSongIndexSmall - 1 + playlist.length) % playlist.length;
+  loadTrackSmall(currentSongIndexSmall);
+  if (isPlayingSmall) audioPlayerSmall.play();
 }
 
-// Button events
-playPauseBtn.addEventListener("click", togglePlayPause);
-nextBtn.addEventListener("click", () => {
-  nextTrack();
-  if (isPlaying) audioPlayer.play();
+/* Automatically play next track when current ends */
+audioPlayerSmall.addEventListener("ended", nextTrackSmall);
+
+/* Attach button event listeners */
+playPauseBtnSmall.addEventListener("click", togglePlayPauseSmall);
+nextBtnSmall.addEventListener("click", nextTrackSmall);
+prevBtnSmall.addEventListener("click", prevTrackSmall);
+
+/* Load the first track initially */
+loadTrackSmall(currentSongIndexSmall);
+
+/* =========================================
+   8) Hamburger Menu for Mobile Navigation (Updated)
+========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector("nav ul");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    const isActive = navLinks.classList.contains("active");
+    hamburger.setAttribute("aria-expanded", isActive);
+    if (isActive) {
+      hamburger.innerHTML = '<i class="fa-solid fa-times"></i>';
+    } else {
+      hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
+  });
+
+  // Close the mobile menu when a link is clicked
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (navLinks.classList.contains("active")) {
+        navLinks.classList.remove("active");
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }
+    });
+  });
 });
-prevBtn.addEventListener("click", () => {
-  prevTrack();
-  if (isPlaying) audioPlayer.play();
+
+/* =========================================
+   9) Active Link Highlighting
+========================================= */
+const sections = document.querySelectorAll("section, header");
+const navItems = document.querySelectorAll("nav ul li a");
+
+const observerOptions = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.6, // 60% of the section is visible
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(link => {
+        link.classList.remove("active-link");
+        if (link.getAttribute("href").substring(1) === entry.target.id) {
+          link.classList.add("active-link");
+        }
+      });
+    }
+  });
+}, observerOptions);
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+
+/* =========================================
+   10) Change Navbar Style on Scroll
+========================================= */
+window.addEventListener("scroll", () => {
+  const navbar = document.querySelector("nav");
+  if (window.scrollY > 50) { // Adjust scroll position as needed
+    document.body.classList.add("scrolled");
+  } else {
+    document.body.classList.remove("scrolled");
+  }
 });
