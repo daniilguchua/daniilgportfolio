@@ -10,30 +10,101 @@ AOS.init({
 });
 
 /* =========================================
-   2) Initialize Vanta.js Background with Optimized Performance
+   2) Initialize Vanta.js Background with Enhanced Shader Effects
 ========================================= */
 
 /* Initialize Vanta.js Fog once the DOM is loaded */
 document.addEventListener("DOMContentLoaded", () => {
-  VANTA.FOG({
+  const vantaEffect = VANTA.FOG({
     el: "#vanta-bg",
     mouseControls: true,
     touchControls: true,
     gyroControls: false,
     minHeight: 200.00,
     minWidth: 200.00,
-    highlightColor: 0xBB86FC, // Soft Purple Highlights
-    midtoneColor: 0x9b59b6,   // Amethyst
-    lowlightColor: 0xbb86fc,  // Soft Purple
-    baseColor: 0x1a1a2e,       // Darker Purple
-    blurFactor: 0.8,
-    speed: 1.5,
-    zoom: 0.1
+    highlightColor: 0x3f1791, // Soft Purple Highlights
+    midtoneColor: 0x0,   // Amethyst
+    lowlightColor: 0x0,  // Soft Purple
+    baseColor: 0x0,       // Darker Purple (Darkened)
+    blurFactor: 1.2,           // Increased blur for more depth
+    speed: 1,                // Increased speed for dynamic movement
+    zoom: 0.2,                 // Increased zoom for closer effect
+    THREE: THREE               // Ensuring Three.js is utilized
   });
 });
 
 /* =========================================
-   3) GSAP Smooth Scroll for Navbar Links
+   3) Particle.js Snow Effect Initialization
+========================================= */
+
+/* Initialize Particle.js Snow Effect */
+document.addEventListener("DOMContentLoaded", () => {
+  particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 50, // Reduced number of snowflakes for a subtler effect
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": ["#BB86FC", "#9933FF", "#AA66CC"] // Shades of purple
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+      },
+      "opacity": {
+        "value": 0.6, // Slightly increased opacity for better visibility
+        "random": true,
+        "anim": {
+          "enable": false,
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+        }
+      },
+      "line_linked": {
+        "enable": false,
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "bottom",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "attract": {
+          "enable": false,
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false,
+        },
+        "onclick": {
+          "enable": false,
+        },
+        "resize": true
+      }
+    },
+    "retina_detect": true
+  });
+});
+
+/* =========================================
+   4) GSAP Smooth Scroll for Navbar Links
 ========================================= */
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger, MotionPathPlugin);
 
@@ -64,12 +135,12 @@ document.querySelectorAll('a[data-link]').forEach(link => {
 });
 
 /* =========================================
-   4) Minimal Scramble Function
+   5) Minimal Scramble Function
 ========================================= */
 // scrambleText() gradually reveals real letters from random characters
 function scrambleText(text, container, durationMs) {
   return new Promise((resolve) => {
-    const intervalTime = 25; // how fast we swap chars
+    const intervalTime = 50; // how fast we swap chars
     const totalSteps = durationMs / intervalTime;
     let currentStep = 0;
 
@@ -111,7 +182,7 @@ function scrambleText(text, container, durationMs) {
 }
 
 /* =========================================
-   5) Title Cycle with Color Animation
+   6) Title Cycle with Color Animation
 ========================================= */
 const dynamicTitle = document.getElementById("dynamicTitle");
 const titles = ["Software Engineer", "Full-Stack Developer", "Cybersecurity Enthusiast"];
@@ -197,17 +268,19 @@ function getRandomAccentColor() {
 }
 
 /* =========================================
-   6) Hero Sequence Animation
+   7) Hero Sequence Animation
 ========================================= */
 async function initHeroAnimation() {
   const introHeading = document.querySelector(".intro-heading");
   const studentP = document.querySelector(".hero-text p");
   const exploreBtn = document.querySelector(".hero-text .btn");
+  const navbar = document.querySelector("nav");
 
-  // Hide dynamicTitle, paragraph, and button initially
+  // Hide dynamicTitle, paragraph, button, and navbar initially
   gsap.set(dynamicTitle, { opacity: 0 });
   gsap.set(studentP, { opacity: 0 });
   gsap.set(exploreBtn, { opacity: 0 });
+  gsap.set(navbar, { opacity: 0 });
 
   // Animate the intro heading
   await scrambleText("Hello! I'm Daniel, and I Am a", introHeading, 2400);
@@ -224,10 +297,11 @@ async function initHeroAnimation() {
         opacity: 1,
         delay: 0.5,
         onComplete: () => {
-          // Fade in the button
-          gsap.to(exploreBtn, {
+          // Fade in the button and navbar simultaneously
+          gsap.to([exploreBtn, navbar], {
             duration: 1,
             opacity: 1,
+            stagger: 0.2, // Slight delay between them
           });
         },
       });
@@ -239,7 +313,7 @@ async function initHeroAnimation() {
 document.addEventListener("DOMContentLoaded", initHeroAnimation);
 
 /* =========================================
-   7) Hamburger Menu for Mobile Navigation (Updated)
+   8) Hamburger Menu for Mobile Navigation (Updated)
 ========================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.querySelector(".hamburger");
@@ -269,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================================
-   8) Active Link Highlighting
+   9) Active Link Highlighting
 ========================================= */
 const sections = document.querySelectorAll("section, header");
 const navItems = document.querySelectorAll("nav ul li a");
@@ -298,13 +372,20 @@ sections.forEach(section => {
 });
 
 /* =========================================
-   9) Change Navbar Style on Scroll
+   10) Change Navbar Style on Scroll
 ========================================= */
+/* Hide/Show Navbar on Scroll */
+let lastScrollY = window.scrollY;
+const navbar = document.querySelector("nav");
+
 window.addEventListener("scroll", () => {
-  const navbar = document.querySelector("nav");
-  if (window.scrollY > 50) { // Adjust scroll position as needed
-    document.body.classList.add("scrolled");
-  } else {
-    document.body.classList.remove("scrolled");
-  }
+    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        // Scrolling down
+        navbar.classList.add("navbar-hidden");
+    } else {
+        // Scrolling up
+        navbar.classList.remove("navbar-hidden");
+    }
+    lastScrollY = window.scrollY;
 });
+
