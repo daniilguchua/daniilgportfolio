@@ -17,7 +17,6 @@
   <link 
     rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
-    integrity="sha512-SOME_INTEGRITY_HASH_HERE" 
     crossorigin="anonymous" 
     referrerpolicy="no-referrer" 
   />
@@ -25,128 +24,122 @@
   <!-- AOS (Animate On Scroll) CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 
+  <!-- Particles.js for Snow Effect -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
   
-  <!-- GSAP and Plugins -->
+  <!-- GSAP and Plugins for Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js" defer></script>
   
   <!-- Rellax.js for Parallax Effects -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js" integrity="sha512-PnO1V7bG+4yXfGknu+edr2DZVLOvBBmh/NwP3qM71/xClplRkZkzhReiTbxAbUR3KOUVj1grxK1TqgEwVAM4Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </head>
 <body>
 
-   <!-- PARTICLES.js Snow Effect -->
-   <div id="particles-js" class="particles-section" aria-hidden="true"></div>
-    
+  <!-- PARTICLES.js Snow Effect -->
+  <div id="particles-js" class="particles-section" aria-hidden="true"></div>
+   
   <!-- NAVBAR -->
   <nav>
     <ul>
-      <li><a href="#home" data-link>Home</a></li>
-      <li><a href="#about" data-link>About</a></li>
-      <li><a href="#skills" data-link>Skills</a></li>
-      <li><a href="#future-goals" data-link>Future Goals</a></li>
-      <li><a href="#experience" data-link>Experience</a></li> <!-- New Experience Link -->
-      <li><a href="#projects" data-link>Projects</a></li>
-      <li><a href="#contact" data-link>Contact</a></li>
+      <li><a href="#home" data-link class="neon-text">Home</a></li>
+      <li><a href="#about" data-link class="neon-text">About</a></li>
+      <li><a href="#skills" data-link class="neon-text">Skills</a></li>
+      <li><a href="#future-goals" data-link class="neon-text">Future Goals</a></li>
+      <li><a href="#experience" data-link class="neon-text">Experience</a></li>
+      <li><a href="#projects" data-link class="neon-text">Projects</a></li>
+      <li><a href="#contact" data-link class="neon-text">Contact</a></li>
     </ul>
-    <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+    <!-- Removed Hamburger Button -->
   </nav>
+  
   <!-- GLOBAL VANTA.js BACKGROUND -->
   <div id="vanta-bg" class="vanta-section" aria-hidden="true"></div>
   
   <!-- HERO SECTION -->
   <header class="hero" id="home">
     <div class="hero-text" data-aos="fade-up">
-      <h2 class="intro-heading">
+      <h2 class="intro-heading neon-text">
         Hello! I'm <span class="highlight">Daniel</span>, an Aspiring
       </h2>
-      <h2 id="dynamicTitle" class="title-animated"></h2>
-      <p>BS Computer Science Student at Northwestern University</p>
+      <h2 id="dynamicTitle" class="title-animated neon-text"></h2>
+      <p class="neon-text">BS Computer Science Student at Northwestern University</p>
       
-      <a href="#about" class="btn" data-link>Explore More</a>
+      <a href="#about" class="btn neon-text" data-link>Explore More</a>
     </div>
   </header>
 
   <hr class="divider"/>
 
- <!-- ABOUT SECTION -->
-<section id="about" class="about" data-aos="fade-up">
-  <h2 class="section-title">About Me</h2>
-  
-  <!-- Three.js Container -->
-  <div id="about-threejs-container" class="about-threejs-container" aria-hidden="true"></div>
-  
-  <div class="about-content">
-    <!-- About Me Subsection -->
-    <div class="about-subsection" data-aos="fade-right">
-      <div class="about-text">
-        <h3>About Me</h3>
-        <p>
-          Welcome to my portfolio! My name is Daniil (pronounced Daniel) and I am an aspiring developer
-          with a passion in innovation and design. I am currently a student at Northwestern University,
-          studying Computer Science in the McCormick School of Engineering. I love working in teams and 
-          contributing to projects that inspire and make the world a better place!
-        </p>
-      </div>
-      <div class="about-image">
-        <div class="img-placeholder">
-          <img src="images/profile.jpg" alt="Daniel's Profile Image" loading="lazy">
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about" data-aos="fade-up">
+    <h2 class="section-title neon-text" data-text="About Me">About Me</h2>
+    
+    <!-- Three.js Container for Advanced Background Effects -->
+    <div id="about-threejs-container" class="about-threejs-container" aria-hidden="true"></div>
+    
+    <div class="about-content">
+      <!-- About Me Subsection -->
+      <div class="about-subsection" data-aos="fade-right">
+        <div class="about-text">
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-info-circle"></i>Who Am I?</h3>
+          <p class="normal-text">
+            Welcome to my portfolio! I'm Daniil (pronounced Daniel), an aspiring software engineer with a passion for <strong>innovation </strong> and <strong>design</strong>. Currently, I'm pursuing a <strong>Bachelor's degree</strong> in <strong> Computer Science </strong> and MaDE <strong>(Manufacturing and Design Engineering)</strong> at <strong>Northwestern University's McCormick School of Engineering</strong>. My greatest strengths are <strong>collaborative teamwork</strong> and <strong>effective communication</strong>. Proficient in <strong>Python, JavaScript (JS), and React</strong>, I develop software solutions and contribute meaningfully to engineering teams.
+          </p>
+        </div>
+        <div class="about-image">
+          <div class="img-placeholder">
+            <img src="images/profile.jpg" alt="Daniel's Profile Image" loading="lazy">
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- My Story Subsection -->
-    <div class="about-subsection" data-aos="fade-left">
-      <div class="about-image">
-        <div class="img-placeholder">
-          <img src="images/story.jpg" alt="My Story Image" loading="lazy">
+      <!-- My Story Subsection -->
+      <div class="about-subsection" data-aos="fade-left">
+        <div class="about-image">
+          <div class="img-placeholder">
+            <img src="images/story.jpg" alt="My Story Image" loading="lazy">
+          </div>
+        </div>
+        <div class="about-text">
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-book-open"></i> My Story</h3>
+          <p class="normal-text">
+            <strong>Minecraft</strong> was more than just a game; it was a <strong>lifeline</strong> during my challenging childhood in Saint Petersburg, Russia. At the age of <strong>10</strong>, my friend Deema introduced me to this immersive world, igniting my <strong>passion for engineering and design</strong>. Through this, I discovered a sense of belonging and stability, which helped me navigate personal struggles and embrace my true self. This experience underscored the <strong>transformative power of technology</strong> and the <strong>importance of diverse perspectives in driving innovation.</strong></p>
         </div>
       </div>
-      <div class="about-text">
-        <h3>My Story</h3>
-        <p>
-          At the age of 10, my friend Deema installed Minecraft on my computer.  Unknowningly, this installation
-          altered my perspective on the world and enthralled me with software engineering and understanding how computers work.
-          Minecraft helped me through a tough childhood and I wish to be able to contribute to projects that can help others who are in
-          need of any help.
-        </p>
-      </div>
-    </div>
 
-    <!-- My Passions Subsection -->
-    <div class="about-subsection" data-aos="fade-right">
-      <div class="about-text">
-        <h3>My Passions</h3>
-        <p>
-          Beyond coding, I am passionate about cybersecurity, ensuring that applications are not only functional 
-          but also secure against threats. Artificial intelligence intrigues me, and I enjoy integrating 
-          intelligent features that enhance user experiences. Additionally, I have a love for design, believing 
-          that aesthetics and functionality should go hand in hand to create impactful digital solutions.
-        </p>
-      </div>
-      <div class="about-image">
-        <div class="img-placeholder">
-          <img src="images/passions.jpg" alt="My Passions Image" loading="lazy">
+      <!-- My Passions Subsection -->
+      <div class="about-subsection" data-aos="fade-right">
+        <div class="about-text">
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-heart"></i> My Passions</h3>
+          <p class="normal-text">
+            In the future, my passion is to be able to collaborate with a team of <strong>like-minded individuals</strong> to <strong>engineer solutions</strong> into the world that might have a similar impact on another person's life as Minecraft had on mine. It would be an honor and a dream to have the poetically full-circle opportunity to <strong>contribute to something bigger than myself</strong> and contribute to <strong>innovative solutions/designs</strong> that can change the world.
+
+
+ 
+          </p>
+        </div>
+        <div class="about-image">
+          <div class="img-placeholder">
+            <img src="images/passions.jpg" alt="My Passions Image" loading="lazy">
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  
   <hr class="divider"/>
 
   <!-- SKILLS SECTION -->
   <section id="skills" class="skills" data-aos="fade-up">
-    <h2 class="section-title">My Skills</h2>
+    <h2 class="section-title neon-text" data-text="My Skills">My Skills</h2>
     <div class="skillset-grid">
       <!-- Skillset Card 1 -->
       <div class="skillset-card" data-aos="fade-left" data-aos-delay="100">
-        <h3><i class="fa-solid fa-code"></i> Frontend Development</h3>
-        <ul>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-code"></i> Frontend Development</h3>
+        <ul class="normal-text">
           <li>HTML5 & CSS3</li>
           <li>JavaScript & ES6+</li>
           <li>React.js</li>
@@ -155,8 +148,8 @@
       </div>
       <!-- Skillset Card 2 -->
       <div class="skillset-card" data-aos="fade-right" data-aos-delay="200">
-        <h3><i class="fa-solid fa-server"></i> Backend Development</h3>
-        <ul>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-server"></i> Backend Development</h3>
+        <ul class="normal-text">
           <li>Node.js & Express.js</li>
           <li>Python & Django</li>
           <li>Databases: MySQL, MongoDB</li>
@@ -165,8 +158,8 @@
       </div>
       <!-- Skillset Card 3 -->
       <div class="skillset-card" data-aos="fade-up" data-aos-delay="300">
-        <h3><i class="fa-solid fa-shield-halved"></i> Cybersecurity</h3>
-        <ul>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-shield-halved"></i> Cybersecurity</h3>
+        <ul class="normal-text">
           <li>Network Security</li>
           <li>Penetration Testing</li>
           <li>Ethical Hacking</li>
@@ -181,19 +174,19 @@
 
   <!-- FUTURE GOALS SECTION -->
   <section id="future-goals" class="future-goals" data-aos="fade-up">
-    <h2 class="section-title">Future Goals</h2>
+    <h2 class="section-title neon-text" data-text="Future Goals">Future Goals</h2>
     <ul class="future-goals-list">
       <li class="goal-item" data-aos="fade-left" data-aos-delay="100">
-        <h3><i class="fa-solid fa-chart-line"></i> Advance in Cybersecurity</h3>
-        <p>Enhance my skills in ethical hacking and network security to protect digital infrastructures.</p>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-chart-line"></i> Advance in Cybersecurity</h3>
+        <p class="normal-text">Enhance my skills in ethical hacking and network security to protect digital infrastructures.</p>
       </li>
       <li class="goal-item" data-aos="fade-right" data-aos-delay="200">
-        <h3><i class="fa-solid fa-cloud"></i> Master Cloud Computing</h3>
-        <p>Gain expertise in cloud platforms like AWS and Azure to build scalable and efficient applications.</p>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-cloud"></i> Master Cloud Computing</h3>
+        <p class="normal-text">Gain expertise in cloud platforms like AWS and Azure to build scalable and efficient applications.</p>
       </li>
       <li class="goal-item" data-aos="fade-left" data-aos-delay="300">
-        <h3><i class="fa-solid fa-robot"></i> Explore Artificial Intelligence</h3>
-        <p>Develop AI-driven solutions to solve complex real-world problems and innovate in technology.</p>
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-robot"></i> Explore Artificial Intelligence</h3>
+        <p class="normal-text">Develop AI-driven solutions to solve complex real-world problems and innovate in technology.</p>
       </li>
       <!-- Add more goal-items as needed -->
     </ul>
@@ -203,24 +196,28 @@
 
   <!-- EXPERIENCE SECTION -->
   <section id="experience" class="experience" data-aos="fade-up">
-    <h2 class="section-title">Experience</h2>
+    <h2 class="section-title neon-text" data-text="Experience">Experience</h2>
     <div class="experience-timeline">
       <!-- Experience Item 1 -->
       <div class="experience-item" data-aos="fade-right" data-aos-delay="100">
         <div class="experience-content">
-          <h3>Software Engineer Intern</h3>
-          <h4>Tech Company Inc.</h4>
-          <span>June 2023 - August 2023</span>
-          <p>Developed scalable web applications using React and Node.js, collaborated with cross-functional teams, and implemented features that improved user engagement by 20%.</p>
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-briefcase"></i> Software Engineer Intern</h3>
+          <h4 class="normal-text">Tech Company Inc.</h4>
+          <span class="normal-text">June 2023 - August 2023</span>
+          <p class="normal-text">
+            Developed scalable web applications using React and Node.js, collaborated with cross-functional teams, and implemented features that improved user engagement by 20%.
+          </p>
         </div>
       </div>
       <!-- Experience Item 2 -->
       <div class="experience-item" data-aos="fade-left" data-aos-delay="200">
         <div class="experience-content">
-          <h3>Research Assistant</h3>
-          <h4>Northwestern University</h4>
-          <span>September 2022 - May 2023</span>
-          <p>Assisted in cybersecurity research, developed tools for penetration testing, and co-authored a paper on network security enhancements.</p>
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-flask"></i> Research Assistant</h3>
+          <h4 class="normal-text">Northwestern University</h4>
+          <span class="normal-text">September 2022 - May 2023</span>
+          <p class="normal-text">
+            Assisted in cybersecurity research, developed tools for penetration testing, and co-authored a paper on network security enhancements.
+          </p>
         </div>
       </div>
       <!-- Add more experience items as needed -->
@@ -231,7 +228,7 @@
 
   <!-- PROJECTS SECTION -->
   <section id="projects" class="projects" data-aos="fade-up">
-    <h2 class="section-title">My Projects</h2>
+    <h2 class="section-title neon-text" data-text="My Projects">My Projects</h2>
     <div class="project-grid">
       <!-- Project Card 1 -->
       <div class="project-card" data-aos="fade-up" data-aos-delay="100">
@@ -239,9 +236,9 @@
           <img src="images/projects/project1.jpg" alt="Project One Image" loading="lazy">
         </div>
         <div class="project-content">
-          <h3>Project One</h3>
-          <p>A brief description of Project One, highlighting key features and technologies used.</p>
-          <a href="#" class="btn">View Project</a>
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-project-diagram"></i> Project One</h3>
+          <p class="normal-text">A brief description of Project One, highlighting key features and technologies used.</p>
+          <!-- Removed "View Project" Button -->
         </div>
       </div>
       
@@ -251,9 +248,9 @@
           <img src="images/projects/project2.jpg" alt="Project Two Image" loading="lazy">
         </div>
         <div class="project-content">
-          <h3>Project Two</h3>
-          <p>A brief description of Project Two, highlighting key features and technologies used.</p>
-          <a href="#" class="btn">View Project</a>
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-project-diagram"></i> Project Two</h3>
+          <p class="normal-text">A brief description of Project Two, highlighting key features and technologies used.</p>
+          <!-- Removed "View Project" Button -->
         </div>
       </div>
       
@@ -263,9 +260,9 @@
           <img src="images/projects/project3.jpg" alt="Project Three Image" loading="lazy">
         </div>
         <div class="project-content">
-          <h3>Project Three</h3>
-          <p>A brief description of Project Three, highlighting key features and technologies used.</p>
-          <a href="#" class="btn">View Project</a>
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-project-diagram"></i> Project Three</h3>
+          <p class="normal-text">A brief description of Project Three, highlighting key features and technologies used.</p>
+          <!-- Removed "View Project" Button -->
         </div>
       </div>
       
@@ -277,31 +274,31 @@
 
   <!-- CONTACT SECTION -->
   <section id="contact" class="contact" data-aos="fade-up">
-    <h2 class="section-title">Get in Touch</h2>
-    <p>Feel free to reach out for collaborations, questions, or just a friendly hello!</p>
+    <h2 class="section-title neon-text" data-text="Get in Touch">Get in Touch</h2>
+    <p class="normal-text">Feel free to reach out for collaborations, questions, or just a friendly hello!</p>
     
     <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST" aria-label="Contact Form">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" name="name" placeholder="Your Name" required aria-required="true" />
+      <label for="name" class="normal-text"><i class="fa-solid fa-user"></i> Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Your Name" required aria-required="true" class="normal-text" />
       
-      <label for="email">Your Email</label>
-      <input type="email" id="email" name="_replyto" placeholder="Your Email" required aria-required="true" />
+      <label for="email" class="normal-text"><i class="fa-solid fa-envelope"></i> Your Email</label>
+      <input type="email" id="email" name="_replyto" placeholder="Your Email" required aria-required="true" class="normal-text" />
       
-      <label for="message">Your Message</label>
-      <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-required="true"></textarea>
+      <label for="message" class="normal-text"><i class="fa-solid fa-message"></i> Your Message</label>
+      <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-required="true" class="normal-text"></textarea>
       
-      <button type="submit" class="btn submit-btn">Submit</button>
+      <button type="submit" class="btn neon-text submit-btn"><i class="fa-solid fa-paper-plane"></i> Submit</button>
     </form>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer" data-aos="fade-up">
-    <p>Daniel © 2024</p>
+    <p class="normal-text">Daniel © 2024</p>
     <div class="footer-links">
-      <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+      <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="normal-text">
         <i class="fa-brands fa-linkedin"></i> LinkedIn
       </a>
-      <a href="mailto:your.email@example.com" aria-label="Send Email">
+      <a href="mailto:your.email@example.com" aria-label="Send Email" class="normal-text">
         <i class="fa-solid fa-envelope"></i> Email
       </a>
     </div>
@@ -317,7 +314,20 @@
   <!-- AOS (Animate On Scroll) JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
+  <!-- jQuery (required for Textillate.js) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Lettering.js for Text Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+
+  <!-- Animate.css for Animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  
+  <!-- Textillate.js for Text Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/textillate/0.4.0/jquery.textillate.min.js"></script>
+  
   <!-- MAIN JS (All your logic) -->
   <script src="main.js" defer></script>
 </body>
 </html>
+
