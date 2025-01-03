@@ -4,13 +4,13 @@
 
 /* Modern and sleek dark color palette */
 :root {
-    --primary-color: #1a1a2e;           /* Darker Purple */
+    --primary-color: #0f0f1a;           /* Darker Purple (Darkened) */
     --secondary-color: #E0E0E0;         /* Light Gray */
     --accent-color1: #BB86FC;           /* Soft Purple */
     --accent-color2: #03DAC6;           /* Teal */
     --accent-color3: #CF6679;           /* Coral */
     --hover-accent: #3700B3;            /* Darker Purple */
-    --background-overlay: rgba(26, 26, 46, 0.8); /* Semi-transparent Dark Purple Overlay */
+    --background-overlay: rgba(15, 15, 26, 0.8); /* Semi-transparent Dark Purple Overlay (Darkened) */
 }
 
 /* Import Open Sans Font */
@@ -33,13 +33,17 @@ body {
     overflow-y: scroll; /* Ensure vertical scroll is always visible */
     min-height: 100vh;
     background-color: var(--primary-color); /* Fallback Background */
-    cursor: default; /* Restore default cursor */
+    /* Removed cursor: none; to show default cursor */
+    padding-top: 80px; /* Offset for fixed navbar */
+    text-shadow: 
+        0 0 5px var(--accent-color1), 
+        0 0 10px var(--accent-color2); /* Enhanced Global Text Shadow */
 }
 
 /* Full-Height Sections */
 section {
     position: relative; /* Establish a containing block for absolute positioning */
-    min-height: 100vh;
+    min-height: calc(100vh - 80px); /* Full viewport height minus navbar height */
     display: flex;
     flex-direction: column; /* Stack content vertically */
     align-items: center; /* Center horizontally */
@@ -48,6 +52,25 @@ section {
     box-sizing: border-box;
     background-color: transparent; /* Remove any global background */
     overflow: hidden; /* Prevent child overflow */
+    transition: min-height 0.3s ease, padding 0.3s ease;
+}
+
+/* Adjust min-height for Mobile to Fit Content */
+@media (max-width: 768px) {
+    section {
+        min-height: auto; /* Allow content to dictate height on smaller screens */
+        padding: 1.5rem;
+    }
+}
+
+/* Specific Adjustments for Certain Sections (Optional) */
+.about,
+.skills,
+.projects,
+.future-goals,
+.contact,
+.experience {
+    min-height: calc(100vh - 80px); /* Ensure consistency */
 }
 
 /* Vanta Section Styling */
@@ -57,8 +80,19 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2; /* Ensure Vanta effect stays behind all content */
+    z-index: -3; /* Positioned below all other background layers */
     background-color: var(--primary-color); /* Fallback background */
+}
+
+.vanta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 20, 0.9); /* Increased opacity for darker overlay */
+    z-index: -1;
 }
 
 /* Responsive Media Queries */
@@ -80,21 +114,37 @@ section {
 }
 
 /* =========================================
-   3) Navbar Styles (Updated for Full-Width and Centering)
+   3) Navbar Styles (Updated for Fade-In and Standardization)
 ========================================= */
 
-/* Make the navbar fixed at the top with full width and transparent background */
+/* Navbar Fade-In Effects */
+
+/* Initial State: Hidden */
 nav {
+    opacity: 0;
+    transition: opacity 1s ease;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 0; /* Adjust padding as needed */
-    background: transparent; /* Fully transparent background */
-    z-index: 1000; /* Ensure navbar is above other elements */
+    height: 80px; /* Fixed height */
+    padding: 20px 0; /* Original padding */
+    background: transparent;
+    z-index: 1000;
     display: flex;
-    justify-content: center; /* Center the nav content horizontally */
-    align-items: center; /* Center the nav content vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Visible State: Fade In */
+nav.visible {
+    opacity: 1;
+}
+
+/* Navbar Hidden State */
+nav.navbar-hidden {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
 }
 
 /* Apply mask-image and existing gradient to the navigation links container */
@@ -109,6 +159,7 @@ nav ul {
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
     border-radius: 0; /* Remove border-radius for full-width */
+    transition: background 0.3s ease;
 }
 
 /* Navigation links */
@@ -125,14 +176,32 @@ nav ul li a {
     text-decoration: none;
     display: block;
     transition: background 0.3s, color 0.3s;
-    border-radius: 4px; /* Optional: Slight rounding for hover effect */
+    border-radius: 4px; /* Slight rounding for hover effect */
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color1); /* Enhanced Glow */
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+    box-shadow: 
+        0 0 15px rgba(0, 0, 0, 0.1), 
+        inset 0 0 2px rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.1);
     color: rgba(0, 35, 122, 0.7);
+}
+
+/* Active Link Highlighting */
+nav ul li a.active-link {
+    color: var(--accent-color1); /* Soft Purple */
+    border-bottom: 2px solid var(--accent-color1); /* Underline */
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+/* Optional: Enhance Active Link in Smaller Navbar */
+nav.navbar-small ul li a.active-link {
+    color: var(--accent-color1);
+    border-bottom: 2px solid var(--accent-color1);
 }
 
 /* Hamburger Menu Styles */
@@ -147,6 +216,7 @@ nav ul li a:focus {
     color: rgba(0, 35, 122, 0.5);
     background: none;
     border: none;
+    transition: font-size 0.3s ease;
 }
 
 /* Responsive Styles */
@@ -156,7 +226,7 @@ nav ul li a:focus {
         align-items: center;
         background: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background for mobile */
         position: absolute;
-        top: 60px; /* Height of the navbar */
+        top: 80px; /* Height of the navbar */
         left: 0;
         right: 0;
         display: none; /* Hidden by default */
@@ -181,7 +251,41 @@ nav ul li a:focus {
 }
 
 /* =========================================
-   4) Future Goals Section Styles (List Format)
+   4) Divider Styles (Reinserting Dividers Between Every Section)
+========================================= */
+
+/* Divider Styling */
+.divider {
+    border: 0;
+    height: 4px; /* Adjust thickness as desired */
+    background: linear-gradient(90deg, #000000, #333333, #000000); /* Shiny black gradient */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Adds depth with shadow */
+    width: 100%;
+    max-width: 1200px; /* Align with section widths */
+    margin: 2rem auto; /* Vertical spacing and center alignment */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shader Effect Using Pseudo-Elements */
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.divider::after {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   5) Future Goals Section Styles (Enhanced)
 ========================================= */
 
 /* Future Goals List */
@@ -196,12 +300,15 @@ nav ul li a:focus {
     align-items: center; /* Center items horizontally */
 }
 
+/* Goal Item Styles with Glow */
 .goal-item {
     background-color: var(--background-overlay);
     border: 2px solid var(--accent-color1);
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Amplified Glow */
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     backdrop-filter: blur(5px); /* Subtle frosted glass effect */
     width: 100%;
@@ -211,9 +318,10 @@ nav ul li a:focus {
 }
 
 .goal-item:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    background-color: var(--background-overlay);
+    transform: translateY(-5px) scale(1.01); /* Slight lift and scale */
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Enhanced Outer Glow */
 }
 
 .goal-item h3 {
@@ -226,23 +334,36 @@ nav ul li a:focus {
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.goal-item h3:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .goal-item p {
     font-size: 1.15rem;
     line-height: 1.7;
     color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .goal-item h3 {
-        font-size: 1.5rem;
-    }
+.goal-item p:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 /* =========================================
-   5) Hero Section Styles
+   6) Hero Section Styles (Updated with Subtle Glow)
 ========================================= */
 
 .hero {
@@ -252,7 +373,7 @@ nav ul li a:focus {
     align-items: center;    /* Center horizontally */
     justify-content: center;/* Center vertically */
     width: 100%;
-    min-height: 100vh;      /* Make hero fill the viewport */
+    min-height: calc(100vh - 80px); /* Make hero fill the viewport minus navbar */
     text-align: center;
     color: var(--secondary-color);
     z-index: 1;
@@ -273,6 +394,9 @@ nav ul li a:focus {
     margin-bottom: 1.5rem;
     line-height: 1.4;
     color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color1); /* Enhanced Glow */
 }
 
 .highlight {
@@ -282,14 +406,35 @@ nav ul li a:focus {
 .title-animated {
     font-size: 2.8rem;
     margin-bottom: 2rem;
-    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color1); /* Enhanced Glow */
     color: var(--accent-color1);
+    transition: text-shadow 0.3s ease;
+}
+
+.title-animated:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color1), 
+        0 0 50px var(--accent-color1); /* Further Enhanced Glow */
 }
 
 .hero-text p {
     font-size: 1.3rem;
     margin-bottom: 2rem;
     color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color1); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.hero-text p:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color1); /* Further Enhanced Glow */
 }
 
 .btn {
@@ -300,43 +445,74 @@ nav ul li a:focus {
     border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s, transform 0.3s;
+    transition: background 0.3s, transform 0.3s, text-shadow 0.3s ease;
     font-size: 1rem;
     text-decoration: none;
     margin-top: 1rem; /* Add some spacing from the paragraph */
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
 }
 
 .btn:hover,
 .btn:focus {
     background-color: var(--hover-accent);
     transform: scale(1.05);
+    text-shadow: 
+        0 0 20px var(--hover-accent), 
+        0 0 40px var(--hover-accent); /* Further Enhanced Glow */
 }
 
 /* =========================================
-   6) Divider Styles
+   7) About Section Styles (Enhanced with Glow)
 ========================================= */
 
-.divider {
-    border: 0;
-    height: 12px; /* Thickness of the divider */
-    background: linear-gradient(to right, var(--accent-color2), var(--accent-color3)); /* Vibrant gradient */
-    width: 100%;        /* Full width of the section */
-    border-radius: 6px; /* Rounded edges */
-    margin: 0; /* Remove vertical spacing */
+.about {
+    position: relative;
+    padding: 4rem 1rem;
+    overflow: hidden;
+    background-color: transparent; /* Set to transparent to match other sections */
 }
 
-/* =========================================
-   7) About Section Styles
-========================================= */
+.vanta-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.threejs-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 
 .section-title {
     align-self: center; /* Center the title horizontally */
-    margin-bottom: 1.5rem;
-    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
     color: var(--secondary-color);
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2), 
+        0 0 30px var(--accent-color1); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+    text-align: center;
+}
+
+.section-title:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2), 
+        0 0 40px var(--accent-color1); /* Further Enhanced Glow */
 }
 
 .about-content {
@@ -344,18 +520,82 @@ nav ul li a:focus {
     flex-direction: column; /* Stack content vertically */
     align-items: center;    /* Center horizontally */
     justify-content: center; /* Center vertically */
-    gap: 2rem;
+    gap: 3rem;
     max-width: 1200px; /* Limits the maximum width */
     width: 100%;
+    margin: 0 auto;
     padding: 0 1rem;
+}
+
+.about-subsection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1000px;
+    background: rgba(0, 0, 0, 0.6); /* Slightly darker for better contrast */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Amplified Glow */
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-subsection:hover {
+    transform: translateY(-10px);
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 50px var(--accent-color2); /* Further Amplified Glow */
+}
+
+.about-subsection h3 {
+    font-size: 2rem;
+    color: var(--accent-color1);
+    margin-bottom: 1rem;
+    text-align: center;
+    position: relative;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.about-subsection h3::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background: var(--accent-color2);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.about-subsection h3:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .about-text {
     font-size: 1.15rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--secondary-color);
     max-width: 800px;
-    text-align: center;
+    text-align: left;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.about-text:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .about-image {
@@ -369,20 +609,55 @@ nav ul li a:focus {
     height: 250px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px dashed var(--accent-color1);
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--accent-color1);
     font-size: 1rem;
     overflow: hidden;
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Amplified Glow */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.img-placeholder:hover {
+    box-shadow: 
+        0 0 40px var(--accent-color1), 
+        0 0 80px var(--accent-color2); /* Further Amplified Glow */
+    transform: scale(1.05);
 }
 
 .img-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .about-subsection {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .about-subsection:nth-child(odd) .about-text {
+        order: 1;
+    }
+
+    .about-subsection:nth-child(odd) .about-image {
+        order: 2;
+    }
+
+    .about-subsection:nth-child(even) .about-text {
+        order: 2;
+    }
+
+    .about-subsection:nth-child(even) .about-image {
+        order: 1;
+    }
 }
 
 /* =========================================
@@ -411,7 +686,9 @@ nav ul li a:focus {
     border: 2px solid var(--accent-color1);
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Amplified Glow */
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     backdrop-filter: blur(5px); /* Subtle frosted glass effect */
     position: relative;
@@ -435,8 +712,10 @@ nav ul li a:focus {
 }
 
 .skillset-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.01); /* Slight lift and scale */
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 50px var(--accent-color2); /* Enhanced Glow on Hover */
     background-color: var(--background-overlay);
 }
 
@@ -450,6 +729,16 @@ nav ul li a:focus {
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.skillset-card h3:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .skillset-card ul {
@@ -458,6 +747,16 @@ nav ul li a:focus {
     text-align: left;
     line-height: 1.8;
     color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.skillset-card ul:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .skillset-card ul li {
@@ -507,7 +806,9 @@ nav ul li a:focus {
     border: 2px solid var(--accent-color1);
     border-radius: 12px;
     overflow: hidden; /* Ensures child elements don't overflow */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Amplified Glow */
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
     display: flex;
@@ -516,10 +817,28 @@ nav ul li a:focus {
     backdrop-filter: blur(5px); /* Subtle frosted glass effect */
 }
 
+.project-card:hover {
+    transform: translateY(-5px) scale(1.01); /* Slight lift and scale */
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 50px var(--accent-color2); /* Enhanced Glow on Hover */
+    background-color: var(--background-overlay);
+}
+
 .project-image {
     width: 100%;
     height: 200px;
     overflow: hidden;
+    box-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: box-shadow 0.3s ease;
+}
+
+.project-image:hover {
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .project-image img {
@@ -543,12 +862,32 @@ nav ul li a:focus {
     background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.project-content h3:hover {
+    text-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 40px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .project-content p {
     flex-grow: 1;
     color: var(--secondary-color);
     margin-bottom: 1.5rem;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.project-content p:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 .project-content .btn {
@@ -560,18 +899,18 @@ nav ul li a:focus {
     border-radius: 4px;
     text-decoration: none;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, text-shadow 0.3s ease;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
 }
 
 .project-content .btn:hover,
 .project-content .btn:focus {
     background-color: var(--hover-accent);
-}
-
-.project-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    background-color: var(--background-overlay);
+    text-shadow: 
+        0 0 30px var(--hover-accent), 
+        0 0 40px var(--hover-accent); /* Further Enhanced Glow */
 }
 
 .project-card:hover .project-image img {
@@ -605,6 +944,16 @@ nav ul li a:focus {
     margin: 1rem 0;
     font-size: 1rem;
     color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.contact p:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
 }
 
 /* Contact Form Styles */
@@ -630,6 +979,10 @@ nav ul li a:focus {
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--secondary-color);
     font-size: 1rem;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contact-form input::placeholder,
@@ -641,25 +994,33 @@ nav ul li a:focus {
 .contact-form textarea:focus {
     outline: none;
     border-color: var(--accent-color2);
-    box-shadow: 0 0 5px var(--accent-color2);
+    box-shadow: 
+        0 0 10px var(--accent-color2), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow on Focus */
 }
 
 .contact-form button {
-    align-self: flex-start;
+    align-self: center;
     padding: 0.8rem 1.5rem;
     background-color: var(--accent-color1);
     color: var(--primary-color);
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+    transition: background 0.3s, transform 0.3s, text-shadow 0.3s ease;
     font-weight: bold;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
 }
 
 .contact-form button:hover,
 .contact-form button:focus {
     background-color: var(--hover-accent);
     transform: scale(1.05);
+    text-shadow: 
+        0 0 30px var(--hover-accent), 
+        0 0 40px var(--hover-accent); /* Further Enhanced Glow */
 }
 
 /* =========================================
@@ -688,15 +1049,21 @@ nav ul li a:focus {
     color: var(--secondary-color);
     text-decoration: none;
     font-size: 1rem;
-    transition: color 0.3s;
+    transition: color 0.3s, text-shadow 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
 }
 
 .footer .footer-links a:hover,
 .footer .footer-links a:focus {
     color: var(--hover-accent);
+    text-shadow: 
+        0 0 15px var(--hover-accent), 
+        0 0 30px var(--hover-accent); /* Further Enhanced Glow */
 }
 
 .footer .footer-links i {
@@ -718,8 +1085,6 @@ a:focus, button:focus, input:focus, textarea:focus {
 ========================================= */
 
 @media (max-width: 600px) {
-    /* Removed music player styles, no changes needed here */
-
     .btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
@@ -730,3 +1095,262 @@ a:focus, button:focus, input:focus, textarea:focus {
         gap: 0.5rem;
     }
 }
+
+/* =========================================
+   14) Cursor Trail Canvas Styles
+========================================= */
+
+/* Cursor Trail Canvas Styling */
+#cursor-trail-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* =========================================
+   15) EXPERIENCE SECTION STYLES
+========================================= */
+
+.experience-timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.experience-timeline::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: var(--accent-color1);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+
+.experience-item {
+    padding: 1rem 2rem;
+    position: relative;
+    background-color: var(--background-overlay);
+    border: 2px solid var(--accent-color1);
+    border-radius: 12px;
+    width: 50%;
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Amplified Glow */
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 50px var(--accent-color2); /* Enhanced Glow on Hover */
+}
+
+.experience-item:nth-child(odd) {
+    left: 0;
+}
+
+.experience-item:nth-child(even) {
+    left: 50%;
+}
+
+.experience-item::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    background-color: var(--accent-color1);
+    border: 4px solid var(--primary-color);
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.experience-item:nth-child(even)::before {
+    left: -10px;
+}
+
+.experience-content h3 {
+    font-size: 1.8rem; /* Increased font size */
+    color: var(--accent-color1);
+    margin-bottom: 0.5rem;
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.experience-content h4 {
+    font-size: 1.3rem; /* Increased font size */
+    color: var(--secondary-color);
+    margin-bottom: 0.3rem;
+    text-shadow: 
+        0 0 5px var(--accent-color1), 
+        0 0 10px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.experience-content span {
+    font-size: 1rem; /* Increased font size */
+    color: var(--accent-color2);
+    margin-bottom: 0.8rem;
+    display: block;
+    text-shadow: 
+        0 0 5px var(--accent-color1), 
+        0 0 10px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.experience-content p {
+    font-size: 1.1rem; /* Increased font size */
+    color: var(--secondary-color);
+    text-shadow: 
+        0 0 10px var(--accent-color1), 
+        0 0 20px var(--accent-color2); /* Enhanced Glow */
+    transition: text-shadow 0.3s ease;
+}
+
+.experience-content p:hover {
+    text-shadow: 
+        0 0 12px var(--accent-color1), 
+        0 0 24px var(--accent-color2); /* Further Enhanced Glow */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .experience-timeline::after {
+        left: 31px;
+    }
+
+    .experience-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        margin-bottom: 2rem;
+    }
+
+    .experience-item:nth-child(even) {
+        left: 0;
+    }
+
+    .experience-item::before {
+        left: 15px;
+    }
+}
+
+.experience-content h3:hover,
+.experience-content h4:hover,
+.experience-content span:hover {
+    /* Optional: Add any additional hover effects if desired */
+}
+
+/* =========================================
+   16) Additional Accessibility Styles
+========================================= */
+
+/* Accessibility: Reduce motion and remove heavy glows for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .section-title,
+    .about-subsection,
+    .about-text,
+    .img-placeholder,
+    .skillset-card,
+    .project-card,
+    .experience-item,
+    .goal-item,
+    .btn,
+    .contact-form button,
+    nav ul li a,
+    .footer .footer-links a {
+        text-shadow: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* =========================================
+   17) Additional Styles for Consistency
+========================================= */
+
+/* General Card Styles (Used in Skills, Projects, Experience) */
+.card, 
+.skillset-card, 
+.project-card, 
+.experience-item, 
+.about-subsection, 
+.goal-item {
+    background-color: var(--background-overlay);
+    border: 2px solid var(--accent-color1);
+    border-radius: 12px;
+    box-shadow: 
+        0 0 20px var(--accent-color1), 
+        0 0 30px var(--accent-color2); /* Consistent Enhanced Glow */
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effects for Cards */
+.card:hover, 
+.skillset-card:hover, 
+.project-card:hover, 
+.experience-item:hover, 
+.about-subsection:hover, 
+.goal-item:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 
+        0 0 30px var(--accent-color1), 
+        0 0 50px var(--accent-color2); /* Consistent Enhanced Glow on Hover */
+}
+
+/* =========================================
+   18) Additional Responsive Enhancements
+========================================= */
+
+/* Adjust font sizes and paddings for smaller devices */
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .about-subsection h3,
+    .skillset-card h3,
+    .project-content h3,
+    .goal-item h3,
+    .experience-content h3 {
+        font-size: 1.6rem;
+    }
+
+    .intro-heading,
+    .title-animated {
+        font-size: 2.2rem;
+    }
+
+    .hero-text p,
+    .contact p,
+    .skillset-card ul,
+    .experience-content p {
+        font-size: 1rem;
+    }
+}
+
+.particles-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Positioned above vanta-bg but below all other content */
+    pointer-events: none; /* Allows interactions through the particles */
+}
+
+
