@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ==============================
+               HEAD
+  =============================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daniil's Portfolio</title>
+
+  <!-- SEO Enhancements -->
+  <meta name="description"
+    content="Daniil's Portfolio - Software Engineer, Full-Stack Developer, Cybersecurity Enthusiast">
+  <meta name="keywords"
+    content="Daniil, Portfolio, Software Engineer, Full-Stack Developer, Cybersecurity, Web Development">
+  <meta name="author" content="Daniil">
+
+  <!-- ==============================
+       EXTERNAL CSS & ICONS
+  =============================== -->
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css" />
+
+  <!-- ==============================
+         JS LIBRARIES 
+  =============================== -->
+  <!-- Vanta & Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js" defer></script>
+
+  <!-- AOS (Animate On Scroll) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+
+  <!-- particles.js (for snow effect) -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+
+  <!-- GSAP & Plugins -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js" defer></script>
+
+  <!-- Swiper.js (Carousel in About) -->
+  <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js" defer></script>
+
+  <!-- VanillaTilt.js  -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js" defer></script>
+
+  <!-- ==============================
+        MAIN JS 
+  =============================== -->
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ==============================
+       SNOW EFFECT 
+  =============================== -->
+  <div id="particles-js" class="particles-section" aria-hidden="true"></div>
+
+  <!-- ==============================
+       NAVBAR
+  =============================== -->
+  <nav>
+    <!-- Hamburger Menu for Mobile -->
+    <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <ul>
+      <li><a href="#home" data-link class="neon-text">Home</a></li>
+      <li><a href="#about" data-link class="neon-text">About</a></li>
+      <li><a href="#skills" data-link class="neon-text">Skills</a></li>
+      <li><a href="#experience" data-link class="neon-text">Experience</a></li>
+      <li><a href="#projects" data-link class="neon-text">Projects</a></li>
+      <li><a href="#contact" data-link class="neon-text">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==============================
+       GLOBAL VANTA BACKGROUND
+  =============================== -->
+  <div id="vanta-bg" class="vanta-section" aria-hidden="true"></div>
+
+  <!-- ==============================
+       HERO SECTION
+  =============================== -->
+  <header class="hero" id="home">
+    <div class="hero-text" data-aos="fade-up">
+
+      <!-- New container for headings -->
+      <div class="hero-heading-wrapper">
+        <!-- Scrambled heading -->
+        <h2 class="intro-heading neon-text">
+          Hello! I'm <span class="highlight">Daniel</span>, an Aspiring
+        </h2>
+        <!-- rotating title -->
+        <h2 id="dynamicTitle" class="title-animated neon-text"></h2>
+      </div>
+
+      <p class="neon-text">
+        BS Computer Science & Manufacturing and Design Engineering at Northwestern University
+      </p>
+
+      <a href="#about" data-link class="shiny-cta">
+        <span>Explore More</span>
+      </a>
+    </div>
+  </header>
+
+  <hr class="divider" />
+
+  <!-- ==============================
+     ABOUT SECTION 
+=============================== -->
+<section id="about" class="about" data-aos="fade-up">
+  <h2 class="section-title neon-text" data-text="About Me">About Me</h2>
+
+  <!-- Swiper Container -->
+  <div class="swiper about-swiper">
+    <div class="swiper-wrapper">
+
+      <!-- ========== SLIDE 1 => STORY ========== -->
+      <div class="swiper-slide">
+        <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
+          <div class="about-image-container">
+            <img src="documents/image1.jpeg" alt="Another About Image" />
+          </div>
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-book-open"></i> My Story
+          </h3>
+          <p class="normal-text">
+            <strong>Minecraft</strong> was more than just a game; it was a <strong>lifeline</strong> during my childhood in
+            Saint Petersburg, Russia. At <strong>10</strong>, I was introduced to this immersive world, igniting my passion
+            for <strong>engineering and design</strong>. This experience showcased the <strong>transformative power of
+            technology</strong> and affirmed how diverse perspectives drive innovation.
+          </p>
+        </div>
+      </div>
+
+      <!-- ========== SLIDE 2 => WHO AM I? ========== -->
+      <div class="swiper-slide">
+        <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
+          <div class="about-image-container">
+            <img src="documents/image3.png" alt="Daniil's Picture" />
+          </div>
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-info-circle"></i> Who Am I?
+          </h3>
+          <p class="normal-text">
+            I'm Daniil (pronounced Daniel), a <strong>Knight Scholar</strong> and <strong>Ryan Scholar</strong> at
+            <strong>Northwestern University's McCormick School of Engineering</strong>. Currently double-majoring in
+            <strong>Computer Science</strong> and <strong>Manufacturing and Design Engineering (MaDE)</strong>, my passion
+            lies in <strong>innovation</strong> and <strong>design</strong>. I thrive in <strong>collaborative teamwork</strong>,
+            leveraging Python, C, C++, and more to build meaningful solutions.
+          </p>
+        </div>
+      </div>
+
+      <!-- ========== SLIDE 3 => PASSIONS ========== -->
+      <div class="swiper-slide">
+        <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
+          <div class="about-image-container">
+            <img src="documents/image2.jpeg" alt="Passions Image" />
+          </div>
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-heart"></i> My Passions
+          </h3>
+          <p class="normal-text">
+            Moving forward, I aim to collaborate on <strong>innovative engineering projects</strong> that have the potential
+            to transform lives. Just like Minecraft had a pivotal impact on me, I'm motivated to build <strong>software
+            tools</strong> and <strong>physical products</strong> that can empower others, proving how creativity and
+            dedication can truly make the world better.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow Buttons -->
+    <div class="swiper-button-prev simple-swiper-btn">
+      <span><i class="fa-solid fa-chevron-left"></i></span>
+    </div>
+    <div class="swiper-button-next simple-swiper-btn">
+      <span><i class="fa-solid fa-chevron-right"></i></span>
+    </div>
+
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ==============================
+       EXPERIENCE SECTION
+  =============================== -->
+  <section id="experience" class="experience" data-aos="fade-up">
+    <h2 class="section-title neon-text" data-text="Experience">Experience</h2>
+    <div class="experience-timeline">
+      
+      <!-- IT Computer Consulting Aide -->
+      <div class="experience-item" data-aos="fade-right" data-aos-delay="100">
+        <div class="experience-content">
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-user-cog"></i> IT Computer Consulting Aide</h3>
+          <h4 class="normal-text">Northwestern McCormick School of Engineering IT</h4>
+          <span class="normal-text">September 2023 - Present</span>
+          <ul class="normal-text">
+            <li>Implement rigorous security measures by securely wiping hard drives before disposal, safeguarding
+              sensitive data.</li>
+            <li>Image and integrate computers into the Northwestern network, troubleshooting hardware/software issues.
+            </li>
+            <li>Maintain computer labs, ensuring hardware and software remain up-to-date and fully functional.</li>
+            <li>Support the IT team with ticket management, providing technical assistance across Northwestern's Tech
+              building.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Private Equity Analyst -->
+      <div class="experience-item" data-aos="fade-left" data-aos-delay="200">
+        <div class="experience-content">
+          <h3 class="subsection-header neon-text"><i class="fa-solid fa-chart-pie"></i> Private Equity Analyst</h3>
+          <h4 class="normal-text">Private Equity & Venture Capital Club</h4>
+          <span class="normal-text">April 2024 - June 2024</span>
+          <ul class="normal-text">
+            <li>Collaborated to simulate financial markets and business operations, enhancing insight into the financial
+              sector.</li>
+            <li>Developed a comprehensive business proposal through meticulous research and in-depth analysis.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ==============================
+       PROJECTS SECTION
+  =============================== -->
+  
+  <section id="projects" class="projects" data-aos="fade-up">
+    <h2 class="section-title neon-text" data-text="My Projects">Projects</h2>
+    <div class="project-grid">
+      
+      <!-- Project: Sentence Autocomplete Program -->
+      <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="project-image">
+          <img src="documents/project1photo.jpeg" alt="Sentence Autocomplete Project" loading="lazy">
+        </div>
+        <div class="project-content">
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-project-diagram"></i> Sentence Autocomplete Program
+          </h3>
+          <p class="normal-text">
+            <strong>Responsible AI Student Organization (Apr 2024 - June 2024)</strong>
+          </p>
+          <ul class="normal-text">
+            <li>Developed a machine learning–powered sentence autocomplete system using Python, NLTK, and spaCy.</li>
+            <li>Implemented a Flask backend and integrated GPT-2 parameters for improved text generation quality.</li>
+            <li>Increased model performance by 50% via real-time data processing and dynamic autocomplete capabilities.</li>
+          </ul>
+          <a href="https://github.com/daniilguchua/sentence-autocomplete-bot" class="shiny-cta small-submit-btn"><span>View Project</span></a>
+        </div>
+      </div>
+  
+      <!-- Project: Vestibular Rehabilitation Therapy Device -->
+      
+      <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-image">
+          <img src="documents/project2photo.png" alt="Vestibular Rehabilitation Therapy Device" loading="lazy">
+        </div>
+        <div class="project-content">
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-project-diagram"></i> Vestibular Rehabilitation Therapy Device
+          </h3>
+          <p class="normal-text">
+            <strong>Team Member (Mar 2024 - June 2024)</strong>
+          </p>
+          <ul class="normal-text">
+            <li>Designed and developed a handheld device for vestibular rehabilitation in collaboration with Shirley Ryan AbilityLab.</li>
+            <li>Utilized AutoCAD and advanced manufacturing to create interchangeable inserts with visual stimuli and adjustable weights.</li>
+            <li>Coordinated tasks, ensured effective communication, and integrated user feedback to enhance usability.</li>
+          </ul>
+          <a href="documents/project2.pdf" class="shiny-cta small-submit-btn"><span>View Project</span></a>
+        </div>
+      </div>
+  
+      <!-- Project: Learning Box Educational Tool -->
+      
+      <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="project-image">
+          <img src="documents/project3photo.png" alt="Learning Box Educational Tool" loading="lazy">
+        </div>
+        <div class="project-content">
+          <h3 class="subsection-header neon-text">
+            <i class="fa-solid fa-project-diagram"></i> Learning Box Educational Tool
+          </h3>
+          <p class="normal-text">
+            <strong>Team Lead (Sep 2023 - Dec 2023)</strong>
+          </p>
+          <ul class="normal-text">
+            <li>Developed an innovative educational tool for adults with intellectual disabilities at the Misericordia Home.</li>
+            <li>Pioneered a customizable product with a unique sensory reward system to boost user engagement.</li>
+            <li>Directed ideation, prototyping, and client feedback sessions, culminating in a comprehensive final report.</li>
+          </ul>
+          <a href="documents/project1.pdf" class="shiny-cta small-submit-btn"><span>View Project</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <hr class="divider" />
+  
+  <!-- ==============================
+       SKILLS SECTION (Unchanged)
+  =============================== -->
+  <section id="skills" class="skills" data-aos="fade-up">
+    <h2 class="section-title neon-text" data-text="My Skills">My Skills</h2>
+    <div class="skillset-grid">
+      
+      <!-- Skill Card 1 -->
+      <div class="skillset-card" data-aos="fade-left" data-aos-delay="100">
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-code"></i> Frontend Development</h3>
+        <ul class="normal-text">
+          <li>HTML5 & CSS3</li>
+          <li>JavaScript: Three.js, Bootstrap, GSAP</li>
+          <li>Responsive Design</li>
+          <li>Problem-solving</li>
+        </ul>
+      </div>
+      
+      <!-- Skill Card 2 -->
+      <div class="skillset-card" data-aos="fade-right" data-aos-delay="200">
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-server"></i> Backend Development</h3>
+        <ul class="normal-text">
+          <li>Python, C++, C</li>
+          <li>Node.js</li>
+          <li>Machine-Learning: Pandas, PyTorch</li>
+          <li>Database Management</li>
+        </ul>
+      </div>
+      
+      <!-- Skill Card 3 -->
+      <div class="skillset-card" data-aos="fade-up" data-aos-delay="300">
+        <h3 class="subsection-header neon-text"><i class="fa-solid fa-shield-halved"></i> Interpersonal</h3>
+        <ul class="normal-text">
+          <li>Communication</li>
+          <li>Attention to detail</li>
+          <li>Adaptability</li>
+          <li>Active Listening</li>
+          <li>Innovation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ==============================
+       CONTACT SECTION
+  =============================== -->
+  <section id="contact" class="contact" data-aos="fade-up">
+    <h2 class="section-title neon-text" data-text="Get in Touch">Get in Touch</h2>
+    <p class="normal-text">Feel free to reach out for collaborations, questions, or just a friendly hello!</p>
+
+    <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST" aria-label="Contact Form">
+      <label for="name" class="normal-text"><i class="fa-solid fa-user"></i> Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Your Name" required aria-required="true"
+        class="normal-text" />
+
+      <label for="email" class="normal-text"><i class="fa-solid fa-envelope"></i> Your Email</label>
+      <input type="email" id="email" name="_replyto" placeholder="Your Email" required aria-required="true"
+        class="normal-text" />
+
+      <label for="message" class="normal-text"><i class="fa-solid fa-message"></i> Your Message</label>
+      <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-required="true"
+        class="normal-text"></textarea>
+
+      <!-- Submit Button -->
+      <button class="shiny-cta small-submit-btn">
+        <span>Submit</span>
+      </button>
+    </form>
+  </section>
+
+  <!-- ==============================
+       FOOTER
+  =============================== -->
+  <footer class="footer" data-aos="fade-up">
+    <p class="normal-text">Daniil Guchua © 2024</p>
+    <div class="footer-links">
+      <!-- Linkedin and Email-->
+      <a href="https://www.linkedin.com/in/daniil-guchua" target="_blank" rel="noopener noreferrer"
+        aria-label="LinkedIn Profile" class="normal-text">
+        <i class="fa-brands fa-linkedin"></i> LinkedIn
+      </a>
+      <a href="mailto:DaniilGuchua05@gmail.com" aria-label="Send Email" class="normal-text">
+        <i class="fa-solid fa-envelope"></i> Email
+      </a>
+      <span class="normal-text">
+        <i class="fa-solid fa-phone"></i> 773-849-5609
+      </span>
+    </div>
+  </footer>
+
+</body>
+
+</html>
