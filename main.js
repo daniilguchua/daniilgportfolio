@@ -150,7 +150,7 @@ function scrambleText(text, container, durationMs) {
 
 // Titles rotating through
 const dynamicTitle = document.getElementById("dynamicTitle");
-const titles = ["Software Engineer", "Full-Stack Developer", "Cybersecurity Enthusiast"];
+const titles = ["Software Engineer", "Full-Stack Developer", "Machine Learning Engineer"];
 let currentIndex = 0;
 
 function displayTitle() {
