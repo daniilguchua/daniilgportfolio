@@ -1,4 +1,3 @@
-
 /*
  1) ROOT VARIABLES, GLOBAL RESETS, & BODY STYLING
  */
@@ -14,7 +13,7 @@
    --background-overlay: rgba(15, 15, 26, 0.8);
    --cosmic-purple: #7f1ab4; 
    --cosmic-blue: #1f2958;  
-
+ 
    /* Shiny CTA Colors */
    --shiny-cta-bg: #191970;
    --shiny-cta-bg-subtle: #1a1818;
@@ -42,7 +41,6 @@
  /*
   2) LAYOUT FOR SECTIONS, DIVIDERS
   */
-
  section {
    position: relative;
    min-height: calc(100vh - 80px);
@@ -50,7 +48,7 @@
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   padding: 4rem; 
+   padding: 4rem;
    box-sizing: border-box;
    background-color: transparent;
    overflow: hidden;
@@ -103,10 +101,10 @@
  /*
    VANTA BG & PARTICLES.JS
   */
-
  .vanta-section {
    position: fixed;
-   top: 0; left: 0;
+   top: 0;
+   left: 0;
    width: 100%;
    height: 100%;
    z-index: -3;
@@ -126,23 +124,23 @@
  
  .particles-section {
    position: fixed;
-   top: 0; left: 0;
+   top: 0;
+   left: 0;
    width: 100%;
    height: 100%;
    z-index: -1;
    pointer-events: none;
  }
  
-
  /*
   4) NAVBAR & RESPONSIVE MENU
- */
-
+  */
  nav {
    opacity: 0;
    transition: opacity 1s ease;
    position: fixed;
-   top: 0; left: 0;
+   top: 0;
+   left: 0;
    width: 100%;
    height: 80px;
    padding: 20px 0;
@@ -176,7 +174,7 @@
      rgba(255, 255, 255, 0.2) 75%,
      rgba(255, 255, 255, 0) 100%
    );
-   box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), 
+   box-shadow: 0 0 25px rgba(0, 0, 0, 0.1),
                inset 0 0 1px rgba(255, 255, 255, 0.6);
    border-radius: 0;
    transition: background 0.3s ease;
@@ -215,7 +213,8 @@
  .hamburger {
    display: none;
    position: absolute;
-   right: 20px; top: 50%;
+   right: 20px;
+   top: 50%;
    transform: translateY(-50%);
    cursor: pointer;
    font-size: 1.5rem;
@@ -231,8 +230,11 @@
      align-items: center;
      background: rgba(26, 26, 46, 0.8);
      position: absolute;
-     top: 80px; left: 0; right: 0;
+     top: 80px;
+     left: 0;
+     right: 0;
      display: none;
+     padding: 1rem 0;
    }
    nav ul.active {
      display: flex;
@@ -249,9 +251,8 @@
  }
  
  /*
- 5) HERO SECTION
- */
-
+  5) HERO SECTION
+  */
  .hero {
    position: relative;
    display: flex;
@@ -303,19 +304,33 @@
    transition: text-shadow 0.3s ease;
  }
  
- 
  .hero-heading-wrapper {
-   min-height: 8rem; 
+   min-height: 8rem;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
  }
  
+ @media (max-width: 768px) {
+   .intro-heading {
+     font-size: 2.5rem;
+   }
+   .title-animated {
+     font-size: 2.2rem;
+   }
+   .hero-text p {
+     font-size: 1rem;
+     margin-bottom: 2rem;
+   }
+   .hero {
+     padding: 2rem;
+   }
+ }
+ 
  /*
   6) ABOUT SECTION (Swiper)
- */
- 
+  */
  .about {
    position: relative;
    overflow: hidden;
@@ -323,9 +338,9 @@
  }
  
  .about .section-title {
-    margin-bottom: 0rem;
-  }
-
+   margin-bottom: 0rem;
+ }
+ 
  .section-title {
    align-self: center;
    margin-bottom: 2rem;
@@ -335,8 +350,8 @@
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    text-shadow: 0 0 10px var(--accent-color1),
-                0 0 20px var(--accent-color2),
-                0 0 30px var(--accent-color1);
+               0 0 20px var(--accent-color2),
+               0 0 30px var(--accent-color1);
    transition: text-shadow 0.3s ease;
    text-align: center;
  }
@@ -349,7 +364,7 @@
    margin: 0 auto;
  }
  
- /* Each Swiper slide (the "cards" in About) */
+ /* Each Swiper slide */
  .swiper-slide {
    display: flex;
    align-items: center;
@@ -359,7 +374,7 @@
    min-height: 400px;
  }
  
- /* The main container  */
+ /* Main container for slide content */
  .about-slide-content {
    display: flex !important;
    flex-direction: column !important;
@@ -368,7 +383,6 @@
    width: 100% !important;
    max-width: 1000px !important;
    margin: 0 auto !important;
- 
    background: rgba(0, 0, 0, 0.6) !important;
    border: 2px solid var(--accent-color1) !important;
    border-radius: 75px !important;
@@ -385,7 +399,7 @@
                0 0 10px var(--accent-color2) !important;
  }
  
- /* Headings inside the About slides */
+ /* Headings inside About slides */
  .subsection-header {
    color: var(--accent-color1);
    margin-bottom: 0.5rem;
@@ -397,25 +411,22 @@
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    text-shadow: 0 0 20px var(--accent-color1),
-                0 0 40px var(--accent-color2);
+               0 0 40px var(--accent-color2);
    transition: text-shadow 0.3s ease;
  }
  
- /* 
-   paragraphs in About slides
- */
-
+ /* Paragraphs in About slides */
  .about-slide-content p {
    font-size-adjust: 0.59;
    line-height: 1.7;
    color: var(--secondary-color);
    margin-bottom: 1rem;
    text-shadow: 0 0 10px var(--accent-color1),
-                0 0 20px var(--accent-color2);
+               0 0 20px var(--accent-color2);
    transition: text-shadow 0.3s ease;
  }
  
- /* The circular image container in each About slide */
+ /* Circular image container */
  .about-image-container {
    width: 180px;
    height: 180px;
@@ -434,14 +445,12 @@
  }
  
  /*
-   7) SWIPER NAV ARROWS
+  7) SWIPER NAV ARROWS
   */
-
  .swiper-button-prev::after,
  .swiper-button-next::after {
    content: none !important;
  }
- 
  .simple-swiper-btn {
    position: absolute;
    top: 90px;
@@ -456,21 +465,17 @@
    background: rgba(25, 25, 112, 0.4);
    transition: transform 0.3s ease, box-shadow 0.3s ease;
  }
- 
  .simple-swiper-btn:hover {
    transform: scale(1.1);
    box-shadow: 0 0 10px var(--accent-color1);
  }
- 
  .simple-swiper-btn span i {
    font-size: 1.3rem;
    color: #ffffff;
  }
- 
  .swiper-button-prev.simple-swiper-btn {
    left: 60px;
  }
- 
  .swiper-button-next.simple-swiper-btn {
    right: 60px;
  }
@@ -478,7 +483,6 @@
  /*
   8) SKILLS SECTION
   */
-
  .skillset-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -487,7 +491,6 @@
    max-width: 1200px;
    padding: 0 1rem;
  }
- 
  .skillset-card {
    background-color: var(--background-overlay);
    border: 2px solid var(--accent-color1);
@@ -499,7 +502,6 @@
    position: relative;
    overflow: hidden;
  }
- 
  .skillset-card::before {
    content: '';
    position: absolute;
@@ -514,7 +516,6 @@
  .skillset-card:hover::before {
    opacity: 0.5;
  }
- 
  .skillset-card h3 {
    color: var(--accent-color1);
    margin-bottom: 1.5rem;
@@ -561,7 +562,6 @@
    max-width: 1200px;
    padding: 0 1rem;
  }
- 
  .project-card {
    background-color: var(--background-overlay);
    border: 2px solid var(--accent-color1);
@@ -575,7 +575,6 @@
    height: 100%;
    backdrop-filter: blur(5px);
  }
- 
  .project-image {
    width: 100%;
    height: 275px;
@@ -592,13 +591,11 @@
  .project-card:hover .project-image img {
    transform: scale(1.1);
  }
- 
  .project-content {
    padding: 1rem;
    display: flex;
    flex-direction: column;
  }
-
  .project-content h3 {
    color: var(--accent-color1);
    margin-bottom: 1rem;
@@ -609,9 +606,7 @@
    text-shadow: 0 0 20px var(--accent-color1), 0 0 40px var(--accent-color2);
    transition: text-shadow 0.3s ease;
  }
-
  .project-content p {
-
    color: var(--secondary-color);
    margin-bottom: 1rem;
    text-shadow: 0 0 10px var(--accent-color1), 0 0 20px var(--accent-color2);
@@ -627,7 +622,6 @@
  /*
   11) CONTACT SECTION
   */
-
  .contact p {
    margin: 1rem 0;
    font-size: 1rem;
@@ -635,7 +629,6 @@
    text-shadow: 0 0 10px var(--accent-color1), 0 0 20px var(--accent-color2);
    transition: text-shadow 0.3s ease;
  }
- 
  .contact-form {
    display: flex;
    flex-direction: column;
@@ -644,12 +637,10 @@
    max-width: 600px;
    margin-top: 2rem;
  }
- 
  .contact-form label {
    font-size: 1rem;
    color: var(--secondary-color);
  }
- 
  .contact-form input,
  .contact-form textarea {
    padding: 0.8rem;
@@ -661,12 +652,10 @@
    text-shadow: 0 0 10px var(--accent-color1), 0 0 20px var(--accent-color2);
    transition: text-shadow 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
  }
- 
  .contact-form input::placeholder,
  .contact-form textarea::placeholder {
    color: var(--secondary-color);
  }
- 
  .contact-form input:focus,
  .contact-form textarea:focus {
    outline: none;
@@ -674,11 +663,9 @@
    box-shadow: 0 0 10px var(--accent-color2), 0 0 20px var(--accent-color2);
  }
  
- 
  /*
-  * 12) FOOTER
- */
-
+  12) FOOTER
+  */
  .footer {
    text-align: center;
    padding: 2rem 1rem;
@@ -690,13 +677,11 @@
    align-items: center;
    gap: 0.5rem;
  }
- 
  .footer .footer-links {
    display: flex;
    gap: 1rem;
    margin-top: 0.5rem;
  }
- 
  .footer .footer-links a {
    color: var(--secondary-color);
    text-decoration: none;
@@ -718,8 +703,7 @@
  
  /*
   13) EXPERIENCE TIMELINE
- */
-
+  */
  .experience-timeline {
    position: relative;
    max-width: 1200px;
@@ -731,7 +715,8 @@
    position: absolute;
    width: 6px;
    background-color: var(--accent-color1);
-   top: 0; bottom: 0;
+   top: 0;
+   bottom: 0;
    left: 50%;
    margin-left: -3px;
  }
@@ -755,7 +740,8 @@
  .experience-item::before {
    content: '';
    position: absolute;
-   width: 20px; height: 20px;
+   width: 20px;
+   height: 20px;
    right: -10px;
    background-color: var(--accent-color1);
    border: 4px solid var(--primary-color);
@@ -801,7 +787,8 @@
    }
    .experience-item {
      width: 100%;
-     padding-left: 70px; padding-right: 25px;
+     padding-left: 70px;
+     padding-right: 25px;
      margin-bottom: 2rem;
    }
    .experience-item:nth-child(even) {
@@ -831,13 +818,12 @@
  }
  
  /*
-  * 15) GENERAL CARD STYLES (HOVER, BOX-SHADOW)
+  15) GENERAL CARD STYLES (HOVER, BOX-SHADOW)
   */
-
  .card,
  .skillset-card,
  .project-card,
- .experience-item{
+ .experience-item {
    background-color: var(--background-overlay);
    border: 2px solid var(--accent-color1);
    border-radius: 12px;
@@ -845,19 +831,17 @@
    backdrop-filter: blur(5px);
    transition: transform 0.3s ease, box-shadow 0.3s ease;
  }
- 
  .card:hover,
  .skillset-card:hover,
  .project-card:hover,
- .experience-item:hover{
+ .experience-item:hover {
    transform: translateY(-5px) scale(1.01);
    box-shadow: 0 0 10px var(--accent-color1), 0 0 10px var(--accent-color2);
  }
  
  /*
   16) SHINY CTA BUTTON
- */
-
+  */
  @property --gradient-angle {
    syntax: "<angle>";
    initial-value: 0deg;
@@ -1010,17 +994,16 @@
  
  /* For Projects and Submit Section */
  .small-submit-btn {
-    display: block;      
-    margin: 0 auto;      
-    padding: 1rem 2rem; 
-    max-width: fit-content; 
-    margin-top:1rem
-  }
-
+   display: block;
+   margin: 0 auto;
+   padding: 1rem 2rem;
+   max-width: fit-content;
+   margin-top: 1rem;
+ }
+ 
  /*
   17) STRONG/BOLD TEXT => LIME GREEN
- */
-
+  */
  strong,
  b {
    color: #00ff00; /* Lime green */
@@ -1030,8 +1013,7 @@
  
  /*
   18) ACCESSIBILITY & REDUCED MOTION
- */
-
+  */
  a:focus,
  button:focus,
  input:focus,
