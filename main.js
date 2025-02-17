@@ -1,5 +1,8 @@
 /* MAIN.JS */
 
+// Global responsive check
+const isMobile = window.innerWidth < 768;
+
 /*
  * AOS Initialization
  */
@@ -12,34 +15,36 @@ AOS.init({
 });
 
 /*
-  Vanta.js Fog Initialization
+  Vanta.js Fog Initialization with responsive adjustments
 */
 document.addEventListener("DOMContentLoaded", () => {
   VANTA.FOG({
     el: "#vanta-bg",
-    mouseControls: true,
+    mouseControls: !isMobile, // Disable mouse controls on mobile
     touchControls: true,
     gyroControls: false,
     highlightColor: 0x3f1791,
     midtoneColor: 0x0,
     lowlightColor: 0x0,
     baseColor: 0x0,
-    blurFactor: 1.2,
-    speed: 1,
-    zoom: 0.2,
+    blurFactor: isMobile ? 1.0 : 1.2, // Adjust blur factor based on device
+    speed: isMobile ? 0.8 : 1,         // Lower speed on mobile for smoother performance
+    zoom: isMobile ? 0.3 : 0.2,        // Adjust zoom based on device
     THREE: THREE,
   });
 });
 
 /*
-  Particles.js
+  Particles.js with responsive particle count
 */
-
 document.addEventListener("DOMContentLoaded", () => {
+  // Use fewer particles on mobile devices for better performance
+  const particleCount = isMobile ? 30 : 50;
+  
   particlesJS("particles-js", {
     "particles": {
       "number": {
-        "value": 50,
+        "value": particleCount,
         "density": { "enable": true, "value_area": 800 }
       },
       "color": {
@@ -80,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
 /*
   GSAP Smooth Scroll for Navbar Links
 */
-
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger, MotionPathPlugin);
 
 document.querySelectorAll('a[data-link]').forEach(link => {
@@ -90,13 +94,16 @@ document.querySelectorAll('a[data-link]').forEach(link => {
     const targetSection = document.getElementById(targetId);
 
     if (targetSection) {
-      const navbarHeight = document.querySelector('nav').offsetHeight;
+      const navbar = document.querySelector('nav');
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
       const sectionRect = targetSection.getBoundingClientRect();
       const sectionTop = window.pageYOffset + sectionRect.top;
+      // Optionally, you can adjust scroll duration based on device:
+      const duration = isMobile ? 0.8 : 1;
       const scrollToPosition = sectionTop - navbarHeight - 20;
 
       gsap.to(window, {
-        duration: 1,
+        duration: duration,
         scrollTo: { y: scrollToPosition, autoKill: false },
         ease: "power2.inOut"
       });
@@ -107,7 +114,6 @@ document.querySelectorAll('a[data-link]').forEach(link => {
 /*
   Hero Text Scramble & Rotating Title
 */
-
 function scrambleText(text, container, durationMs) {
   return new Promise(resolve => {
     const intervalTime = 50;
@@ -131,7 +137,7 @@ function scrambleText(text, container, durationMs) {
       for (let i = revealCount; i < text.length; i++) {
         const ch = text[i];
         if (ch === " " || /[.,!?]/.test(ch)) {
-          scrambledPart += ch; 
+          scrambledPart += ch;
         } else {
           scrambledPart += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
         }
@@ -225,7 +231,6 @@ function nextTitle() {
 
 // Accent colors for the rotating characters
 function getRandomAccentColor() {
-  // Updated color array for the rotating text
   const accents = ["#3A0CA3", "#7209B7", "#B5179E", "#F72585"];
   return accents[Math.floor(Math.random() * accents.length)];
 }
@@ -308,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*
-  Active Link Highlighting
+  Active Link Highlighting with responsive threshold
 */
 const sections = document.querySelectorAll("section, header");
 const navItems = document.querySelectorAll("nav ul li a");
@@ -316,7 +321,7 @@ const navItems = document.querySelectorAll("nav ul li a");
 const observerOptions = {
   root: null,
   rootMargin: "0px",
-  threshold: 0.6,
+  threshold: isMobile ? 0.4 : 0.6,
 };
 
 const observer = new IntersectionObserver(entries => {
@@ -350,21 +355,19 @@ window.addEventListener("scroll", () => {
 });
 
 /*
-  Swiper Initialization
+  Swiper Initialization with responsive settings
 */
 document.addEventListener("DOMContentLoaded", function () {
   const aboutSwiper = new Swiper(".about-swiper", {
     loop: true,
     speed: 1200,
     effect: "cube",
-    // Removed shadow for the cube effect
     cubeEffect: {
       shadow: false,
       shadowOffset: 0,
       shadowScale: 0,
       slideShadows: false,
     },
-    // Show the middle slide first
     initialSlide: 1,
     navigation: {
       nextEl: ".swiper-button-next.simple-swiper-btn",
@@ -374,11 +377,12 @@ document.addEventListener("DOMContentLoaded", function () {
       el: ".swiper-pagination",
       clickable: true,
     },
+    // On mobile, force one slide view
+    slidesPerView: isMobile ? 1 : "auto",
     on: {
       slideChangeTransitionStart: function (swiper) {
         const currentSlide = swiper.slides[swiper.activeIndex];
         const aboutContent = currentSlide.querySelector(".about-slide-content");
-        // Animate in from below
         gsap.fromTo(
           aboutContent,
           { y: 80, opacity: 0 },
