@@ -2,10 +2,10 @@
   const state = {
     isMobile: window.matchMedia('(max-width: 767px)').matches,
     prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-    deviceMemory: navigator.deviceMemory || 4, // hint, not guaranteed
+    deviceMemory: navigator.deviceMemory || 4,
   };
 
-  // Utilities //
+    // Utilities //
   function onScrollRAF(cb) {
     let ticking = false;
     window.addEventListener(
@@ -23,7 +23,7 @@
     );
   }
 
-  // Smooth Scroll //
+    // Smooth Scroll //
   function initSmoothScroll() {
     const links = document.querySelectorAll('a[data-link]');
     const nav = document.querySelector('nav');
@@ -50,7 +50,7 @@
         const navH = nav?.offsetHeight || 0;
         const y = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
         scrollToY(y);
-        
+
         const menu = document.querySelector('nav ul');
         if (menu?.classList.contains('active')) {
           document.querySelector('.hamburger')?.click();
@@ -59,46 +59,38 @@
     });
   }
 
-  // Hero Text Scramble //
-  function scrambleIn(finalText, el, duration = 1400) {
+    // Hero Text Scramble //
+  function scrambleIn(finalText, el, duration = 1200) {
     return new Promise((resolve) => {
       if (!el) return resolve();
-
-      const pool =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{};:<>,.?/';
+      const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{};:<>,.?/';
       const start = performance.now();
 
       function frame(now) {
         const t = Math.min((now - start) / duration, 1);
         const reveal = Math.floor(t * finalText.length);
-
         let out = finalText.slice(0, reveal);
         for (let i = reveal; i < finalText.length; i++) {
           const ch = finalText[i];
           out += ch === ' ' || /[.,!?]/.test(ch) ? ch : pool[(Math.random() * pool.length) | 0];
         }
-
         el.textContent = out;
         if (t < 1) requestAnimationFrame(frame);
-        else {
-          el.textContent = finalText;
-          resolve();
-        }
+        else { el.textContent = finalText; resolve(); }
       }
-
       requestAnimationFrame(frame);
     });
   }
 
   function initHero() {
-    const titleEl = document.getElementById('dynamicTitle'); 
+    const titleEl = document.getElementById('dynamicTitle');
     const introHeading = document.querySelector('.intro-heading');
     const studentP = document.querySelector('.hero-text p');
     const cta = document.querySelector('.hero-text .shiny-cta');
     const nav = document.querySelector('nav');
-    
+
     if (window.gsap) {
-      gsap.set([titleEl, studentP, cta, nav], { opacity: 0 });
+      gsap.set([introHeading, titleEl, studentP, cta, nav], { opacity: 0, y: 6 });
     }
 
     const titles = ['Software Engineer', 'Full-Stack Developer', 'ML Engineer'];
@@ -109,39 +101,36 @@
       if (!titleEl) return;
       titleEl.textContent = titles[idx];
       if (window.gsap) {
-        gsap.fromTo(
-          titleEl,
-          { opacity: 0, y: 6 },
-          { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }
-        );
+        gsap.fromTo(titleEl, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' });
       }
       idx = (idx + 1) % titles.length;
     }
 
     (async () => {
-      await scrambleIn("Hello! I'm Daniil, an Aspiring", introHeading, 1400);
+      await scrambleIn("Hello! I'm Daniil, an Aspiring", introHeading, 1200);
       if (window.gsap) {
-        gsap.to([titleEl, studentP, cta, nav], {
-          opacity: 1,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'power2.out',
-        });
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        tl.to(introHeading, { opacity: 1, y: 0, duration: 0.35 }, 0)
+          .add(() => cycleTitle(), '+=0.15')
+          .to(studentP, { opacity: 1, y: 0, duration: 0.35 }, '+=0.35')
+          .to([cta, nav], { opacity: 1, y: 0, duration: 0.4, stagger: 0.1 }, '+=0.1');
+      } else {
+        introHeading.style.opacity = 1;
+        studentP.style.opacity = 1;
+        cta.style.opacity = 1;
+        nav.style.opacity = 1;
+        cycleTitle();
       }
-      cycleTitle();
+
       const period = state.isMobile ? 2800 : 3400;
       const start = () => (titleTimer = setInterval(cycleTitle, period));
       const stop = () => (titleTimer ? clearInterval(titleTimer) : null);
       start();
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stop();
-        else start();
-      });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
     })();
   }
 
-  // Vanta Fog //
+    // Vanta Fog //
   let vantaInstance = null;
   function initVanta() {
     const el = document.getElementById('vanta-bg');
@@ -179,9 +168,7 @@
     hamburger.addEventListener('click', () => {
       const active = menu.classList.toggle('active');
       hamburger.setAttribute('aria-expanded', active);
-      hamburger.innerHTML = active
-        ? '<i class="fa-solid fa-times"></i>'
-        : '<i class="fa-solid fa-bars"></i>';
+      hamburger.innerHTML = active ? '<i class="fa-solid fa-times"></i>' : '<i class="fa-solid fa-bars"></i>';
       if (active) menu.querySelector('a')?.focus();
     });
   }
@@ -194,8 +181,7 @@
       links.forEach((a) => {
         const match = a.getAttribute('href')?.slice(1) === id;
         a.classList.toggle('active-link', match);
-        if (match) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
+        if (match) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
       });
     };
 
@@ -214,13 +200,12 @@
 
     onScrollRAF(() => {
       const y = window.scrollY;
-      if (y > last && y > 100) nav.classList.add('navbar-hidden');
-      else nav.classList.remove('navbar-hidden');
+      if (y > last && y > 100) nav.classList.add('navbar-hidden'); else nav.classList.remove('navbar-hidden');
       last = y;
     });
   }
 
-  // Swiper //
+    // Swiper //
   function initSwiper() {
     if (!window.Swiper) return;
     const el = document.querySelector('.about-swiper');
@@ -228,12 +213,12 @@
 
     const aboutSwiper = new Swiper('.about-swiper', {
       loop: true,
-      speed: 650,
-      effect: 'slide',        
-      slidesPerView: 1,         
-      centeredSlides: true,     
-      autoHeight: true,        
-      spaceBetween: 16,
+      speed: 550,
+      effect: 'slide',
+      slidesPerView: 1,
+      centeredSlides: true,
+      autoHeight: true,
+      spaceBetween: 12,
       navigation: {
         nextEl: '.swiper-button-next.simple-swiper-btn',
         prevEl: '.swiper-button-prev.simple-swiper-btn',
@@ -243,7 +228,7 @@
         slideChangeTransitionStart(swiper) {
           const content = swiper.slides[swiper.activeIndex]?.querySelector('.about-slide-content');
           if (content && window.gsap) {
-            gsap.fromTo(content, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+            gsap.fromTo(content, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: 'power2.out' });
           }
         },
       },
@@ -256,7 +241,7 @@
     initHamburger();
     initActiveLinkObserver();
     initAutoHideNav();
-    initVanta();  
+    initVanta();
     initSwiper();
   });
 })();
