@@ -25,7 +25,6 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   font-family: "Open Sans", sans-serif;
  }
  
  body {
@@ -36,6 +35,7 @@
    min-height: 100vh;
    padding-top: 80px;
    text-shadow: 0 0 5px var(--accent-color1), 0 0 10px var(--accent-color2);
+   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
  }
  
  /*
@@ -186,7 +186,6 @@
  
  nav ul li a {
    padding: 18px;
-   font-family: "Open Sans", sans-serif;
    text-transform: uppercase;
    color: #ffffff;
    font-size: 18px;
