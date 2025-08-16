@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
+/*
+ 1) ROOT VARIABLES, GLOBAL RESETS, & BODY STYLING
+ */
+ @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
 
  :root {
    --primary-color: #0f0f1a;        /* Dark Purple/Blue */
@@ -6,11 +9,12 @@
    --accent-color1: #bb86fc;        /* Soft Purple */
    --accent-color2: #03dac6;        /* Teal */
    --accent-color3: #cf6679;        /* Coral */
-   --hover-accent: #3700b3;         /* Darker Purple */
+   --hover-accent: #3700b3;         /* Darker Purple for hover states */
    --background-overlay: rgba(15, 15, 26, 0.8);
    --cosmic-purple: #7f1ab4; 
    --cosmic-blue: #1f2958;  
  
+   /* Shiny CTA Colors */
    --shiny-cta-bg: #191970;
    --shiny-cta-bg-subtle: #1a1818;
    --shiny-cta-highlight: #ff69b4;
@@ -21,7 +25,6 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   font-family: "Open Sans", sans-serif;
  }
  
  body {
@@ -32,9 +35,12 @@
    min-height: 100vh;
    padding-top: 80px;
    text-shadow: 0 0 5px var(--accent-color1), 0 0 10px var(--accent-color2);
+   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
  }
  
-
+ /*
+  2) LAYOUT FOR SECTIONS, DIVIDERS
+  */
  section {
    position: relative;
    min-height: calc(100vh - 80px);
@@ -92,7 +98,9 @@
    transform: rotate(180deg);
  }
  
-
+ /*
+   VANTA BG & PARTICLES.JS
+  */
  .vanta-section {
    position: fixed;
    top: 0;
@@ -123,7 +131,10 @@
    z-index: -1;
    pointer-events: none;
  }
-
+ 
+ /*
+  4) NAVBAR & RESPONSIVE MENU
+  */
  nav {
    opacity: 0;
    transition: opacity 1s ease;
@@ -175,7 +186,6 @@
  
  nav ul li a {
    padding: 18px;
-   font-family: "Open Sans", sans-serif;
    text-transform: uppercase;
    color: #ffffff;
    font-size: 18px;
@@ -239,7 +249,9 @@
    }
  }
  
-
+ /*
+  5) HERO SECTION
+  */
  .hero {
    position: relative;
    display: flex;
@@ -315,6 +327,9 @@
    }
  }
  
+ /*
+  6) ABOUT SECTION (Swiper)
+  */
  .about {
    position: relative;
    overflow: hidden;
@@ -340,6 +355,7 @@
    text-align: center;
  }
  
+ /* Swiper container sizing */
  .swiper {
    overflow: visible;
    width: 90%;
@@ -347,6 +363,7 @@
    margin: 0 auto;
  }
  
+ /* Each Swiper slide */
  .swiper-slide {
    display: flex;
    align-items: center;
@@ -356,6 +373,7 @@
    min-height: 400px;
  }
  
+ /* Main container for slide content */
  .about-slide-content {
    display: flex !important;
    flex-direction: column !important;
@@ -380,6 +398,7 @@
                0 0 10px var(--accent-color2) !important;
  }
  
+ /* Headings inside About slides */
  .subsection-header {
    color: var(--accent-color1);
    margin-bottom: 0.5rem;
@@ -395,6 +414,7 @@
    transition: text-shadow 0.3s ease;
  }
  
+ /* Paragraphs in About slides */
  .about-slide-content p {
    font-size-adjust: 0.59;
    line-height: 1.7;
@@ -405,6 +425,7 @@
    transition: text-shadow 0.3s ease;
  }
  
+ /* Circular image container */
  .about-image-container {
    width: 180px;
    height: 180px;
@@ -422,7 +443,9 @@
    object-fit: cover;
  }
  
-
+ /*
+  7) SWIPER NAV ARROWS
+  */
  .swiper-button-prev::after,
  .swiper-button-next::after {
    content: none !important;
@@ -456,7 +479,9 @@
    right: 60px;
  }
  
- 
+ /*
+  8) SKILLS SECTION
+  */
  .skillset-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -525,7 +550,9 @@
    font-size: 1rem;
  }
  
-
+ /*
+  10) PROJECTS SECTION
+  */
  .project-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -591,7 +618,9 @@
    }
  }
  
-
+ /*
+  11) CONTACT SECTION
+  */
  .contact p {
    margin: 1rem 0;
    font-size: 1rem;
@@ -633,7 +662,9 @@
    box-shadow: 0 0 10px var(--accent-color2), 0 0 20px var(--accent-color2);
  }
  
-
+ /*
+  12) FOOTER
+  */
  .footer {
    text-align: center;
    padding: 2rem 1rem;
@@ -669,7 +700,9 @@
    font-size: 1.2rem;
  }
  
-
+ /*
+  13) EXPERIENCE TIMELINE
+  */
  .experience-timeline {
    position: relative;
    max-width: 1200px;
@@ -765,7 +798,9 @@
    }
  }
  
-
+ /*
+  14) REDUCED MOTION 
+  */
  @media (prefers-reduced-motion: reduce) {
    .section-title,
    .about-slide-content,
@@ -781,7 +816,9 @@
    }
  }
  
-
+ /*
+  15) GENERAL CARD STYLES (HOVER, BOX-SHADOW)
+  */
  .card,
  .skillset-card,
  .project-card,
@@ -801,7 +838,9 @@
    box-shadow: 0 0 10px var(--accent-color1), 0 0 10px var(--accent-color2);
  }
  
-
+ /*
+  16) SHINY CTA BUTTON
+  */
  @property --gradient-angle {
    syntax: "<angle>";
    initial-value: 0deg;
@@ -952,6 +991,7 @@
    color: inherit;
  }
  
+ /* For Projects and Submit Section */
  .small-submit-btn {
    display: block;
    margin: 0 auto;
@@ -960,15 +1000,19 @@
    margin-top: 1rem;
  }
  
-
+ /*
+  17) STRONG/BOLD TEXT => LIME GREEN
+  */
  strong,
  b {
-   color: #00ff00; 
+   color: #00ff00; /* Lime green */
    font-weight: bold;
    font-size-adjust: 0.58;
  }
  
-
+ /*
+  18) ACCESSIBILITY & REDUCED MOTION
+  */
  a:focus,
  button:focus,
  input:focus,
