@@ -2,9 +2,14 @@
 <html lang="en">
 
 <head>
+  <!-- ==============================
+               HEAD
+  =============================== -->
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daniil's Portfolio</title>
-  
+
+  <!-- SEO Enhancements -->
   <meta name="description"
     content="Daniil's Portfolio - Software Engineer, Full-Stack Developer, Machine-Learning Engineer">
   <meta name="keywords"
@@ -12,31 +17,59 @@
   <meta name="author" content="Daniil">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+  <!-- ==============================
+       EXTERNAL CSS & ICONS
+  =============================== -->
   <link rel="stylesheet" href="CSS/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css" />
 
+  <!-- ==============================
+         JS LIBRARIES 
+  =============================== -->
+  <!-- Vanta & Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js" defer></script>
+
+  <!-- AOS (Animate On Scroll) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+
+  <!-- particles.js (for snow effect) -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+
+  <!-- GSAP & Plugins -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js" defer></script>
+
+  <!-- Swiper.js (Carousel in About) -->
   <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js" defer></script>
+
+  <!-- VanillaTilt.js  -->
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js" defer></script>
+
+  <!-- ==============================
+        MAIN JS 
+  =============================== -->
   <script src="main.js" defer></script>
 </head>
 
 <body>
 
+  <!-- ==============================
+       SNOW EFFECT 
+  =============================== -->
   <div id="particles-js" class="particles-section" aria-hidden="true"></div>
 
+  <!-- ==============================
+       NAVBAR
+  =============================== -->
   <nav>
-
+    <!-- Hamburger Menu for Mobile -->
     <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
       <i class="fa-solid fa-bars"></i>
     </button>
@@ -50,17 +83,24 @@
     </ul>
   </nav>
 
-
+  <!-- ==============================
+       GLOBAL VANTA BACKGROUND
+  =============================== -->
   <div id="vanta-bg" class="vanta-section" aria-hidden="true"></div>
 
-
+  <!-- ==============================
+       HERO SECTION
+  =============================== -->
   <header class="hero" id="home">
     <div class="hero-text" data-aos="fade-up">
 
+      <!-- New container for headings -->
       <div class="hero-heading-wrapper">
+        <!-- Scrambled heading -->
         <h2 class="intro-heading neon-text">
           Hello! I'm <span class="highlight">Daniel</span>, an Aspiring
         </h2>
+        <!-- rotating title -->
         <h2 id="dynamicTitle" class="title-animated neon-text"></h2>
       </div>
 
@@ -76,14 +116,17 @@
 
   <hr class="divider" />
 
-
+  <!-- ==============================
+     ABOUT SECTION 
+=============================== -->
 <section id="about" class="about" data-aos="fade-up">
   <h2 class="section-title neon-text" data-text="About Me">About Me</h2>
 
+  <!-- Swiper Container -->
   <div class="swiper about-swiper">
     <div class="swiper-wrapper">
 
-      
+      <!-- ========== SLIDE 1 => STORY ========== -->
       <div class="swiper-slide">
         <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
           <div class="about-image-container">
@@ -101,7 +144,7 @@
         </div>
       </div>
 
-
+      <!-- ========== SLIDE 2 => WHO AM I? ========== -->
       <div class="swiper-slide">
         <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
           <div class="about-image-container">
@@ -120,7 +163,7 @@
         </div>
       </div>
 
-
+      <!-- ========== SLIDE 3 => PASSIONS ========== -->
       <div class="swiper-slide">
         <div class="about-slide-content" data-tilt data-tilt-max="10" data-tilt-speed="400">
           <div class="about-image-container">
@@ -139,7 +182,7 @@
       </div>
     </div>
 
-
+    <!-- Arrow Buttons -->
     <div class="swiper-button-prev simple-swiper-btn">
       <span><i class="fa-solid fa-chevron-left"></i></span>
     </div>
@@ -153,12 +196,14 @@
 
 <hr class="divider" />
 
-
+<!-- ==============================
+       EXPERIENCE SECTION
+  =============================== -->
   <section id="experience" class="experience" data-aos="fade-up">
     <h2 class="section-title neon-text" data-text="Experience">Experience</h2>
     <div class="experience-timeline">
       
-  
+      <!-- IT Computer Consulting Aide -->
       <div class="experience-item" data-aos="fade-right" data-aos-delay="100">
         <div class="experience-content">
           <h3 class="subsection-header neon-text"><i class="fa-solid fa-user-cog"></i> IT Computer Consulting Aide</h3>
@@ -206,10 +251,13 @@
 
   <hr class="divider" />
 
-
+    <!-- ==============================
+       PROJECTS SECTION
+=============================== -->
 <section id="projects" class="projects" data-aos="fade-up">
   <h2 class="section-title neon-text" data-text="My Projects">Projects</h2>
   <div class="project-grid">
+    <!-- Project: Slime-Mold Simulation -->
     <div class="project-card" data-aos="fade-up" data-aos-delay="100">
       <div class="project-image">
         <img src="documents/SlimeMoldCover.png" alt="Physarium Polycephalum Simulation" loading="lazy">
@@ -229,6 +277,7 @@
       </div>
     </div>
 
+    <!-- Project: Sentence Autocomplete Program -->
     <div class="project-card" data-aos="fade-up" data-aos-delay="100">
       <div class="project-image">
         <img src="documents/project1photo.jpeg" alt="Sentence Autocomplete Project" loading="lazy">
@@ -249,6 +298,7 @@
       </div>
     </div>
 
+    <!-- Project: Coming Soon -->
     <div class="project-card" data-aos="fade-up" data-aos-delay="100">
       <div class="project-image">
         <img src="documents/SlimeMoldCover.png" alt="Coming Soon" loading="lazy">
@@ -272,12 +322,15 @@
 </section>
 
   <hr class="divider" />
-
   
+  <!-- ==============================
+       SKILLS SECTION
+  =============================== -->
   <section id="skills" class="skills" data-aos="fade-up">
     <h2 class="section-title neon-text" data-text="My Skills">My Skills</h2>
     <div class="skillset-grid">
       
+      <!-- Skill Card 1 -->
       <div class="skillset-card" data-aos="fade-left" data-aos-delay="100">
         <h3 class="subsection-header neon-text"><i class="fa-solid fa-code"></i> Frontend Development</h3>
         <ul class="normal-text">
@@ -288,7 +341,7 @@
         </ul>
       </div>
       
-
+      <!-- Skill Card 2 -->
       <div class="skillset-card" data-aos="fade-right" data-aos-delay="200">
         <h3 class="subsection-header neon-text"><i class="fa-solid fa-server"></i> Backend Development</h3>
         <ul class="normal-text">
@@ -300,6 +353,7 @@
         </ul>
       </div>
       
+      <!-- Skill Card 3 -->
       <div class="skillset-card" data-aos="fade-up" data-aos-delay="300">
         <h3 class="subsection-header neon-text"><i class="fa-solid fa-shield-halved"></i> Interpersonal</h3>
         <ul class="normal-text">
@@ -316,6 +370,9 @@
   <hr class="divider" />
 
 
+  <!-- ==============================
+       CONTACT SECTION
+  =============================== -->
   <section id="contact" class="contact" data-aos="fade-up">
     <h2 class="section-title neon-text" data-text="Get in Touch">Get in Touch</h2>
     <p class="normal-text">Feel free to reach out for collaborations, questions, or just a friendly hello!</p>
@@ -333,17 +390,20 @@
       <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-required="true"
         class="normal-text"></textarea>
 
-
+      <!-- Submit Button -->
       <button class="shiny-cta small-submit-btn">
         <span>Submit</span>
       </button>
     </form>
   </section>
 
-
+  <!-- ==============================
+       FOOTER
+  =============================== -->
   <footer class="footer" data-aos="fade-up">
     <p class="normal-text">Daniil Guchua © 2024</p>
     <div class="footer-links">
+      <!-- Linkedin and Email-->
       <a href="https://www.linkedin.com/in/daniil-guchua" target="_blank" rel="noopener noreferrer"
         aria-label="LinkedIn Profile" class="normal-text">
         <i class="fa-brands fa-linkedin"></i> LinkedIn
