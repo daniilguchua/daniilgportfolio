@@ -49,34 +49,38 @@
     });
   }
 
+  // FIXED: uses #titleA / #titleB / #titleStack and filters GSAP targets
   function initHero(){
     const nav          = document.querySelector('nav');
     const heroText     = document.querySelector('.hero-text');
     const introHeading = document.querySelector('.intro-heading');
-    const titleEl      = document.getElementById('dynamicTitle') || document.querySelector('#home .title-animated');
+    const titleStack   = document.getElementById('titleStack');
+    const titleA       = document.getElementById('titleA');
+    const titleB       = document.getElementById('titleB');
     const studentP     = heroText?.querySelector('p');
     const cta          = heroText?.querySelector('.shiny-cta');
 
-    if(!heroText || !introHeading || !titleEl){ return; }
+    if(!heroText || !introHeading || !titleStack || !titleA || !titleB) return;
 
     const FINAL_INTRO = "Hello! I'm Daniil, an Aspiring";
-    const titles      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
-    const isMobile    = window.matchMedia('(max-width: 767px)').matches;
-    const PERIOD      = isMobile ? 2800 : 3400;
+    const TITLES      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
+    const PERIOD      = state.isMobile ? 2800 : 3400;
     const hasGSAP     = typeof window.gsap === 'function';
 
     nav?.classList.add('visible');
-    titleEl.style.display = 'block';
-    [titleEl, studentP, cta].forEach(el => { if(el) el.style.opacity = 0; });
 
-    function lockIntroWidth(){
+    const fadeTargets = [studentP, cta].filter(Boolean);
+    if (hasGSAP && fadeTargets.length) gsap.set(fadeTargets, { opacity: 0 });
+    else fadeTargets.forEach(el => el.style.opacity = 0);
+
+    // prevent intro wrap during scramble
+    (function lockIntroWidth(){
       const m  = document.createElement('span');
       const cs = getComputedStyle(introHeading);
       Object.assign(m.style, {
-        position:'absolute', visibility:'hidden', pointerEvents:'none',
-        whiteSpace:'nowrap',
-        fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight,
-        letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, lineHeight: cs.lineHeight
+        position:'absolute', visibility:'hidden', pointerEvents:'none', whiteSpace:'nowrap',
+        fontFamily:cs.fontFamily, fontSize:cs.fontSize, fontWeight:cs.fontWeight,
+        letterSpacing:cs.letterSpacing, textTransform:cs.textTransform, lineHeight:cs.lineHeight
       });
       m.textContent = FINAL_INTRO;
       document.body.appendChild(m);
@@ -86,95 +90,104 @@
       introHeading.style.display    = 'inline-block';
       introHeading.style.width      = Math.ceil(r.width)  + 'px';
       introHeading.style.height     = Math.ceil(r.height) + 'px';
+    })();
+
+    // reserve height for rotating title based on actual wrapping width
+    function reserveTitleHeight(){
+      const containerWidth = Math.max(0, Math.floor(heroText.getBoundingClientRect().width));
+      if(!containerWidth) return;
+      const probe = document.createElement('h2');
+      const cs = getComputedStyle(titleA);
+      Object.assign(probe.style, {
+        position:'absolute', left:'-99999px', top:'-99999px', visibility:'hidden',
+        whiteSpace:'normal', width: containerWidth + 'px', margin:'0',
+        fontFamily:cs.fontFamily, fontSize:cs.fontSize, fontWeight:cs.fontWeight,
+        letterSpacing:cs.letterSpacing, textTransform:cs.textTransform, lineHeight:cs.lineHeight
+      });
+      document.body.appendChild(probe);
+      let maxH = 0;
+      for(const t of TITLES){ probe.textContent = t; maxH = Math.max(maxH, Math.ceil(probe.getBoundingClientRect().height)); }
+      document.body.removeChild(probe);
+      titleStack.style.height = (maxH || 0) + 'px';
     }
 
-    function scrambleIn(finalText, el, duration=1400){
+    function scrambleIn(finalText, el, duration=1200){
       return new Promise(res=>{
-        if(!el) return res();
-        const pool  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const start = performance.now();
+        const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const start=performance.now();
         function frame(now){
-          const t      = Math.min((now - start) / duration, 1);
-          const reveal = Math.floor(t * finalText.length);
-          let out      = finalText.slice(0, reveal);
+          const t=Math.min((now-start)/duration,1);
+          const reveal=Math.floor(t*finalText.length);
+          let out=finalText.slice(0,reveal);
           for(let i=reveal;i<finalText.length;i++){
-            const ch = finalText[i];
-            out += (ch===' ' || /[.,!?]/.test(ch)) ? ch : pool[(Math.random()*pool.length)|0];
+            const ch=finalText[i];
+            out+=(ch===' '||/[.,!?]/.test(ch))?ch:pool[(Math.random()*pool.length)|0];
           }
-          el.textContent = out;
-          if(t<1) requestAnimationFrame(frame); else { el.textContent = finalText; res(); }
+          el.textContent=out;
+          if(t<1) requestAnimationFrame(frame); else { el.textContent=finalText; res(); }
         }
         requestAnimationFrame(frame);
       });
     }
 
-    function reserveTitleHeightForWrap(){
-      const containerWidth = Math.max(0, Math.floor(heroText.getBoundingClientRect().width));
-      if(!containerWidth) return;
-      const probe = document.createElement('h2');
-      const cs = getComputedStyle(titleEl);
-      Object.assign(probe.style, {
-        position:'absolute', left:'-99999px', top:'-99999px',
-        visibility:'hidden', pointerEvents:'none',
-        whiteSpace:'normal', width: containerWidth + 'px',
-        margin:'0',
-        fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight,
-        letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, lineHeight: cs.lineHeight
-      });
-      document.body.appendChild(probe);
-      let maxH = 0;
-      for(const t of titles){
-        probe.textContent = t;
-        maxH = Math.max(maxH, Math.ceil(probe.getBoundingClientRect().height));
-      }
-      document.body.removeChild(probe);
-      titleEl.style.minHeight = (maxH || 0) + 'px';
-      if(parseFloat(getComputedStyle(titleEl).marginBottom) < 14){
-        titleEl.style.marginBottom = '14px';
-      }
-    }
+    // crossfade between two title nodes
+    let idx=0, showingA=true, timer=null;
+    function setText(el, text){ el.textContent = text; }
+    function swapTitles(){
+      const next = TITLES[idx];
+      const incoming = showingA ? titleB : titleA;
+      const outgoing = showingA ? titleA : titleB;
 
-    let idx=0, timer=null;
-    function cycleOnce(){
-      titleEl.textContent = titles[idx];
+      setText(incoming, next);
+
       if(hasGSAP){
-        try{
-          gsap.fromTo(titleEl,{opacity:0,y:6},{opacity:1,y:0,duration:.45,ease:'power2.out'});
-        }catch{ titleEl.style.opacity = 1; titleEl.style.transform='translateY(0)'; }
+        const safe = [incoming, outgoing].filter(Boolean);
+        if(safe.length){
+          gsap.killTweensOf(safe);
+          gsap.set(incoming, { opacity: 0, y: 8, position:'absolute', inset:0 });
+          gsap.set(outgoing, { position:'absolute', inset:0 });
+          gsap.to(incoming, { opacity:1, y:0, duration:.45, ease:'power2.out' });
+          gsap.to(outgoing,  { opacity:0, y:-6, duration:.45, ease:'power2.out' });
+        }
       }else{
-        titleEl.style.transition = 'opacity 250ms ease, transform 250ms ease';
-        titleEl.style.opacity = 0;
-        void titleEl.offsetWidth;
-        titleEl.style.opacity = 1;
-        titleEl.style.transform = 'translateY(0)';
+        incoming.style.opacity='0'; incoming.style.transform='translateY(8px)'; incoming.style.position='absolute'; incoming.style.inset='0';
+        outgoing.style.position='absolute'; outgoing.style.inset='0';
+        requestAnimationFrame(()=>{
+          incoming.style.transition='opacity .45s ease, transform .45s ease';
+          outgoing.style.transition='opacity .45s ease, transform .45s ease';
+          incoming.style.opacity='1'; incoming.style.transform='translateY(0)';
+          outgoing.style.opacity='0'; outgoing.style.transform='translateY(-6px)';
+        });
       }
-      idx = (idx+1)%titles.length;
+
+      showingA = !showingA;
+      idx = (idx+1) % TITLES.length;
     }
-    function startCycle(){ if(timer) clearInterval(timer); cycleOnce(); timer=setInterval(cycleOnce, PERIOD); }
+    function startCycle(){ if(timer) clearInterval(timer); swapTitles(); timer=setInterval(swapTitles, PERIOD); }
     function stopCycle(){ if(timer){ clearInterval(timer); timer=null; } }
 
-    titleEl.textContent = titles[0];
-    lockIntroWidth();
-    reserveTitleHeightForWrap();
+    setText(titleA, TITLES[0]); setText(titleB, TITLES[1]);
+    reserveTitleHeight();
 
-    (async()=>{
-      await scrambleIn(FINAL_INTRO, introHeading, 1400);
-      [titleEl, studentP, cta].forEach(el => { if(el) el.style.opacity = 1; });
+    scrambleIn(FINAL_INTRO, introHeading, 1200).then(()=>{
+      if (hasGSAP && fadeTargets.length) gsap.to(fadeTargets, { opacity: 1, duration:.5, stagger:.08, ease:'power2.out' });
+      else fadeTargets.forEach(el => el.style.opacity = 1);
       startCycle();
-      let resizeTO=null;
-      window.addEventListener('resize', ()=>{
-        if(resizeTO) clearTimeout(resizeTO);
-        resizeTO=setTimeout(reserveTitleHeightForWrap, 120);
-      }, {passive:true});
-      document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
-    })();
+    });
+
+    let resizeTO=null;
+    window.addEventListener('resize', ()=>{
+      if(resizeTO) clearTimeout(resizeTO);
+      resizeTO=setTimeout(reserveTitleHeight, 120);
+    }, { passive:true });
+
+    document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
   }
 
   function initVanta(){
     const el = document.getElementById('vanta-bg');
     if(!el) return;
 
-    // Skip heavy background on low-end or reduced-motion.
     if(state.prefersReducedMotion || (state.isMobile && state.deviceMemory <= 2)){
       el.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color') || '#0f0f1a';
       return;
@@ -205,13 +218,12 @@
       const id = setInterval(()=>{
         attempts++;
         if(window.VANTA && window.VANTA.FOG && window.THREE){ clearInterval(id); mount(); }
-        if(attempts > 40){ clearInterval(id); } // ~4s max
+        if(attempts > 40){ clearInterval(id); }
       }, 100);
     };
 
     tryMount();
 
-    // Free GPU when tab hidden; remount when visible.
     document.addEventListener('visibilitychange', () => {
       if(document.hidden){
         if(vanta && vanta.destroy){ vanta.destroy(); vanta = null; }
@@ -220,7 +232,6 @@
       }
     });
 
-    // Defensive cleanup on unload.
     window.addEventListener('beforeunload', () => {
       if(vanta && vanta.destroy){ vanta.destroy(); vanta = null; }
     });
@@ -289,7 +300,9 @@
       on: {
         slideChangeTransitionStart(swiper){
           const content = swiper.slides[swiper.activeIndex]?.querySelector('.about-slide-content');
-          if(content && window.gsap) gsap.fromTo(content,{y:30,opacity:0},{y:0,opacity:1,duration:.4,ease:'power2.out'});
+          if(content && window.gsap){
+            try{ gsap.fromTo(content,{y:30,opacity:0},{y:0,opacity:1,duration:.4,ease:'power2.out'}); }catch{}
+          }
         },
       },
     };
@@ -347,19 +360,6 @@
     setTimeout(()=> requestAnimationFrame(drawExperienceConnectors), 120);
   }
 
-  window.addEventListener('DOMContentLoaded', ()=>{
-    initAOS();
-    initSmoothScroll();
-    initHero();
-    initHamburger();
-    initActiveLinkObserver();
-    initAutoHideNav();
-    initVanta();             // background fix
-    initSwiper();
-    initExperienceAccordion();
-    initExperienceWires();
-  });
-
   function initExperienceAccordion(){
     const items=document.querySelectorAll('.experience-item');
     items.forEach((item,idx)=>{
@@ -387,4 +387,18 @@
       document.dispatchEvent(new CustomEvent('exp:toggle'));
     }
   }
+
+  window.addEventListener('DOMContentLoaded', ()=>{
+    initAOS();
+    initSmoothScroll();
+    initHero();                
+    initHamburger();
+    initActiveLinkObserver();
+    initAutoHideNav();
+    initVanta();
+    initSwiper();
+    initExperienceAccordion();
+    initExperienceWires();
+  });
 })();
+
