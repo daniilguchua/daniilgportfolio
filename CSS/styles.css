@@ -421,7 +421,6 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 a.shiny-cta{ display:inline-block; text-decoration:none; color:inherit; }
 .small-submit-btn{ display:block; margin:0 auto; padding:1rem 2rem; max-width:fit-content; margin-top:1rem; }
 
-/* Misc */
 strong,b{ color:#00ff00; font-weight:bold; font-size-adjust:.58; }
 a:focus,button:focus,input:focus,textarea:focus{ outline:2px solid var(--accent-color1); outline-offset:2px; }
 html.aos-disabled [data-aos]{ opacity:1 !important; transform:none !important; }
