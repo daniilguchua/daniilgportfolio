@@ -27,6 +27,7 @@
     if(window.gsap && window.ScrollToPlugin){ try{ gsap.registerPlugin(ScrollToPlugin); }catch{} }
     const links = document.querySelectorAll('a[data-link]');
     const nav = document.querySelector('nav');
+
     const scrollToY = (y) => {
       if(window.gsap && window.ScrollToPlugin){
         gsap.to(window,{ duration: state.isMobile? .6:.9, scrollTo:{y, autoKill:false}, ease:'power2.out' });
@@ -34,6 +35,7 @@
         window.scrollTo({ top:y, behavior:'smooth' });
       }
     };
+
     links.forEach(link=>{
       link.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -49,18 +51,19 @@
     });
   }
 
-  // FIXED: uses #titleA / #titleB / #titleStack and filters GSAP targets
   function initHero(){
     const nav          = document.querySelector('nav');
     const heroText     = document.querySelector('.hero-text');
     const introHeading = document.querySelector('.intro-heading');
     const titleStack   = document.getElementById('titleStack');
-    const titleA       = document.getElementById('titleA');
-    const titleB       = document.getElementById('titleB');
+    const titleEl      = document.getElementById('titleA') || document.querySelector('#home .title-animated');
+    const titleB       = document.getElementById('titleB'); // will be hidden
     const studentP     = heroText?.querySelector('p');
     const cta          = heroText?.querySelector('.shiny-cta');
 
-    if(!heroText || !introHeading || !titleStack || !titleA || !titleB) return;
+    if(!heroText || !introHeading || !titleStack || !titleEl) return;
+
+    if (titleB) titleB.style.display = 'none';
 
     const FINAL_INTRO = "Hello! I'm Daniil, an Aspiring";
     const TITLES      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
@@ -73,7 +76,7 @@
     if (hasGSAP && fadeTargets.length) gsap.set(fadeTargets, { opacity: 0 });
     else fadeTargets.forEach(el => el.style.opacity = 0);
 
-    // prevent intro wrap during scramble
+    // Fix intro width while scrambling
     (function lockIntroWidth(){
       const m  = document.createElement('span');
       const cs = getComputedStyle(introHeading);
@@ -92,12 +95,12 @@
       introHeading.style.height     = Math.ceil(r.height) + 'px';
     })();
 
-    // reserve height for rotating title based on actual wrapping width
+    // Reserve vertical space under the intro for the tallest wrapped title
     function reserveTitleHeight(){
       const containerWidth = Math.max(0, Math.floor(heroText.getBoundingClientRect().width));
       if(!containerWidth) return;
       const probe = document.createElement('h2');
-      const cs = getComputedStyle(titleA);
+      const cs = getComputedStyle(titleEl);
       Object.assign(probe.style, {
         position:'absolute', left:'-99999px', top:'-99999px', visibility:'hidden',
         whiteSpace:'normal', width: containerWidth + 'px', margin:'0',
@@ -130,43 +133,41 @@
       });
     }
 
-    // crossfade between two title nodes
-    let idx=0, showingA=true, timer=null;
-    function setText(el, text){ el.textContent = text; }
-    function swapTitles(){
+    // fade the single title element out -> set text -> fade in
+    let idx = 0, timer = null;
+    function showNextTitle(){
       const next = TITLES[idx];
-      const incoming = showingA ? titleB : titleA;
-      const outgoing = showingA ? titleA : titleB;
-
-      setText(incoming, next);
-
       if(hasGSAP){
-        const safe = [incoming, outgoing].filter(Boolean);
-        if(safe.length){
-          gsap.killTweensOf(safe);
-          gsap.set(incoming, { opacity: 0, y: 8, position:'absolute', inset:0 });
-          gsap.set(outgoing, { position:'absolute', inset:0 });
-          gsap.to(incoming, { opacity:1, y:0, duration:.45, ease:'power2.out' });
-          gsap.to(outgoing,  { opacity:0, y:-6, duration:.45, ease:'power2.out' });
+        try{
+          gsap.to(titleEl, { opacity:0, y:-6, duration:.25, ease:'power2.out',
+            onComplete: ()=>{
+              titleEl.textContent = next;
+              gsap.fromTo(titleEl,{ opacity:0, y:8 },{ opacity:1, y:0, duration:.45, ease:'power2.out' });
+            }
+          });
+        }catch{
+          titleEl.style.opacity='0';
+          titleEl.textContent = next;
+          requestAnimationFrame(()=>{
+            titleEl.style.transition='opacity .45s ease, transform .45s ease';
+            titleEl.style.transform='translateY(0)';
+            titleEl.style.opacity='1';
+          });
         }
       }else{
-        incoming.style.opacity='0'; incoming.style.transform='translateY(8px)'; incoming.style.position='absolute'; incoming.style.inset='0';
-        outgoing.style.position='absolute'; outgoing.style.inset='0';
-        requestAnimationFrame(()=>{
-          incoming.style.transition='opacity .45s ease, transform .45s ease';
-          outgoing.style.transition='opacity .45s ease, transform .45s ease';
-          incoming.style.opacity='1'; incoming.style.transform='translateY(0)';
-          outgoing.style.opacity='0'; outgoing.style.transform='translateY(-6px)';
-        });
+        titleEl.style.opacity='0';
+        setTimeout(()=>{
+          titleEl.textContent = next;
+          titleEl.style.transition='opacity .45s ease';
+          titleEl.style.opacity='1';
+        }, 200);
       }
-
-      showingA = !showingA;
       idx = (idx+1) % TITLES.length;
     }
-    function startCycle(){ if(timer) clearInterval(timer); swapTitles(); timer=setInterval(swapTitles, PERIOD); }
+    function startCycle(){ if(timer) clearInterval(timer); showNextTitle(); timer=setInterval(showNextTitle, PERIOD); }
     function stopCycle(){ if(timer){ clearInterval(timer); timer=null; } }
 
-    setText(titleA, TITLES[0]); setText(titleB, TITLES[1]);
+    titleEl.textContent = TITLES[0];
     reserveTitleHeight();
 
     scrambleIn(FINAL_INTRO, introHeading, 1200).then(()=>{
@@ -391,7 +392,7 @@
   window.addEventListener('DOMContentLoaded', ()=>{
     initAOS();
     initSmoothScroll();
-    initHero();                
+    initHero();                 
     initHamburger();
     initActiveLinkObserver();
     initAutoHideNav();
