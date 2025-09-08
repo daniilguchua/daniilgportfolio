@@ -5,6 +5,7 @@
     deviceMemory: navigator.deviceMemory || 4,
   };
 
+  /* -------------------- utilities -------------------- */
   function onScrollRAF(cb){
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -12,6 +13,7 @@
     }, {passive:true});
   }
 
+  /* -------------------- AOS -------------------- */
   function initAOS(){
     try{
       if(window.AOS && typeof AOS.init === 'function'){
@@ -23,14 +25,17 @@
     }catch{ document.documentElement.classList.add('aos-disabled'); }
   }
 
+  /* ---------------- smooth scroll ---------------- */
   function initSmoothScroll(){
     if(window.gsap && window.ScrollToPlugin){ try{ gsap.registerPlugin(ScrollToPlugin); }catch{} }
     const links = document.querySelectorAll('a[data-link]');
     const nav = document.querySelector('nav');
 
     const scrollToY = (y) => {
-      if(window.gsap && window.ScrollToPlugin){
-        gsap.to(window,{ duration: state.isMobile? .6:.9, scrollTo:{y, autoKill:false}, ease:'power2.out' });
+      if(window.gsap && window.ScrollToPlugin && typeof gsap.to === 'function'){
+        try{
+          gsap.to(window,{ duration: state.isMobile? .6:.9, scrollTo:{y, autoKill:false}, ease:'power2.out' });
+        }catch{ window.scrollTo({ top:y, behavior:'smooth' }); }
       }else{
         window.scrollTo({ top:y, behavior:'smooth' });
       }
@@ -51,39 +56,67 @@
     });
   }
 
+  /* -------------------- HERO -------------------- */
   function initHero(){
-    const nav          = document.querySelector('nav');
-    const heroText     = document.querySelector('.hero-text');
-    const introHeading = document.querySelector('.intro-heading');
-    const titleStack   = document.getElementById('titleStack');
-    const titleEl      = document.getElementById('titleA') || document.querySelector('#home .title-animated');
-    const titleB       = document.getElementById('titleB'); // will be hidden
-    const studentP     = heroText?.querySelector('p');
-    const cta          = heroText?.querySelector('.shiny-cta');
+    const nav           = document.querySelector('nav');
+    const heroText      = document.querySelector('.hero-text');
+    const introHeading  = document.querySelector('.intro-heading');
+    const stack         = document.getElementById('titleStack');        // wrapper
+    const titleA        = document.getElementById('titleA');            // two layers
+    const titleB        = document.getElementById('titleB');
+    const studentP      = heroText?.querySelector('p');
+    const cta           = heroText?.querySelector('.shiny-cta');
 
-    if(!heroText || !introHeading || !titleStack || !titleEl) return;
-
-    if (titleB) titleB.style.display = 'none';
+    if(!heroText || !introHeading || !stack || !titleA || !titleB){ return; }
 
     const FINAL_INTRO = "Hello! I'm Daniil, an Aspiring";
-    const TITLES      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
+    const titles      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
     const PERIOD      = state.isMobile ? 2800 : 3400;
     const hasGSAP     = typeof window.gsap === 'function';
 
     nav?.classList.add('visible');
 
-    const fadeTargets = [studentP, cta].filter(Boolean);
-    if (hasGSAP && fadeTargets.length) gsap.set(fadeTargets, { opacity: 0 });
-    else fadeTargets.forEach(el => el.style.opacity = 0);
+    // Ensure stacked cross-fade but with stable layout
+    stack.style.position = 'relative';
+    [titleA, titleB].forEach(el => {
+      el.style.position = 'absolute';
+      el.style.left = '50%';
+      el.style.top = '0';
+      el.style.transform = 'translateX(-50%)';
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
+      el.setAttribute('aria-hidden','true');
+    });
 
-    // Fix intro width while scrambling
-    (function lockIntroWidth(){
+    // Reserve height equal to tallest role text
+    function reserveRoleHeight(){
+      const probe = document.createElement('h2');
+      const cs = getComputedStyle(titleA);
+      Object.assign(probe.style, {
+        position:'absolute', left:'-99999px', top:'-99999px', visibility:'hidden',
+        whiteSpace:'nowrap', margin:'0',
+        fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight,
+        letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, lineHeight: cs.lineHeight
+      });
+      document.body.appendChild(probe);
+      let maxH = 0;
+      for(const t of titles){
+        probe.textContent = t;
+        maxH = Math.max(maxH, Math.ceil(probe.getBoundingClientRect().height));
+      }
+      document.body.removeChild(probe);
+      stack.style.minHeight = (maxH || 0) + 'px';
+    }
+
+    // Keep intro line from reflowing during scramble
+    function lockIntroWidth(){
       const m  = document.createElement('span');
       const cs = getComputedStyle(introHeading);
       Object.assign(m.style, {
-        position:'absolute', visibility:'hidden', pointerEvents:'none', whiteSpace:'nowrap',
-        fontFamily:cs.fontFamily, fontSize:cs.fontSize, fontWeight:cs.fontWeight,
-        letterSpacing:cs.letterSpacing, textTransform:cs.textTransform, lineHeight:cs.lineHeight
+        position:'absolute', visibility:'hidden', pointerEvents:'none',
+        whiteSpace:'nowrap',
+        fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight,
+        letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, lineHeight: cs.lineHeight
       });
       m.textContent = FINAL_INTRO;
       document.body.appendChild(m);
@@ -93,98 +126,144 @@
       introHeading.style.display    = 'inline-block';
       introHeading.style.width      = Math.ceil(r.width)  + 'px';
       introHeading.style.height     = Math.ceil(r.height) + 'px';
-    })();
-
-    // Reserve vertical space under the intro for the tallest wrapped title
-    function reserveTitleHeight(){
-      const containerWidth = Math.max(0, Math.floor(heroText.getBoundingClientRect().width));
-      if(!containerWidth) return;
-      const probe = document.createElement('h2');
-      const cs = getComputedStyle(titleEl);
-      Object.assign(probe.style, {
-        position:'absolute', left:'-99999px', top:'-99999px', visibility:'hidden',
-        whiteSpace:'normal', width: containerWidth + 'px', margin:'0',
-        fontFamily:cs.fontFamily, fontSize:cs.fontSize, fontWeight:cs.fontWeight,
-        letterSpacing:cs.letterSpacing, textTransform:cs.textTransform, lineHeight:cs.lineHeight
-      });
-      document.body.appendChild(probe);
-      let maxH = 0;
-      for(const t of TITLES){ probe.textContent = t; maxH = Math.max(maxH, Math.ceil(probe.getBoundingClientRect().height)); }
-      document.body.removeChild(probe);
-      titleStack.style.height = (maxH || 0) + 'px';
     }
 
-    function scrambleIn(finalText, el, duration=1200){
+    // Intro scramble
+    function scrambleIn(finalText, el, duration=1400){
       return new Promise(res=>{
-        const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const start=performance.now();
+        if(!el) return res();
+        if(state.prefersReducedMotion){ el.textContent = finalText; return res(); }
+        const pool  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const start = performance.now();
         function frame(now){
-          const t=Math.min((now-start)/duration,1);
-          const reveal=Math.floor(t*finalText.length);
-          let out=finalText.slice(0,reveal);
+          const t      = Math.min((now - start) / duration, 1);
+          const reveal = Math.floor(t * finalText.length);
+          let out      = finalText.slice(0, reveal);
           for(let i=reveal;i<finalText.length;i++){
-            const ch=finalText[i];
-            out+=(ch===' '||/[.,!?]/.test(ch))?ch:pool[(Math.random()*pool.length)|0];
+            const ch = finalText[i];
+            out += (ch===' ' || /[.,!?]/.test(ch)) ? ch : pool[(Math.random()*pool.length)|0];
           }
-          el.textContent=out;
-          if(t<1) requestAnimationFrame(frame); else { el.textContent=finalText; res(); }
+          el.textContent = out;
+          if(t<1) requestAnimationFrame(frame); else { el.textContent = finalText; res(); }
         }
         requestAnimationFrame(frame);
       });
     }
 
-    // fade the single title element out -> set text -> fade in
-    let idx = 0, timer = null;
-    function showNextTitle(){
-      const next = TITLES[idx];
-      if(hasGSAP){
+    // Cross-fade controller (A <-> B)
+    let idx=0, timer=null, curr=titleA, next=titleB;
+
+    function showFirstRole(){
+      curr.textContent = titles[idx];
+      curr.style.opacity = '0';
+      curr.removeAttribute('aria-hidden');
+      if(hasGSAP && !state.prefersReducedMotion){
+        try{ gsap.fromTo(curr,{opacity:0,y:6},{opacity:1,y:0,duration:.5,ease:'power2.out'}); }
+        catch{ curr.style.opacity='1'; curr.style.transform='translateX(-50%)'; }
+      }else{
+        curr.style.transition='opacity .35s ease, transform .35s ease';
+        curr.style.opacity='1';
+        curr.style.transform='translateX(-50%)';
+      }
+    }
+
+    function crossFade(){
+      idx = (idx + 1) % titles.length;
+      // prepare next
+      next.textContent = titles[idx];
+      next.style.opacity='0';
+      next.removeAttribute('aria-hidden');
+      curr.setAttribute('aria-hidden','true');
+
+      if(hasGSAP && !state.prefersReducedMotion){
         try{
-          gsap.to(titleEl, { opacity:0, y:-6, duration:.25, ease:'power2.out',
-            onComplete: ()=>{
-              titleEl.textContent = next;
-              gsap.fromTo(titleEl,{ opacity:0, y:8 },{ opacity:1, y:0, duration:.45, ease:'power2.out' });
-            }
-          });
+          gsap.timeline()
+            .to(curr, {opacity:0, y:-6, duration:.35, ease:'power2.out'}, 0)
+            .fromTo(next, {opacity:0, y:6}, {opacity:1, y:0, duration:.45, ease:'power2.out'}, 0.05);
         }catch{
-          titleEl.style.opacity='0';
-          titleEl.textContent = next;
-          requestAnimationFrame(()=>{
-            titleEl.style.transition='opacity .45s ease, transform .45s ease';
-            titleEl.style.transform='translateY(0)';
-            titleEl.style.opacity='1';
-          });
+          curr.style.opacity='0';
+          next.style.opacity='1';
         }
       }else{
-        titleEl.style.opacity='0';
-        setTimeout(()=>{
-          titleEl.textContent = next;
-          titleEl.style.transition='opacity .45s ease';
-          titleEl.style.opacity='1';
-        }, 200);
+        curr.style.transition='opacity .3s ease, transform .3s ease';
+        next.style.transition='opacity .3s ease, transform .3s ease';
+        curr.style.opacity='0'; curr.style.transform='translateX(-50%) translateY(-6px)';
+        next.style.opacity='1'; next.style.transform='translateX(-50%)';
       }
-      idx = (idx+1) % TITLES.length;
+
+      // swap refs
+      const tmp = curr; curr = next; next = tmp;
     }
-    function startCycle(){ if(timer) clearInterval(timer); showNextTitle(); timer=setInterval(showNextTitle, PERIOD); }
+
+    function startCycle(){ if(timer) clearInterval(timer); timer=setInterval(crossFade, PERIOD); }
     function stopCycle(){ if(timer){ clearInterval(timer); timer=null; } }
 
-    titleEl.textContent = TITLES[0];
-    reserveTitleHeight();
+    // sequence: intro → role → paragraph & CTA → cycle
+    (async ()=>{
+      lockIntroWidth();
+      reserveRoleHeight();
 
-    scrambleIn(FINAL_INTRO, introHeading, 1200).then(()=>{
-      if (hasGSAP && fadeTargets.length) gsap.to(fadeTargets, { opacity: 1, duration:.5, stagger:.08, ease:'power2.out' });
-      else fadeTargets.forEach(el => el.style.opacity = 1);
-      startCycle();
-    });
+      // Begin with intro scrambled-in
+      await scrambleIn(FINAL_INTRO, introHeading, 1400);
 
-    let resizeTO=null;
-    window.addEventListener('resize', ()=>{
-      if(resizeTO) clearTimeout(resizeTO);
-      resizeTO=setTimeout(reserveTitleHeight, 120);
-    }, { passive:true });
+      // Show first role
+      showFirstRole();
 
-    document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
+      if (hasGSAP && !state.prefersReducedMotion) {
+        try {
+          const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      
+          // Force visibility before animating
+          [studentP, cta].forEach(el => {
+            if (el) {
+              el.style.visibility = 'visible';
+              el.style.opacity = 0;
+              el.style.transform = 'translateY(8px)';
+            }
+          });
+      
+          if (studentP) {
+            tl.to(studentP, { opacity: 1, y: 0, duration: 0.45 }, '+=0.05');
+          }
+          if (cta) {
+            tl.to(cta, { opacity: 1, y: 0, duration: 0.5 }, '+=0.08');
+          }
+      
+          tl.add(startCycle, '+=0.05');
+      
+        } catch {
+          [studentP, cta].forEach(el => {
+            if (el) {
+              el.style.visibility = 'visible';
+              el.style.opacity = 1;
+              el.style.transform = 'none';
+            }
+          });
+          startCycle();
+        }
+      } else {
+        [studentP, cta].forEach(el => {
+          if (el) {
+            el.style.visibility = 'visible';
+            el.style.opacity = 1;
+            el.style.transform = 'none';
+          }
+        });
+        startCycle();
+      }
+      
+
+
+      let resizeTO=null;
+      window.addEventListener('resize', ()=>{
+        if(resizeTO) clearTimeout(resizeTO);
+        resizeTO=setTimeout(reserveRoleHeight, 120);
+      }, {passive:true});
+      document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
+    })();
   }
 
+  /* -------------------- Vanta -------------------- */
   function initVanta(){
     const el = document.getElementById('vanta-bg');
     if(!el) return;
@@ -219,7 +298,7 @@
       const id = setInterval(()=>{
         attempts++;
         if(window.VANTA && window.VANTA.FOG && window.THREE){ clearInterval(id); mount(); }
-        if(attempts > 40){ clearInterval(id); }
+        if(attempts > 40){ clearInterval(id); } // ~4s max
       }, 100);
     };
 
@@ -238,6 +317,7 @@
     });
   }
 
+  /* -------------------- hamburger -------------------- */
   function initHamburger(){
     const hamburger=document.querySelector('.hamburger');
     const menu=document.querySelector('nav ul');
@@ -250,6 +330,7 @@
     });
   }
 
+  /* --------------- active link observer --------------- */
   function initActiveLinkObserver(){
     const sections=document.querySelectorAll('section[id], header[id]');
     const links=document.querySelectorAll('nav ul li a');
@@ -267,6 +348,7 @@
     sections.forEach(s=>observer.observe(s));
   }
 
+  /* ---------------- auto-hide nav ---------------- */
   function initAutoHideNav(){
     const nav=document.querySelector('nav');
     if(!nav) return;
@@ -279,6 +361,7 @@
     });
   }
 
+  /* -------------------- Swiper -------------------- */
   function initSwiper(){
     if(!window.Swiper) return;
     const el=document.querySelector('.about-swiper');
@@ -316,6 +399,7 @@
     new Swiper('.about-swiper', opts);
   }
 
+  /* ----------- Experience wires (SVG) ----------- */
   function drawExperienceConnectors(){
     const container=document.querySelector('.experience-timeline');
     if(!container) return;
@@ -361,6 +445,7 @@
     setTimeout(()=> requestAnimationFrame(drawExperienceConnectors), 120);
   }
 
+  /* ----------- Experience accordion ----------- */
   function initExperienceAccordion(){
     const items=document.querySelectorAll('.experience-item');
     items.forEach((item,idx)=>{
@@ -389,10 +474,11 @@
     }
   }
 
+  /* -------------------- boot -------------------- */
   window.addEventListener('DOMContentLoaded', ()=>{
     initAOS();
     initSmoothScroll();
-    initHero();                 
+    initHero();            // fixed sequence & cross-fade
     initHamburger();
     initActiveLinkObserver();
     initAutoHideNav();
@@ -402,4 +488,3 @@
     initExperienceWires();
   });
 })();
-
