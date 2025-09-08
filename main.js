@@ -9,7 +9,10 @@
   function onScrollRAF(cb){
     let ticking = false;
     window.addEventListener('scroll', () => {
-      if(!ticking){ requestAnimationFrame(()=>{ cb(); ticking = false; }); ticking = true; }
+      if(!ticking){
+        requestAnimationFrame(()=>{ cb(); ticking = false; });
+        ticking = true;
+      }
     }, {passive:true});
   }
 
@@ -22,12 +25,16 @@
       }else{
         document.documentElement.classList.add('aos-disabled');
       }
-    }catch{ document.documentElement.classList.add('aos-disabled'); }
+    }catch{
+      document.documentElement.classList.add('aos-disabled');
+    }
   }
 
   /* ---------------- smooth scroll ---------------- */
   function initSmoothScroll(){
-    if(window.gsap && window.ScrollToPlugin){ try{ gsap.registerPlugin(ScrollToPlugin); }catch{} }
+    if(window.gsap && window.ScrollToPlugin){
+      try{ gsap.registerPlugin(ScrollToPlugin); }catch{}
+    }
     const links = document.querySelectorAll('a[data-link]');
     const nav = document.querySelector('nav');
 
@@ -35,7 +42,9 @@
       if(window.gsap && window.ScrollToPlugin && typeof gsap.to === 'function'){
         try{
           gsap.to(window,{ duration: state.isMobile? .6:.9, scrollTo:{y, autoKill:false}, ease:'power2.out' });
-        }catch{ window.scrollTo({ top:y, behavior:'smooth' }); }
+        }catch{
+          window.scrollTo({ top:y, behavior:'smooth' });
+        }
       }else{
         window.scrollTo({ top:y, behavior:'smooth' });
       }
@@ -61,13 +70,18 @@
     const nav           = document.querySelector('nav');
     const heroText      = document.querySelector('.hero-text');
     const introHeading  = document.querySelector('.intro-heading');
-    const stack         = document.getElementById('titleStack');        // wrapper
-    const titleA        = document.getElementById('titleA');            // two layers
+    const stack         = document.getElementById('titleStack');  
+    const titleA        = document.getElementById('titleA');      
     const titleB        = document.getElementById('titleB');
-    const studentP      = heroText?.querySelector('p');
-    const cta           = heroText?.querySelector('.shiny-cta');
+    const studentP      = heroText?.querySelector('p');           
+    const cta           = heroText?.querySelector('.shiny-cta'); 
 
     if(!heroText || !introHeading || !stack || !titleA || !titleB){ return; }
+
+    const T_DELAY_PARA_MS  = 150;  
+    const T_DELAY_CTA_MS   = 120; 
+    const T_DELAY_ROLE_MS  = 180;  
+    const T_DELAY_CYCLE_MS = 180; 
 
     const FINAL_INTRO = "Hello! I'm Daniil, an Aspiring";
     const titles      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
@@ -76,7 +90,31 @@
 
     nav?.classList.add('visible');
 
-    // Ensure stacked cross-fade but with stable layout
+    if (heroText.hasAttribute('data-aos')) heroText.removeAttribute('data-aos');
+    heroText.classList.remove('aos-animate');
+    heroText.style.removeProperty('opacity');
+    heroText.style.removeProperty('transform');
+
+    const sleep = (ms)=> new Promise(r=> setTimeout(r, ms));
+    const tweenTo = (target, vars, durSec)=>{
+      return new Promise(res=>{
+        if(!target) return res();
+        if(hasGSAP && !state.prefersReducedMotion){
+          try{
+            gsap.to(target, { duration: durSec, ...vars, onComplete:res });
+          }catch{
+            if(vars.opacity != null) target.style.opacity = String(vars.opacity);
+            target.style.transform = 'none';
+            res();
+          }
+        }else{
+          if(vars.opacity != null) target.style.opacity = String(vars.opacity);
+          target.style.transform = 'none';
+          res();
+        }
+      });
+    };
+
     stack.style.position = 'relative';
     [titleA, titleB].forEach(el => {
       el.style.position = 'absolute';
@@ -88,7 +126,6 @@
       el.setAttribute('aria-hidden','true');
     });
 
-    // Reserve height equal to tallest role text
     function reserveRoleHeight(){
       const probe = document.createElement('h2');
       const cs = getComputedStyle(titleA);
@@ -108,7 +145,6 @@
       stack.style.minHeight = (maxH || 0) + 'px';
     }
 
-    // Keep intro line from reflowing during scramble
     function lockIntroWidth(){
       const m  = document.createElement('span');
       const cs = getComputedStyle(introHeading);
@@ -128,7 +164,6 @@
       introHeading.style.height     = Math.ceil(r.height) + 'px';
     }
 
-    // Intro scramble
     function scrambleIn(finalText, el, duration=1400){
       return new Promise(res=>{
         if(!el) return res();
@@ -150,7 +185,6 @@
       });
     }
 
-    // Cross-fade controller (A <-> B)
     let idx=0, timer=null, curr=titleA, next=titleB;
 
     function showFirstRole(){
@@ -158,8 +192,11 @@
       curr.style.opacity = '0';
       curr.removeAttribute('aria-hidden');
       if(hasGSAP && !state.prefersReducedMotion){
-        try{ gsap.fromTo(curr,{opacity:0,y:6},{opacity:1,y:0,duration:.5,ease:'power2.out'}); }
-        catch{ curr.style.opacity='1'; curr.style.transform='translateX(-50%)'; }
+        try{
+          gsap.fromTo(curr,{opacity:0,y:6},{opacity:1,y:0,duration:.5,ease:'power2.out'});
+        }catch{
+          curr.style.opacity='1'; curr.style.transform='translateX(-50%)';
+        }
       }else{
         curr.style.transition='opacity .35s ease, transform .35s ease';
         curr.style.opacity='1';
@@ -169,7 +206,6 @@
 
     function crossFade(){
       idx = (idx + 1) % titles.length;
-      // prepare next
       next.textContent = titles[idx];
       next.style.opacity='0';
       next.removeAttribute('aria-hidden');
@@ -191,76 +227,58 @@
         next.style.opacity='1'; next.style.transform='translateX(-50%)';
       }
 
-      // swap refs
       const tmp = curr; curr = next; next = tmp;
     }
 
-    function startCycle(){ if(timer) clearInterval(timer); timer=setInterval(crossFade, PERIOD); }
-    function stopCycle(){ if(timer){ clearInterval(timer); timer=null; } }
+    function startCycle(){ if(timer) clearInterval(timer); timer = setInterval(crossFade, PERIOD); }
+    function stopCycle(){ if(timer){ clearInterval(timer); timer = null; } }
 
-    // sequence: intro → role → paragraph & CTA → cycle
-    (async ()=>{
-      lockIntroWidth();
-      reserveRoleHeight();
+   
+(async ()=>{
+  lockIntroWidth();
+  reserveRoleHeight();
 
-      // Begin with intro scrambled-in
-      await scrambleIn(FINAL_INTRO, introHeading, 1400);
+  await scrambleIn(FINAL_INTRO, introHeading, 1400);
 
-      // Show first role
-      showFirstRole();
+  await new Promise(r=> setTimeout(r, 100));
+  showFirstRole();
 
-      if (hasGSAP && !state.prefersReducedMotion) {
-        try {
-          const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-      
-          // Force visibility before animating
-          [studentP, cta].forEach(el => {
-            if (el) {
-              el.style.visibility = 'visible';
-              el.style.opacity = 0;
-              el.style.transform = 'translateY(8px)';
-            }
-          });
-      
-          if (studentP) {
-            tl.to(studentP, { opacity: 1, y: 0, duration: 0.45 }, '+=0.05');
-          }
-          if (cta) {
-            tl.to(cta, { opacity: 1, y: 0, duration: 0.5 }, '+=0.08');
-          }
-      
-          tl.add(startCycle, '+=0.05');
-      
-        } catch {
-          [studentP, cta].forEach(el => {
-            if (el) {
-              el.style.visibility = 'visible';
-              el.style.opacity = 1;
-              el.style.transform = 'none';
-            }
-          });
-          startCycle();
-        }
-      } else {
-        [studentP, cta].forEach(el => {
-          if (el) {
-            el.style.visibility = 'visible';
-            el.style.opacity = 1;
-            el.style.transform = 'none';
-          }
-        });
-        startCycle();
-      }
-      
+  if(studentP){ studentP.style.opacity = '0'; studentP.style.transform = 'translateY(8px)'; }
+  if(cta){      cta.style.opacity      = '0'; cta.style.transform      = 'translateY(8px)'; }
 
+  await new Promise(r=> setTimeout(r, T_DELAY_PARA_MS));
+  await (typeof gsap === 'function' && !state.prefersReducedMotion
+    ? new Promise(res=>{
+        try{ gsap.to(studentP, {opacity:1, y:0, duration:0.45, ease:'power2.out', onComplete:res}); }
+        catch{ if(studentP){ studentP.style.opacity='1'; studentP.style.transform='none'; } res(); }
+      })
+    : (studentP && (studentP.style.opacity='1', studentP.style.transform='none'), Promise.resolve())
+  );
 
-      let resizeTO=null;
-      window.addEventListener('resize', ()=>{
-        if(resizeTO) clearTimeout(resizeTO);
-        resizeTO=setTimeout(reserveRoleHeight, 120);
-      }, {passive:true});
-      document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
-    })();
+  // 5) Then the CTA
+  await new Promise(r=> setTimeout(r, T_DELAY_CTA_MS));
+  await (typeof gsap === 'function' && !state.prefersReducedMotion
+    ? new Promise(res=>{
+        try{ gsap.to(cta, {opacity:1, y:0, duration:0.5, ease:'power2.out', onComplete:res}); }
+        catch{ if(cta){ cta.style.opacity='1'; cta.style.transform='none'; } res(); }
+      })
+    : (cta && (cta.style.opacity='1', cta.style.transform='none'), Promise.resolve())
+  );
+
+  // 6) Finally start cycling the roles
+  await new Promise(r=> setTimeout(r, T_DELAY_ROLE_MS + T_DELAY_CYCLE_MS));
+  startCycle();
+
+  // housekeeping
+  let resizeTO=null;
+  window.addEventListener('resize', ()=>{
+    if(resizeTO) clearTimeout(resizeTO);
+    resizeTO = setTimeout(reserveRoleHeight, 120);
+  }, {passive:true});
+  document.addEventListener('visibilitychange', ()=> document.hidden ? stopCycle() : startCycle());
+  cta?.addEventListener('mouseenter', stopCycle);
+  cta?.addEventListener('mouseleave', startCycle);
+})();
   }
 
   /* -------------------- Vanta -------------------- */
@@ -385,7 +403,9 @@
         slideChangeTransitionStart(swiper){
           const content = swiper.slides[swiper.activeIndex]?.querySelector('.about-slide-content');
           if(content && window.gsap){
-            try{ gsap.fromTo(content,{y:30,opacity:0},{y:0,opacity:1,duration:.4,ease:'power2.out'}); }catch{}
+            try{
+              gsap.fromTo(content,{y:30,opacity:0},{y:0,opacity:1,duration:.4,ease:'power2.out'});
+            }catch{}
           }
         },
       },
@@ -478,7 +498,7 @@
   window.addEventListener('DOMContentLoaded', ()=>{
     initAOS();
     initSmoothScroll();
-    initHero();            // fixed sequence & cross-fade
+    initHero();           
     initHamburger();
     initActiveLinkObserver();
     initAutoHideNav();
