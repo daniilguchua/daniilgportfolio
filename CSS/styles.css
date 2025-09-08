@@ -16,7 +16,7 @@
   --exp-spine-width:8px;
 }
 
-html{ font-size:clamp(17px,0.9vw + 14px,20px); }
+html{ font-size:clamp(12px,1000vw + 100px,10px); }
 *{ margin:0; padding:0; box-sizing:border-box; }
 
 body{
@@ -32,7 +32,7 @@ body{
 section{
   position:relative; min-height:calc(100vh - 80px);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:4.5rem; background-color:transparent; overflow:hidden;
+  padding:rem; background-color:transparent; overflow:hidden;
   transition:min-height .3s ease, padding .3s ease;
 }
 @media (max-width:768px){ section{ min-height:auto; padding:1.75rem; } }
@@ -40,7 +40,7 @@ section{
 
 /* Divider */
 .divider{
-  border:0; height:4px; width:100%; max-width:1200px; margin:2rem auto; position:relative; overflow:hidden;
+  border:0; height:5px; width:100%; max-width:1200px; margin:2rem auto; position:relative; overflow:hidden;
   background:linear-gradient(90deg,#000,#333,#000);
   box-shadow:0 4px 6px rgba(0,0,0,.3);
 }
@@ -140,7 +140,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 /* About */
 .about{ position:relative; overflow:hidden; background-color:transparent; }
 .section-title{
-  align-self:center; margin-bottom:2.2rem; font-size:3.25rem; color:var(--secondary-color);
+  align-self:center; margin-bottom:2.5rem; font-size:4rem; color:var(--secondary-color);
   background:linear-gradient(90deg,var(--accent-color1),var(--accent-color2));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   text-shadow:0 0 10px var(--accent-color1),0 0 20px var(--accent-color2),0 0 30px var(--accent-color1);
@@ -158,12 +158,12 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 }
 .about-slide-content:hover{ transform:translateY(-5px) scale(1.01) !important; box-shadow:0 0 10px var(--accent-color1),0 0 10px var(--accent-color2) !important; }
 .subsection-header{
-  color:var(--accent-color1); margin-bottom:.6rem; font-size:2rem; border-bottom:2px solid var(--accent-color1);
+  color:var(--accent-color1); margin-bottom:.6rem; font-size:2.5rem; border-bottom:2px solid var(--accent-color1);
   display:inline-block; padding-bottom:0;
   background:linear-gradient(90deg,var(--accent-color1),var(--accent-color2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   text-shadow:0 0 20px var(--accent-color1),0 0 40px var(--accent-color2);
 }
-.about-slide-content p{ font-size:1.05rem; line-height:1.8; color:var(--secondary-color); margin-bottom:1rem; text-shadow:0 0 10px var(--accent-color1),0 0 20px var(--accent-color2); }
+.about-slide-content p{ font-size:1.25rem; line-height:1.8; color:var(--secondary-color); margin-bottom:1rem; text-shadow:0 0 10px var(--accent-color1),0 0 20px var(--accent-color2); }
 .about-image-container{
   width:190px; height:190px; margin-bottom:1rem; border:2px dashed var(--accent-color1); border-radius:50%; overflow:hidden;
   box-shadow:0 0 20px var(--accent-color1),0 0 40px var(--accent-color2);
@@ -172,7 +172,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 
 .swiper-button-prev::after,.swiper-button-next::after{ content:none !important; }
 .simple-swiper-btn{
-  position:absolute; top:90px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:50%;
+  position:absolute; top:100px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:50%;
   cursor:pointer; z-index:10; background:rgba(25,25,112,.4); transition:transform .3s ease, box-shadow .3s ease;
 }
 .simple-swiper-btn:hover{ transform:scale(1.1); box-shadow:0 0 10px var(--accent-color1); }
@@ -190,7 +190,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 
 .skillset-grid{
   display:grid; grid-template-columns:repeat(3, minmax(270px,1fr));
-  gap:2.4rem; width:100%; max-width:1300px; padding:0 1rem;
+  gap:5rem; width:100%; max-width:1000px; padding:0 1rem;
 }
 @media (max-width:1024px){ .skillset-grid{ grid-template-columns:repeat(2, minmax(260px,1fr)); } }
 @media (max-width:640px){ .skillset-grid{ grid-template-columns:1fr; } }
@@ -226,7 +226,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 .skill-icon i{ color:#0b0b14; font-size:1.35rem; filter:drop-shadow(0 0 4px rgba(255,255,255,.35)); }
 
 .skill-title{
-  font-size:1.8rem; line-height:1.1; font-weight:700; letter-spacing:.3px;
+  font-size:2rem; line-height:1.1; font-weight:700; letter-spacing:.3px;
   background: linear-gradient(90deg, var(--accent-color1), var(--accent-color2));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   text-shadow: 0 0 20px rgba(187,134,252,.5), 0 0 40px rgba(3,218,198,.25);
@@ -242,7 +242,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
   display:flex; flex-direction:column; gap:.7rem;
 }
 .skillset-card li{
-  position:relative; padding-left:1.6rem; font-size:1.05rem; line-height:1.7;
+  position:relative; padding-left:1.6rem; font-size:1.3rem; line-height:1.7;
   color:var(--secondary-color);
   text-shadow: 0 0 10px rgba(187,134,252,.25), 0 0 18px rgba(3,218,198,.15);
 }
@@ -261,8 +261,8 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 
 /* Projects */
 .project-grid{
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));
-  gap:2.2rem; width:100%; max-width:1300px; padding:0 1rem;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+  gap:2.2rem; width:100%; max-width:1100px; padding:0 1rem;
 }
 .project-card{
   background-color:rgba(15,15,26,.8); border:2px solid var(--accent-color1); border-radius:14px; overflow:hidden;
@@ -396,7 +396,7 @@ nav ul li a.active-link{ color:var(--accent-color1); border-bottom:2px solid var
 }
 .card:hover,.skillset-card:hover,.project-card:hover,.experience-item:hover{ transform:translateY(-5px) scale(1.01); box-shadow:0 0 10px var(--accent-color1),0 0 10px var(--accent-color2); }
 
-
+/* Shiny CTA */
 @property --gradient-angle{ syntax:"<angle>"; initial-value:0deg; inherits:false; }
 @property --gradient-angle-offset{ syntax:"<angle>"; initial-value:0deg; inherits:false; }
 @property --gradient-percent{ syntax:"<percentage>"; initial-value:5%; inherits:false; }
@@ -450,7 +450,7 @@ html.aos-disabled [data-aos]{ opacity:1 !important; transform:none !important; }
   left: 50%;
   top: 0;
   transform: translateX(-50%);
-  opacity: 0;            
+  opacity: 0;          
   pointer-events: none;
 }
 
@@ -459,5 +459,6 @@ html.aos-disabled [data-aos]{ opacity:1 !important; transform:none !important; }
 .hero .shiny-cta {
   opacity: 0;
   transform: translateY(8px);
-  transition: none;    
+  transition: none;     
 }
+
