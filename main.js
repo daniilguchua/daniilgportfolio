@@ -84,7 +84,7 @@
     const T_DELAY_CYCLE_MS = 180; 
 
     const FINAL_INTRO = "Hello! I'm Daniil, an Aspiring";
-    const titles      = ['Software Engineer','Full-Stack Developer','ML Engineer'];
+    const titles      = ['Data Science & Automation Engineer','Software Engineer','AI/ML Engineer'];
     const PERIOD      = state.isMobile ? 2800 : 3400;
     const hasGSAP     = typeof window.gsap === 'function';
 
