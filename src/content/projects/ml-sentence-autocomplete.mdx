@@ -1,0 +1,28 @@
+---
+title: "ML Sentence Autocomplete"
+subtitle: "NLP Pipeline with Custom Language Models"
+date: 2024-03-10
+type: case-study
+tags: ["Python", "NLTK", "spaCy", "Flask", "Machine Learning"]
+thumbnail: "/images/project2photo.png"
+sourceUrl: "https://github.com/daniilguchua"
+featured: true
+color: "#38bdf8"
+description: "A sentence autocomplete system built from scratch using n-gram language models, tokenization pipelines, and a Flask web interface."
+order: 2
+---
+
+## Overview
+
+A sentence autocomplete system powered by custom n-gram language models, built from the ground up without relying on pre-trained models. The system tokenizes input, analyzes context, and generates probabilistically ranked completions in real-time.
+
+## Architecture
+
+- **Tokenization pipeline**: Custom preprocessing with NLTK and spaCy for robust text normalization
+- **N-gram models**: Bigram and trigram models with Laplace smoothing for handling unseen sequences
+- **Flask API**: RESTful backend serving predictions with sub-100ms latency
+- **Interactive frontend**: Real-time suggestion dropdown as users type
+
+## Results
+
+The system demonstrates strong completion accuracy on conversational English text, with the trigram model significantly outperforming the bigram baseline.

@@ -1,0 +1,33 @@
+---
+title: "Physarum Polycephalum Simulation"
+subtitle: "WebGL Slime Mold Agent-Based Modeling"
+date: 2024-06-15
+type: live-demo
+tags: ["WebGL", "GLSL Shaders", "Agent-Based Modeling", "JavaScript"]
+thumbnail: "/images/slime-mold-cover.png"
+liveUrl: "https://example.com/slime-mold"
+sourceUrl: "https://github.com/daniilguchua"
+featured: true
+color: "#f59e0b"
+description: "A real-time agent-based simulation of Physarum Polycephalum (slime mold) behavior, rendered using WebGL compute shaders with 100,000+ autonomous agents."
+order: 1
+---
+
+## Overview
+
+A real-time agent-based simulation of Physarum Polycephalum (slime mold) behavior, rendered using WebGL. Each of the 100,000+ agents follows simple local rules — sense, rotate, deposit — that emerge into complex, organic network patterns.
+
+## The Challenge
+
+Traditional slime mold simulations run on the CPU, limiting agent count to a few thousand. I wanted to push the boundaries by leveraging GPU parallelism to simulate orders of magnitude more agents in real-time.
+
+## Technical Approach
+
+- **GPU-accelerated agents**: Each agent's position, heading, and sensor data processed in parallel via WebGL fragment shaders
+- **Double-buffered trail map**: Agents deposit pheromone trails on a texture that diffuses and decays each frame
+- **Sensor-based steering**: Three forward-facing sensors read trail intensity to guide agent movement
+- **Real-time parameter tuning**: All simulation parameters (sensor angle, step size, decay rate) adjustable live
+
+## Key Learnings
+
+Building this from scratch — no libraries, no tutorials — deepened my understanding of GPU programming, framebuffer objects, and the emergent behavior that arises from simple rules applied at scale.

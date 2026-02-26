@@ -1,0 +1,284 @@
+---
+const experiences = [
+  {
+    title: 'IT Operations Intern',
+    org: 'Kemper Corporation',
+    period: 'Jun — Aug 2025',
+    highlight: true,
+    pullQuote: 'Presented to the CIO and 50 senior PMs at the monthly executive meeting.',
+    bullets: [
+      'Built AI workflow agents using OpenAI APIs that automated PM reporting — agents drafted status reports from Jira data, surfaced cross-project dependencies, and flagged schedule risks autonomously. Reduced average report prep time from 2 hours to 15 minutes.',
+      'Designed executive dashboards and data visualizations for monthly CIO-level reporting, translating raw project data into actionable risk/status views for 200+ active initiatives.',
+      'Led full redesign of the PM Handbook, standardizing project intake, status cadences, and escalation paths across 50+ PMs. Presented the final deliverable to the CIO, IT VPs, and the full PM org at the monthly executive meeting.',
+      'Initiated a 3-week mentorship with 3 senior PMs alongside regular duties — shadowed enterprise architecture reviews, learned stakeholder mapping, and gained hands-on exposure to how large-scale IT programs are governed.',
+    ],
+  },
+  {
+    title: 'IT Support Aide',
+    org: 'Northwestern McCormick School of Engineering IT',
+    period: 'Sept 2023 — Sept 2025',
+    bullets: [
+      'Provided frontline technical support for 2,000+ engineering students and faculty — device provisioning, network configuration, software troubleshooting. Resolved 500+ tickets across macOS, Windows, and Linux.',
+      'Managed 8 computer labs: coordinated hardware refresh cycles, deployed software images, and maintained lab uptime. Only aide granted direct access to create and track tickets in the enterprise IT system.',
+    ],
+  },
+  {
+    title: 'Project Member — Vestibular Rehab Device',
+    org: 'Shirley Ryan AbilityLab',
+    period: 'Mar — Jun 2024',
+    bullets: [
+      'Designed and prototyped a medical device for vestibular rehabilitation patients — interchangeable foam inserts with adjustable weights to progressively challenge balance recovery. Built 3 iterative prototypes using CAD modeling and manual fabrication.',
+      'Conducted user research alongside clinicians at the AbilityLab: observed therapy sessions, interviewed PTs, validated assumptions against real patient data. Findings directly shaped the weight distribution and insert geometry.',
+    ],
+  },
+  {
+    title: 'Project Lead — Learning Tool',
+    org: 'Misericordia Home',
+    period: 'Sept — Dec 2023',
+    bullets: [
+      'Led a 4-person team to design and build an interactive learning tool for residents with developmental disabilities. Conducted needs assessments with caregivers, defined learning objectives, and managed a 10-week development timeline.',
+      'Managed project scope, stakeholder communication, and weekly demos. Delivered a functional prototype that was adopted by staff for ongoing resident engagement.',
+    ],
+  },
+];
+---
+
+<section class="experience" id="experience">
+  <div class="experience__inner container">
+    <div class="experience__header" data-reveal>
+      <span class="section-label">Experience</span>
+      <h2 class="section-title experience__section-title">Where I've Contributed</h2>
+    </div>
+
+    <div class="experience__timeline">
+      <div class="experience__line" id="experience-line"></div>
+      {experiences.map((exp, i) => (
+        <div class={`experience__item ${exp.highlight ? 'experience__item--highlight' : ''}`} data-reveal style={`transition-delay: ${i * 0.1}s`}>
+          <div class="experience__dot"></div>
+          <div class="experience__card">
+            <div class="experience__card-header">
+              <div>
+                <h3 class="experience__role-title">{exp.title}</h3>
+                <span class="experience__org">{exp.org}</span>
+              </div>
+              <span class="experience__period">{exp.period}</span>
+            </div>
+            {exp.pullQuote && (
+              <blockquote class="experience__pull-quote">
+                {exp.pullQuote}
+              </blockquote>
+            )}
+            <ul class="experience__bullets">
+              {exp.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience {
+    padding: var(--spacing-section) 0;
+  }
+
+  .experience__header {
+    margin-bottom: 3rem;
+  }
+
+  .experience__section-title {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .experience__section-title.revealed {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .experience__timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .experience__line {
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
+    transform-origin: top;
+  }
+
+  .experience__item {
+    position: relative;
+    padding-bottom: 2.5rem;
+  }
+
+  .experience__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .experience__dot {
+    position: absolute;
+    left: -2rem;
+    top: 8px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--color-bg-primary);
+    border: 2px solid var(--color-border-hover);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .experience__item--highlight .experience__dot {
+    width: 14px;
+    height: 14px;
+    left: calc(-2rem - 1.5px);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px var(--color-accent-glow);
+  }
+
+  .experience__item:hover .experience__dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 12px var(--color-accent-glow);
+  }
+
+  .experience__card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .experience__item--highlight .experience__card {
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(to bottom, var(--color-accent), var(--color-ir-4)) 1;
+    border-image-slice: 0 0 0 1;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.03), rgba(168, 85, 247, 0.02), var(--color-bg-card));
+  }
+
+  .experience__card:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .experience__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .experience__role-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .experience__org {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .experience__period {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .experience__pull-quote {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0 1rem;
+    border-left: 2px solid var(--color-accent);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  .experience__bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .experience__bullets li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .experience__bullets li::before {
+    content: '\203A';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-muted);
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .experience__card-header {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .experience__section-title {
+      clip-path: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const expTitle = document.querySelector('.experience__section-title');
+  if (expTitle && !reducedMotion) {
+    ScrollTrigger.create({
+      trigger: expTitle,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => expTitle.classList.add('revealed'),
+    });
+  }
+
+  // Timeline line draw animation
+  const expLine = document.getElementById('experience-line');
+  if (expLine && !reducedMotion) {
+    gsap.fromTo(expLine,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.experience__timeline',
+          start: 'top 75%',
+          end: 'bottom 90%',
+          scrub: 0.5,
+        },
+      }
+    );
+  }
+</script>

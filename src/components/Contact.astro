@@ -1,0 +1,260 @@
+---
+---
+
+<section class="contact" id="contact">
+  <div class="contact__inner container">
+    <div class="contact__content" data-reveal>
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title contact__title">Let's Build Something.</h2>
+      <p class="contact__desc">
+        I'm looking for Summer 2026 internships in AI/ML engineering and full-stack systems. If you're building something ambitious — especially around LLMs, agentic systems, or developer tools — I'd love to talk.
+      </p>
+    </div>
+
+    <div class="contact__grid">
+      <form
+        class="contact__form"
+        action="https://formspree.io/f/meoeyzbj"
+        method="POST"
+        data-reveal
+      >
+        <div class="contact__form-row">
+          <div class="contact__field">
+            <label for="name" class="contact__label">Name</label>
+            <input type="text" id="name" name="name" required class="contact__input" placeholder="Your name" />
+          </div>
+          <div class="contact__field">
+            <label for="email" class="contact__label">Email</label>
+            <input type="email" id="email" name="email" required class="contact__input" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="contact__field">
+          <label for="message" class="contact__label">Message</label>
+          <textarea id="message" name="message" required rows="5" class="contact__textarea" placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button type="submit" class="contact__submit">
+          Send Message
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="contact__info" data-reveal>
+        <a href="mailto:DaniilGuchua05@gmail.com" class="contact__link">
+          <span class="contact__link-label">Email</span>
+          <span class="contact__link-value">DaniilGuchua05@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/daniil-guchua" target="_blank" rel="noopener noreferrer" class="contact__link">
+          <span class="contact__link-label">LinkedIn</span>
+          <span class="contact__link-value">linkedin.com/in/daniil-guchua</span>
+        </a>
+        <a href="https://github.com/daniilguchua" target="_blank" rel="noopener noreferrer" class="contact__link">
+          <span class="contact__link-label">GitHub</span>
+          <span class="contact__link-value">github.com/daniilguchua</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: var(--spacing-section) 0;
+  }
+
+  .contact__inner {
+    max-width: 900px;
+  }
+
+  .contact__content {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .contact__desc {
+    font-size: var(--text-base);
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact__label {
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .contact__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: 1px solid var(--color-border-hover);
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    align-self: flex-start;
+  }
+
+  .contact__submit:hover {
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+
+  .contact__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 240px;
+  }
+
+  .contact__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact__link:hover {
+    border-color: var(--color-border-hover);
+    transform: translateX(4px);
+  }
+
+  .contact__link-label {
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .contact__link-value {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease;
+  }
+
+  .contact__link:hover .contact__link-value {
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__submit {
+      width: 100%;
+    }
+  }
+
+  .contact__title {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact__title.revealed {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact__title {
+      clip-path: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const contactTitle = document.querySelector('.contact__title');
+  if (contactTitle && !reducedMotion) {
+    ScrollTrigger.create({
+      trigger: contactTitle,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => contactTitle.classList.add('revealed'),
+    });
+  }
+</script>

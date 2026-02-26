@@ -1,0 +1,378 @@
+---
+const aboutText = "I learned early that the way most people explain things doesn't work for everyone. That 'obvious' is never universal. That the gap between understanding and being understood is where the most important engineering happens. Growing up navigating that gap — watching systems fail the people they're supposed to serve — is what pulled me into CS. It's why Axiom Engine has three teaching personas. Why I obsess over reliability. Why every tool I build starts from the same question: does this actually meet people where they are? Systems, machine learning, and cognitive science aren't three separate concentrations. They're one thesis: build things that adapt to the person, not the other way around. The cognitive science isn't a side interest — it's why Axiom has three teaching personas calibrated to how different people actually learn.";
+const words = aboutText.split(' ');
+
+const coursework = [
+  'Machine Learning', 'Databases', 'Networking', 'Intro to AI',
+  'Programming Languages', 'Computer Systems I & II',
+  'Data Structures & Algorithms', 'Linear Algebra', 'Engineering Analysis',
+];
+---
+
+<section class="about" id="about">
+  <div class="about__inner container">
+    <div class="about__story" data-reveal>
+      <span class="section-label">About</span>
+      <h2 class="section-title about__title">Perspective shapes what I build.</h2>
+      <p class="about__text" id="about-text">
+        {words.map((word) => (
+          <span class="about__word">{word} </span>
+        ))}
+      </p>
+
+      <div class="about__links">
+        <a href="https://www.linkedin.com/in/daniil-guchua" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/daniilguchua" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="mailto:DaniilGuchua05@gmail.com">Email</a>
+      </div>
+    </div>
+
+    <div class="about__credentials">
+      <!-- Education Card -->
+      <div class="about__card" data-reveal>
+        <div class="about__card-header">
+          <span class="about__card-overline">Education</span>
+          <span class="about__card-dates">2023 — 2027</span>
+        </div>
+        <h3 class="about__card-title">Northwestern University</h3>
+        <p class="about__card-subtitle">McCormick School of Engineering</p>
+        <p class="about__card-detail">B.S. Computer Science (Systems Concentration)</p>
+        <p class="about__card-detail">Minors: Cognitive Science &middot; ML & Data Science</p>
+      </div>
+
+      <!-- Honors -->
+      <div class="about__card" data-reveal>
+        <span class="about__card-overline">Honors</span>
+        <div class="about__badges">
+          <span class="about__badge">Knight Scholar</span>
+          <span class="about__badge">Ryan Scholar</span>
+          <span class="about__badge">Dean's List</span>
+        </div>
+      </div>
+
+      <!-- Coursework -->
+      <div class="about__card" data-reveal>
+        <span class="about__card-overline">Coursework</span>
+        <div class="about__coursework">
+          {coursework.map((course) => (
+            <span class="about__course-tag">{course}</span>
+          ))}
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <div class="about__card" data-reveal>
+        <span class="about__card-overline">GitHub</span>
+        <div class="about__github-stats" id="about-github">
+          <div class="about__github-stat">
+            <span class="about__github-value" data-count="50" data-suffix="+">0</span>
+            <span class="about__github-label">Repos</span>
+          </div>
+          <div class="about__github-stat">
+            <span class="about__github-value" data-count="15" data-suffix="K+">0</span>
+            <span class="about__github-label">Lines</span>
+          </div>
+          <div class="about__github-stat">
+            <span class="about__github-value" data-count="6" data-suffix="+">0</span>
+            <span class="about__github-label">Languages</span>
+          </div>
+        </div>
+        <a href="https://github.com/daniilguchua" target="_blank" rel="noopener noreferrer" class="about__github-link">
+          View Profile
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: var(--spacing-section) 0;
+  }
+
+  .about__inner {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about__title {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about__title.revealed {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .about__text {
+    font-size: var(--text-base);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .about__word {
+    color: var(--color-text-muted);
+    transition: color 0.3s ease;
+  }
+
+  .about__word.highlighted {
+    color: var(--color-text-primary);
+  }
+
+  .about__links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .about__links a {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+  }
+
+  .about__links a:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* ---- Credential Cards ---- */
+  .about__credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about__card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(to bottom, var(--color-accent), var(--color-ir-4)) 1;
+    border-image-slice: 0 0 0 1;
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .about__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .about__card-overline {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .about__card-dates {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .about__card-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.15rem;
+  }
+
+  .about__card-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .about__card-detail {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .about__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .about__badge {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    border: 1px solid var(--color-border-hover);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-full);
+  }
+
+  .about__coursework {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .about__course-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .about__github-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about__github-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .about__github-value {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .about__github-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .about__github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .about__github-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .about__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about__title {
+      clip-path: none;
+    }
+
+    .about__word {
+      color: var(--color-text-secondary);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Clip-path title reveal
+  const aboutTitle = document.querySelector('.about__title');
+  if (aboutTitle && !reducedMotion) {
+    ScrollTrigger.create({
+      trigger: aboutTitle,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => aboutTitle.classList.add('revealed'),
+    });
+  }
+
+  // GitHub stats counter animation
+  const githubStats = document.getElementById('about-github');
+  if (githubStats && !reducedMotion) {
+    const statValues = githubStats.querySelectorAll('.about__github-value');
+
+    ScrollTrigger.create({
+      trigger: githubStats,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        statValues.forEach((el) => {
+          const target = parseInt(el.getAttribute('data-count') || '0', 10);
+          const suffix = el.getAttribute('data-suffix') || '';
+          const obj = { val: 0 };
+
+          gsap.to(obj, {
+            val: target,
+            duration: 1.5,
+            ease: 'power2.out',
+            onUpdate: () => {
+              (el as HTMLElement).textContent = Math.round(obj.val) + suffix;
+            },
+          });
+        });
+      },
+    });
+  } else if (githubStats) {
+    githubStats.querySelectorAll('.about__github-value').forEach((el) => {
+      const target = el.getAttribute('data-count') || '0';
+      const suffix = el.getAttribute('data-suffix') || '';
+      (el as HTMLElement).textContent = target + suffix;
+    });
+  }
+
+  // Word-by-word scroll highlight
+  const aboutText = document.getElementById('about-text');
+  if (aboutText && !reducedMotion) {
+    const words = aboutText.querySelectorAll('.about__word');
+
+    ScrollTrigger.create({
+      trigger: aboutText,
+      start: 'top 75%',
+      end: 'bottom 50%',
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const totalWords = words.length;
+        const highlightIndex = Math.floor(progress * totalWords);
+
+        words.forEach((word, i) => {
+          if (i <= highlightIndex) {
+            word.classList.add('highlighted');
+          } else {
+            word.classList.remove('highlighted');
+          }
+        });
+      },
+    });
+  }
+</script>

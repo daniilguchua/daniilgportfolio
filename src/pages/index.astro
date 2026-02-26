@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Work from '../components/Work.astro';
+import Skills from '../components/Skills.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<BaseLayout title="Daniil Guchua — CS Student & Builder">
+  <Hero />
+  <div class="section-divider" aria-hidden="true"></div>
+  <Work />
+  <div class="section-divider" aria-hidden="true"></div>
+  <Skills />
+  <div class="section-divider" aria-hidden="true"></div>
+  <About />
+  <div class="section-divider" aria-hidden="true"></div>
+  <Experience />
+  <div class="section-divider" aria-hidden="true"></div>
+  <Contact />
+</BaseLayout>
+
+<style>
+  .section-divider {
+    width: 100%;
+    max-width: 1200px;
+    height: 1px;
+    margin: 0 auto;
+    background: var(--color-border);
+  }
+</style>

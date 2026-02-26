@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} — Daniil Guchua`} description={project.data.description}>
+  <article class="project-page">
+    <div class="project-page__hero">
+      <div class="container">
+        <a href="/#work" class="project-page__back">
+          &larr; Back to Work
+        </a>
+        <div class="project-page__meta">
+          <span class="project-page__type">{project.data.type.replace('-', ' ')}</span>
+          <time datetime={project.data.date.toISOString()}>
+            {project.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+          </time>
+        </div>
+        <h1 class="project-page__title">{project.data.title}</h1>
+        <p class="project-page__subtitle">{project.data.subtitle}</p>
+
+        <div class="project-page__tags">
+          {project.data.tags.map((tag) => (
+            <span class="project-page__tag">{tag}</span>
+          ))}
+        </div>
+
+        <div class="project-page__actions">
+          {project.data.liveUrl && (
+            <a href={project.data.liveUrl} target="_blank" rel="noopener noreferrer" class="project-page__btn project-page__btn--primary">
+              View Live Demo
+            </a>
+          )}
+          {project.data.sourceUrl && (
+            <a href={project.data.sourceUrl} target="_blank" rel="noopener noreferrer" class="project-page__btn project-page__btn--secondary">
+              View Source
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+
+    {project.data.type === 'live-demo' && project.data.liveUrl && (
+      <div class="project-page__demo">
+        <iframe src={project.data.liveUrl} title={`${project.data.title} demo`} loading="lazy"></iframe>
+      </div>
+    )}
+
+    <div class="project-page__content container">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-page__hero {
+    padding: calc(72px + 4rem) 0 3rem;
+  }
+
+  .project-page__back {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s ease;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .project-page__back:hover {
+    color: var(--color-accent);
+  }
+
+  .project-page__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-page__type {
+    color: var(--color-accent);
+  }
+
+  .project-page__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-page__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-tertiary);
+    margin-bottom: 2rem;
+  }
+
+  .project-page__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-page__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    background: var(--color-bg-elevated);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .project-page__actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .project-page__btn {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .project-page__btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .project-page__btn--primary {
+    color: var(--color-bg-primary);
+    background: var(--color-accent);
+  }
+
+  .project-page__btn--primary:hover {
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
+    color: var(--color-bg-primary);
+  }
+
+  .project-page__btn--secondary {
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    background: transparent;
+  }
+
+  .project-page__btn--secondary:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text-primary);
+  }
+
+  .project-page__demo {
+    width: 100%;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .project-page__demo iframe {
+    width: 100%;
+    height: 60vh;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-secondary);
+  }
+
+  .project-page__content {
+    max-width: 720px;
+    padding-top: 3rem;
+    padding-bottom: var(--spacing-section);
+  }
+
+  /* Prose styles for MDX content */
+  .prose {
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose :global(ul), .prose :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(strong) {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    color: var(--color-accent);
+    background: var(--color-bg-elevated);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  .prose :global(pre) {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: var(--text-sm);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.25rem;
+    color: var(--color-text-tertiary);
+    font-style: italic;
+    margin: 1.5rem 0;
+  }
+</style>

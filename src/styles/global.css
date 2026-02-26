@@ -1,0 +1,245 @@
+@import "tailwindcss";
+@import '@fontsource-variable/inter';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+/* ============================================
+   APPLE PRO DARK — Design System
+   Portfolio Revamp 2026
+   ============================================ */
+
+@theme {
+  /* Backgrounds — pure black foundation */
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #0a0a0a;
+  --color-bg-elevated: #111111;
+  --color-bg-surface: #161616;
+  --color-bg-card: #0d0d0d;
+
+  /* Text — cool whites, Apple's palette */
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #a1a1a6;
+  --color-text-tertiary: #6e6e73;
+  --color-text-muted: #3d3d3f;
+
+  /* Iridescent spectrum — saturated gradient stops */
+  --color-ir-1: #e8ecf5;
+  --color-ir-2: #a0c4f0;
+  --color-ir-3: #60b8e8;
+  --color-ir-4: #9878d0;
+  --color-ir-5: #d080c0;
+
+  /* Interaction accent — electric cyan */
+  --color-accent: #0ea5e9;
+  --color-accent-bright: #38bdf8;
+  --color-accent-dim: #0284c7;
+  --color-accent-glow: rgba(14, 165, 233, 0.15);
+
+  /* Category colors — skill tree */
+  --color-cat-languages: #0ea5e9;
+  --color-cat-ai: #a855f7;
+  --color-cat-backend: #22c55e;
+  --color-cat-frontend: #f97316;
+
+  /* Functional */
+  --color-green: #30d158;
+  --color-red: #ff453a;
+
+  /* Borders — extremely subtle */
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-border-glow: rgba(14, 165, 233, 0.15);
+
+  /* Spacing */
+  --spacing-section: clamp(5rem, 10vh, 8rem);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Typography — Inter for everything, JetBrains Mono for code */
+  --font-display: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  /* Type scale — fluid clamp */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.8rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem);
+  --text-base: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
+  --text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  --text-2xl: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
+  --text-3xl: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+  --text-4xl: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+  --text-hero: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(14, 165, 233, 0.15);
+  color: var(--color-text-primary);
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-primary);
+  overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+
+.iridescent-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-ir-1) 0%,
+    var(--color-ir-3) 35%,
+    var(--color-ir-4) 65%,
+    var(--color-ir-2) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: iridescent-shift 8s ease infinite;
+}
+
+@keyframes iridescent-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* Legacy gradient-text kept for compatibility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-ir-4), var(--color-ir-2), var(--color-ir-3), var(--color-ir-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+}
+
+/* Section label */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+
+/* Scroll reveal base */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}

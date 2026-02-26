@@ -1,0 +1,128 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="footer__logo">DG</span>
+        <p class="footer__tagline">Northwestern CS '27 · Building things that actually work.</p>
+      </div>
+
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__heading">Navigate</h4>
+          <ul role="list">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#work">Work</a></li>
+            <li><a href="/#skills">Skills</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Connect</h4>
+          <ul role="list">
+            <li><a href="https://www.linkedin.com/in/daniil-guchua" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://github.com/daniilguchua" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="mailto:DaniilGuchua05@gmail.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; {currentYear} Daniil Guchua. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: 4rem 0 2rem;
+    margin-top: var(--spacing-section);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .footer__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+
+  .footer__logo {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .footer__tagline {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+    font-family: var(--font-heading);
+  }
+
+  .footer__links {
+    display: flex;
+    gap: 4rem;
+  }
+
+  .footer__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer__col a {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    transition: color 0.2s ease;
+  }
+
+  .footer__col a:hover {
+    color: var(--color-text-primary);
+  }
+
+  .footer__bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+  }
+
+  .footer__bottom p {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .footer__top {
+      flex-direction: column;
+    }
+
+    .footer__links {
+      gap: 2rem;
+    }
+  }
+</style>

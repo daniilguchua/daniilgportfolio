@@ -1,0 +1,144 @@
+---
+title: "Axiom Engine"
+subtitle: "64 source files, 31 API endpoints, 4-tier self-healing Mermaid compiler, RAG pipeline, 3 AI personas — 10K+ lines of production-grade AI infrastructure"
+date: 2024-12-01
+type: case-study
+tags: ["Python", "Flask", "Google Gemini 2.5 Pro", "LangChain", "FAISS", "RAG", "Mermaid.js", "Three.js", "Docker", "SQLite", "pytest"]
+thumbnail: "/images/axiom-preview.png"
+sourceUrl: "https://github.com/daniilguchua/axiom-engine"
+featured: true
+flagship: true
+color: "#0ea5e9"
+description: "A full-stack AI platform that generates, renders, and self-heals interactive algorithm visualizations using Google Gemini 2.5 Pro, LangChain, FAISS, and Three.js."
+order: 0
+---
+
+## By The Numbers
+
+| Metric | Value |
+|--------|-------|
+| Lines of Code | 10,000+ |
+| Source Files | 64 across 4 languages |
+| API Endpoints | 31 across 8 Flask blueprints |
+| Frontend Modules | 10 (zero framework dependencies) |
+| Database Tables | 10 (SQLite WAL mode + auto-migration) |
+| Test Modules | 10 with 23 fixtures (392 lines of test infra) |
+| Self-Healing Rate | ~95% |
+| AI Personas | 3 (Explorer, Engineer, Architect) |
+| Prompt Injection Patterns | 11 compiled regex detectors |
+| Algorithm Categories | 7 auto-detected types |
+
+## The Problem
+
+Existing algorithm visualization tools are static, pre-built, and limited. Students can only view a fixed set of algorithms with predetermined inputs. There's no way to explore arbitrary algorithms, customize visualizations, or get AI-powered explanations of what's happening at each step. I kept hitting the same wall across multiple classes at Northwestern — algorithms made sense in lecture, but the moment I tried to trace through them alone, I'd lose track of state by step three.
+
+## What I Built
+
+Axiom Engine is a full-stack platform that uses AI to **generate, render, and self-heal** interactive algorithm visualizations from natural language descriptions. You describe an algorithm — anything from Dijkstra's to backpropagation to transformer self-attention — and the system generates a complete step-by-step visual simulation with Mermaid flowcharts, markdown narratives, data table overlays, and step analysis tracking.
+
+The system spans **10,000+ lines of code** across 64 source files, with 31 REST API endpoints across 8 Flask blueprints. It features a 4-tier self-healing Mermaid compiler that achieves ~95% automatic repair, a complete RAG document pipeline, semantic caching, and three distinct AI teaching personas.
+
+## Architecture
+
+The system follows a layered architecture:
+
+- **Client Layer** — 10-module vanilla JavaScript IIFE frontend, Three.js 3,000+ particle neural background with custom GLSL shaders, Mermaid.js rendering, svg-pan-zoom interactions
+- **API Layer** — Flask backend with 8 blueprints: chat, upload, repair, feedback, session, health, debug, node_inspect
+- **Middleware** — Cross-cutting concerns: `@rate_limit`, `@validate_session`, `@require_api_key`, `InputValidator` with 11 compiled injection patterns
+- **Core Services** — Persona engine (Strategy pattern), Mermaid sanitizer (23+ regex), session manager (RLock, TTL, LRU), repair tester (5-pipeline benchmark)
+- **Cache Layer** — Facade pattern delegating to: semantic cache, repair tracker, repair logger, feedback logger, SQLite database
+- **External Services** — Google Gemini 2.5 Pro (streaming generation), Gemini Embeddings (768-dim), FAISS IndexFlatL2
+
+## Self-Healing Mermaid Compiler
+
+This is Axiom's most novel technical feature. LLMs produce syntactically broken Mermaid code ~30-40% of the time — bad escaping, malformed arrows, corrupted brackets, CSS-like properties in the wrong format, run-on statements. Axiom fixes them automatically through a **4-tier escalation system**:
+
+### Tier 1 — Python Regex Sanitizer (~5ms, free)
+23+ ordered regex transformations in `sanitize_mermaid_code()`. Order matters — earlier transforms create the conditions for later ones to match correctly. This is essentially a **hand-written Mermaid syntax repair compiler**: force LR layout, convert escaped newlines, fix malformed subgraphs, split run-on statements, repair broken CSS properties, normalize edge labels, and more. Handles ~60% of failures.
+
+### Tier 2 — Python + JavaScript Sanitizer (~10ms, free)
+13-phase JavaScript pipeline with a key innovation: **string literal masking** (borrowed from compiler design). Phase 2 replaces quoted strings with `__PROTECTED_n__` tokens, structural fixes are applied safely, then Phase 9 restores originals. This prevents the common pitfall of regex tools corrupting text inside quotes. Handles ~25% more.
+
+### Tier 3 — LLM Repair + Python Sanitizer (~3-10s, API cost)
+Sends broken Mermaid code to Gemini with a specialized repair prompt. The LLM returns corrected code, which passes through the Python sanitizer for additional cleanup.
+
+### Tier 4 — LLM Repair + Full Pipeline (~3-10s, API cost)
+LLM repair output passes through both Python and JavaScript sanitizers. Last resort before graceful degradation.
+
+**Ghost Testing:** In the background, `ghostCaptureAndTest()` automatically captures raw LLM output, runs it through all 5 sanitization pipeline combinations, attempts to render each, and logs results — producing data-driven insights without blocking the user.
+
+## RAG Document Pipeline
+
+Upload any PDF and Axiom unlocks two document-aware modes:
+
+1. **Document Ingestion** — PyMuPDF extraction with page-level metadata → RecursiveCharacterTextSplitter (1,000 chars, 100-char overlap) → Google `gemini-embedding-001` (768-dim vectors) → FAISS `IndexFlatL2`
+2. **Smart Intent Routing** — 41 phrase-based trigger patterns (not bare keywords) classify every query into: `DOCUMENT_QA`, `DOCUMENT_SIMULATION`, `NEW_SIMULATION`, or `GENERAL_QA`
+3. **Query-Time Retrieval** — Top-6 chunks with word-level deduplication (>60% overlap filtering), formatted with page citations
+4. **Persona-Specific Prompts** — Each persona has dedicated document Q&A system prompts with citation rules, depth calibration, and formatting guidance
+
+## AI Persona System (Strategy Pattern)
+
+A single `difficulty` parameter swaps the entire behavioral profile:
+
+| | Explorer | Engineer | Architect |
+|---|---|---|---|
+| **Audience** | Beginners, visual learners | Intermediate, implementation-focused | Advanced, research-oriented |
+| **Tone** | Warm, encouraging, analogies | Professional, pragmatic, precise | Dense, research-grade |
+| **Node Count** | ~6 nodes | 9-12 nodes | 12-18 with subgraphs |
+| **Temp (New/Continue)** | 0.55 / 0.70 | 0.40 / 0.60 | 0.30 / 0.50 |
+| **Pedagogy** | Progressive reveal, milestones | Pseudocode mapping, edge cases | Alternative comparisons, amortized analysis |
+
+All personas share a **196-line Mermaid Syntax Firewall** — strict formatting rules that constrain LLM output to maximize render success.
+
+## Semantic Caching
+
+Two-tier cost optimization that eliminates redundant Gemini API calls:
+
+- **Tier 1 — Exact Match:** SHA-256 hash of normalized prompt + difficulty → instant retrieval
+- **Tier 2 — Semantic Similarity:** Embedding-based search across cached entries, cosine similarity ≥ 0.80
+- **Broken Simulation Tracker:** Retry budget (max 3), 24-hour cooldown, permanent-broken status — prevents wasting API credits on known-bad prompts
+- Only **verified-complete** simulations (all steps rendered + client confirmation) are cached
+
+## Design Patterns
+
+| Pattern | Where | Why |
+|---|---|---|
+| **Facade** | CacheManager → 5 sub-modules | Clean interface hiding internal cache complexity |
+| **Strategy** | 3 AI personas | Swap entire prompt + temperature + pedagogy via one parameter |
+| **Decorator** | @validate_session, @rate_limit | Cross-cutting concerns without polluting route logic |
+| **Blueprint** | 8 Flask blueprints | Modular, independently maintainable route organization |
+| **Tiered Escalation** | 4-tier repair pipeline | Progressive cost/complexity tradeoff |
+| **Observer** | Ghost testing | Non-blocking background analytics |
+| **Schema Migration** | database.py startup | Forward-compatible DB evolution |
+
+## Security
+
+- **Prompt Injection Detection** — 11 compiled regex patterns blocking `SYSTEM:`, `<<SYS>>`, `[INST]`, `ignore previous instructions`, and more
+- **Rate Limiting** — Per-IP+session token bucket (30 req/60s on chat, 20 req/60s on enhancement)
+- **Input Length Enforcement** — 10,000-character maximum per message
+- **Session Validation** — Alphanumeric + underscore/hyphen, max 128 chars
+- **Path Traversal Prevention** — Filename sanitization strips `../`, absolute paths, null bytes
+- **Thread Safety** — `threading.RLock` on all session operations
+
+## Engineering Challenges
+
+**The LLM Output Problem:** LLMs produce broken Mermaid ~30-40% of the time. Built a custom syntax repair compiler — a 4-tier escalation with 23+ ordered regex transforms and a 13-phase JS sanitizer using string literal masking from compiler design. ~95% auto-repair without API calls.
+
+**The State Continuity Problem:** "Generate More" requests have no memory of algorithm state. Engineered a context injection system feeding last 3 rendered graphs + step_analysis objects back into the prompt, preserving correctness across continuation chains.
+
+**The Cost Control Problem:** Every API call costs money. Built a three-layer stack: semantic cache, broken simulation tracker with retry budgets, and local-first repair resolving ~85% of failures in Tier 1/2 for free.
+
+**The Concurrency Problem:** Multiple users sharing Flask with in-memory state. Production-grade sessions with RLock, TTL (60 min), background daemon cleanup (5 min), LRU eviction at 1,000 sessions.
+
+## Tech Stack
+
+- **Backend**: Python, Flask, Google Gemini 2.5 Pro, LangChain, FAISS, PyMuPDF, SQLite (WAL), Pydantic
+- **Frontend**: Vanilla JavaScript (10-module IIFE), Mermaid.js 11.3, Three.js r128, svg-pan-zoom, marked.js, Prism.js, Chart.js, GSAP
+- **Testing**: pytest (10 modules, 23 fixtures), pytest-mock, pytest-cov, freezegun
+- **Infrastructure**: Docker (Python 3.9-slim), Docker Compose, GitHub Actions CI/CD
+
+## What I Learned
+
+The hardest part of AI-powered code generation isn't the generation — it's making the output **reliable**. The self-healing pipeline was born out of necessity: early versions had a ~40% success rate. Engineering the repair system to ~95% required deep understanding of Mermaid internals, regex ordering dependencies, and the insight that string literal masking (from compiler design) could prevent structural fixes from corrupting text content.
+
+This project also pushed me to architect a real production system: a Facade pattern for the cache layer, Strategy pattern for personas, thread-safe session management with daemon cleanup, and a forward-compatible schema migration system. The infrastructure to train an ML-powered repair model is already in place — every repair attempt is logged with tier, duration, success/failure, and both original and repaired code.

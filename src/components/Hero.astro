@@ -1,0 +1,336 @@
+---
+import AuroraBackground from './AuroraBackground.astro';
+---
+
+<section class="hero" id="home">
+  <AuroraBackground />
+
+  <div class="hero__content container">
+    <span class="hero__label" id="hero-label">Northwestern CS &middot; Class 2027</span>
+
+    <h1 class="hero__name" id="hero-name">Daniil Guchua</h1>
+
+    <div class="hero__statement" id="hero-statement">
+      <p class="hero__statement-line hero__statement-line--thin">I built an AI platform</p>
+      <p class="hero__statement-line hero__statement-line--iridescent iridescent-text">that heals its own code.</p>
+      <p class="hero__statement-sub">Northwestern CS sophomore. Knight Scholar. I build reliable AI systems — from vector pipelines to production APIs — grounded in real software engineering.</p>
+    </div>
+
+    <div class="hero__evidence" id="hero-evidence">
+      <span>10K+ LoC, 64 source files</span>
+      <span class="hero__evidence-dot">&middot;</span>
+      <span>31 API endpoints, 219 tests</span>
+      <span class="hero__evidence-dot">&middot;</span>
+      <span>4-tier agentic repair pipeline</span>
+    </div>
+
+    <div class="hero__buttons" id="hero-buttons">
+      <a href="#work" class="hero__cta hero__cta--primary">
+        <span>See the Work</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 3V13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hero__cta hero__cta--ghost">
+        <span>Read Resume</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__scroll" id="hero-scroll" aria-hidden="true">
+    <span class="hero__scroll-text">Scroll</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    max-width: 900px;
+  }
+
+  .hero__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    opacity: 0;
+  }
+
+  .hero__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    opacity: 0;
+  }
+
+  .hero__statement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .hero__statement-line {
+    font-family: var(--font-heading);
+    font-size: var(--text-hero);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    opacity: 0;
+  }
+
+  .hero__statement-line--thin {
+    font-weight: 300;
+    color: var(--color-text-primary);
+  }
+
+  .hero__statement-line--iridescent {
+    font-weight: 500;
+  }
+
+  .hero__statement-sub {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-tertiary);
+    margin-top: 0.75rem;
+    line-height: 1.5;
+    opacity: 0;
+  }
+
+  .hero__evidence {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.02em;
+    opacity: 0;
+  }
+
+  .hero__evidence-dot {
+    color: var(--color-text-muted);
+  }
+
+  .hero__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .hero__cta--primary {
+    color: var(--color-text-primary);
+    background: transparent;
+    border: 1px solid var(--color-border-glow);
+  }
+
+  .hero__cta--primary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(14, 165, 233, 0.3);
+    box-shadow: 0 0 30px var(--color-accent-glow);
+    color: var(--color-text-primary);
+  }
+
+  .hero__cta--ghost {
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    background: transparent;
+  }
+
+  .hero__cta--ghost:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    right: clamp(1.25rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+  }
+
+  .hero__scroll-text {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-ir-2), transparent);
+    animation: scroll-line 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-line {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero__content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero__statement-line {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+    }
+
+    .hero__evidence {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero__buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero__cta {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__label,
+    .hero__name,
+    .hero__statement-line,
+    .hero__statement-sub,
+    .hero__evidence,
+    .hero__buttons,
+    .hero__scroll {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reducedMotion) {
+    const tl = gsap.timeline({ delay: 0.5 });
+
+    // Label
+    tl.to('#hero-label', {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+    })
+    // Name slide up
+    .to('#hero-name', {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      startAt: { y: 30 },
+    }, '-=0.2')
+    // Statement lines stagger
+    .to('.hero__statement-line', {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: 'power3.out',
+      startAt: { y: 30 },
+    }, '-=0.3')
+    // Statement sub
+    .to('.hero__statement-sub', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      startAt: { y: 20 },
+    }, '-=0.3')
+    // Evidence strip
+    .to('#hero-evidence', {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+    }, '-=0.2')
+    // CTA buttons
+    .to('#hero-buttons', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      startAt: { y: 15 },
+    }, '-=0.1')
+    // Scroll indicator
+    .to('#hero-scroll', {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+    }, '-=0.3');
+
+    // Parallax exit on scroll
+    ScrollTrigger.create({
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set('#hero-name', { y: -p * 120 });
+        gsap.set('#hero-statement', { y: -p * 90 });
+        gsap.set('#hero-evidence', { y: -p * 60 });
+        gsap.set('#hero-buttons', { y: -p * 40, opacity: 1 - p * 2 });
+      },
+    });
+  }
+</script>

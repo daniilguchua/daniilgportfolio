@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import ScrollProgress from '../components/ScrollProgress.astro';
+import CursorGlow from '../components/CursorGlow.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = "Northwestern CS sophomore building reliable AI systems, full-stack platforms, and developer tools. Knight Scholar. 10K+ LoC flagship project with production-grade RAG, self-healing pipelines, and 219 tests.",
+  image = "/og-image.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Daniil Guchua",
+      "url": canonicalURL,
+      "jobTitle": "Software Engineering Student",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Northwestern University"
+      },
+      "knowsAbout": ["Agentic AI Systems", "Reliability Engineering", "RAG Pipelines", "Self-Healing Systems", "Machine Learning", "Cognitive Science", "LLM Integration", "Full-Stack Development", "Flask", "FAISS", "LangChain", "Google Gemini"]
+    })} />
+  </head>
+  <body>
+    <CursorGlow />
+    <ScrollProgress />
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Lenis smooth scroll + GSAP init -->
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        touchMultiplier: 2,
+      });
+
+      lenis.on('scroll', ScrollTrigger.update);
+
+      gsap.ticker.add((time: number) => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
+
+      // Make lenis available globally for other components
+      (window as any).__lenis = lenis;
+
+      // Scroll reveal observer
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      );
+
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        revealObserver.observe(el);
+      });
+    </script>
+  </body>
+</html>
