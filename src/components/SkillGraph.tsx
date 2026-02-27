@@ -56,11 +56,34 @@ export default function SkillGraph() {
     return () => ro.disconnect();
   }, []);
 
-  // Zoom to fit after mount
+  // Configure forces after graph mounts
+  useEffect(() => {
+    const fg = graphRef.current;
+    if (!fg) return;
+
+    // Stronger repulsion so nodes spread out
+    fg.d3Force('charge')?.strength(-150);
+
+    // Shorter link distances to keep connected nodes close
+    fg.d3Force('link')?.distance(55);
+
+    // Collision to prevent overlapping
+    const d3 = (window as any).d3;
+    if (d3?.forceCollide) {
+      fg.d3Force('collide', d3.forceCollide(20));
+    }
+  }, []);
+
+  // Zoom to fit when engine stops (nodes are settled)
+  const handleEngineStop = useCallback(() => {
+    graphRef.current?.zoomToFit(600, 80);
+  }, []);
+
+  // Also do initial zoom after a delay as fallback
   useEffect(() => {
     const timer = setTimeout(() => {
-      graphRef.current?.zoomToFit(400, 60);
-    }, 500);
+      graphRef.current?.zoomToFit(600, 80);
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -101,70 +124,47 @@ export default function SkillGraph() {
     return sourceId === nodeId || targetId === nodeId;
   }, []);
 
-  // Neural network node rendering
+  // Simplified node rendering — fewer draw calls
   const paintNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x == null || node.y == null || !isFinite(node.x) || !isFinite(node.y)) return;
     const n = node as GraphNode;
     const color = categoryColors[n.category];
-    const baseRadius = Math.sqrt(n.val) * 3;
+    const radius = Math.sqrt(n.val) * 3;
     const isHovered = hoveredNode === n.id;
     const isSelected = selectedNode?.id === n.id;
     const isFiring = firingNode === n.id;
     const isNeighborOfHovered = hoveredNode ? adjacencyMap.get(hoveredNode)?.has(n.id) ?? false : false;
-    const isNeighborOfFiring = firingNode ? adjacencyMap.get(firingNode)?.has(n.id) ?? false : false;
     const fontSize = Math.max(10 / globalScale, 1.5);
+    const isActive = isHovered || isSelected || isFiring;
 
-    // Pulse animation
-    const time = Date.now() / 1000;
-    const nodeHash = n.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const pulse = reducedMotion ? 0 : Math.sin(time * 1.5 + nodeHash) * 1;
-    const radius = baseRadius + pulse;
-
-    // Outer glow ring (pulsing)
-    const glowIntensity = isSelected || isFiring ? 0.25 : isHovered ? 0.18 : isNeighborOfFiring ? 0.12 : 0.06;
-    const glowPulse = reducedMotion ? glowIntensity : glowIntensity + Math.sin(time * 2 + nodeHash) * 0.03;
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, radius + 6, 0, 2 * Math.PI);
-    ctx.fillStyle = `${color}${Math.round(Math.max(0, Math.min(1, glowPulse)) * 255).toString(16).padStart(2, '0')}`;
-    ctx.fill();
-
-    // Middle ring for active states
-    if (isHovered || isSelected || isFiring) {
+    // Glow ring — only for active states
+    if (isActive) {
       ctx.beginPath();
-      ctx.arc(node.x, node.y, radius + 3, 0, 2 * Math.PI);
-      ctx.fillStyle = `${color}33`;
+      ctx.arc(node.x, node.y, radius + 4, 0, 2 * Math.PI);
+      ctx.fillStyle = `${color}30`;
       ctx.fill();
     }
 
-    // Main neuron body with radial gradient
+    // Main body with gradient
     const gradient = ctx.createRadialGradient(
       node.x - radius * 0.3, node.y - radius * 0.3, 0,
       node.x, node.y, radius
     );
-    gradient.addColorStop(0, isSelected || isFiring ? `${color}ff` : `${color}dd`);
-    gradient.addColorStop(0.7, `${color}aa`);
-    gradient.addColorStop(1, `${color}66`);
+    gradient.addColorStop(0, isActive ? `${color}ff` : `${color}cc`);
+    gradient.addColorStop(1, `${color}55`);
 
     ctx.beginPath();
     ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
     ctx.fillStyle = gradient;
     ctx.fill();
 
-    // Bright core dot (nucleus)
-    const coreRadius = radius * 0.35;
+    // Core dot
     ctx.beginPath();
-    ctx.arc(node.x, node.y, coreRadius, 0, 2 * Math.PI);
-    ctx.fillStyle = isSelected || isFiring ? '#ffffff' : color;
+    ctx.arc(node.x, node.y, radius * 0.3, 0, 2 * Math.PI);
+    ctx.fillStyle = isActive ? '#ffffff' : `${color}ee`;
     ctx.fill();
 
-    // Border ring
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = isHovered || isSelected || isFiring ? `${color}88` : `${color}33`;
-    ctx.lineWidth = (isSelected ? 2 : 1) / globalScale;
-    ctx.stroke();
-
-    // Label with background pill
+    // Label
     if (globalScale > 0.6) {
       const label = n.name;
       ctx.font = `500 ${fontSize}px 'Inter Variable', Inter, system-ui, sans-serif`;
@@ -176,19 +176,21 @@ export default function SkillGraph() {
       const dimmed = !isHovered && !isSelected && !isNeighborOfHovered && hoveredNode !== null;
       ctx.fillStyle = dimmed ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.6)';
       const pillRadius = 2 / globalScale;
-      const pillX = node.x - textWidth / 2 - pillPadding;
-      const pillY = labelY - fontSize * 0.1 - pillPadding;
-      const pillW = textWidth + pillPadding * 2;
-      const pillH = fontSize + pillPadding * 2;
 
       ctx.beginPath();
-      ctx.roundRect(pillX, pillY, pillW, pillH, pillRadius);
+      ctx.roundRect(
+        node.x - textWidth / 2 - pillPadding,
+        labelY - fontSize * 0.1 - pillPadding,
+        textWidth + pillPadding * 2,
+        fontSize + pillPadding * 2,
+        pillRadius
+      );
       ctx.fill();
 
       // Text
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = isHovered || isSelected || isFiring
+      ctx.fillStyle = isActive
         ? '#f5f5f7'
         : isNeighborOfHovered
           ? '#a1a1a6'
@@ -197,9 +199,9 @@ export default function SkillGraph() {
             : '#8e8e93';
       ctx.fillText(label, node.x, labelY);
     }
-  }, [hoveredNode, selectedNode, firingNode, adjacencyMap, reducedMotion]);
+  }, [hoveredNode, selectedNode, firingNode, adjacencyMap]);
 
-  // Custom link rendering with gradient colors
+  // Custom link rendering
   const paintLink = useCallback((link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     const sourceNode = typeof link.source === 'object' ? link.source : null;
     const targetNode = typeof link.target === 'object' ? link.target : null;
@@ -247,36 +249,33 @@ export default function SkillGraph() {
     ctx.fill();
   }, []);
 
-  // Dynamic particle config based on firing state
-  const getParticleWidth = useCallback((link: any) => {
-    if (firingNode && isLinkConnected(link, firingNode)) return 3;
-    if (hoveredNode && isLinkConnected(link, hoveredNode)) return 2;
-    return 1.5;
-  }, [firingNode, hoveredNode, isLinkConnected]);
-
+  // Particles — only on hover/firing, not constantly
   const getParticleCount = useCallback((link: any) => {
     if (reducedMotion) return 0;
-    if (firingNode && isLinkConnected(link, firingNode)) return 6;
-    if (hoveredNode && isLinkConnected(link, hoveredNode)) return 4;
-    return 2;
+    if (firingNode && isLinkConnected(link, firingNode)) return 4;
+    if (hoveredNode && isLinkConnected(link, hoveredNode)) return 3;
+    return 0; // No particles by default!
   }, [firingNode, hoveredNode, isLinkConnected, reducedMotion]);
+
+  const getParticleWidth = useCallback((link: any) => {
+    if (firingNode && isLinkConnected(link, firingNode)) return 2.5;
+    if (hoveredNode && isLinkConnected(link, hoveredNode)) return 2;
+    return 0;
+  }, [firingNode, hoveredNode, isLinkConnected]);
 
   const getParticleSpeed = useCallback((link: any) => {
     if (firingNode && isLinkConnected(link, firingNode)) return 0.012;
-    if (hoveredNode && isLinkConnected(link, hoveredNode)) return 0.006;
-    return 0.003;
-  }, [firingNode, hoveredNode, isLinkConnected]);
+    return 0.006;
+  }, [firingNode, isLinkConnected]);
 
   const getParticleColor = useCallback((link: any) => {
     const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
     const sourceNode = skillNodes.find(n => n.id === sourceId);
     if (!sourceNode) return 'rgba(255,255,255,0.1)';
-
     const color = categoryColors[sourceNode.category];
     if (firingNode && isLinkConnected(link, firingNode)) return `${color}cc`;
-    if (hoveredNode && isLinkConnected(link, hoveredNode)) return `${color}88`;
-    return `${color}44`;
-  }, [firingNode, hoveredNode, isLinkConnected]);
+    return `${color}88`;
+  }, [firingNode, isLinkConnected]);
 
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -293,14 +292,15 @@ export default function SkillGraph() {
         onNodeClick={handleNodeClick}
         onNodeHover={handleNodeHover}
         onBackgroundClick={handleBackgroundClick}
+        onEngineStop={handleEngineStop}
         linkDirectionalParticles={getParticleCount}
         linkDirectionalParticleWidth={getParticleWidth}
         linkDirectionalParticleSpeed={getParticleSpeed}
         linkDirectionalParticleColor={getParticleColor}
-        d3AlphaDecay={reducedMotion ? 1 : 0.01}
-        d3AlphaMin={reducedMotion ? undefined : 0.005}
-        d3VelocityDecay={0.4}
-        cooldownTicks={reducedMotion ? 0 : Infinity}
+        d3AlphaDecay={reducedMotion ? 1 : 0.035}
+        d3VelocityDecay={0.5}
+        cooldownTicks={reducedMotion ? 0 : 300}
+        warmupTicks={100}
         enableZoomInteraction={true}
         enablePanInteraction={true}
         enableNodeDrag={true}

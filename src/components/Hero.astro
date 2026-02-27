@@ -6,14 +6,14 @@ import AuroraBackground from './AuroraBackground.astro';
   <AuroraBackground />
 
   <div class="hero__content container">
-    <span class="hero__label" id="hero-label">Northwestern CS &middot; Class 2027</span>
+    <span class="hero__label" id="hero-label">Northwestern CS &middot; Graduating March 2027</span>
 
     <h1 class="hero__name" id="hero-name">Daniil Guchua</h1>
 
     <div class="hero__statement" id="hero-statement">
       <p class="hero__statement-line hero__statement-line--thin">I built an AI platform</p>
       <p class="hero__statement-line hero__statement-line--iridescent iridescent-text">that heals its own code.</p>
-      <p class="hero__statement-sub">Northwestern CS sophomore. Knight Scholar. I build reliable AI systems — from vector pipelines to production APIs — grounded in real software engineering.</p>
+      <p class="hero__statement-sub">Graduating March 2027. Knight Scholar. I build reliable AI systems — from vector pipelines to production APIs — grounded in real software engineering.</p>
     </div>
 
     <div class="hero__evidence" id="hero-evidence">
@@ -153,13 +153,13 @@ import AuroraBackground from './AuroraBackground.astro';
   .hero__cta--primary {
     color: var(--color-text-primary);
     background: transparent;
-    border: 1px solid var(--color-border-glow);
+    border: 1px solid var(--color-border-hover);
   }
 
   .hero__cta--primary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(14, 165, 233, 0.3);
-    box-shadow: 0 0 30px var(--color-accent-glow);
+    border-color: var(--color-accent);
+    background: rgba(14, 165, 233, 0.06);
+    transform: translateY(-1px);
     color: var(--color-text-primary);
   }
 

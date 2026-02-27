@@ -19,6 +19,7 @@ import SkillGraph from './SkillGraph';
 <style>
   .skills {
     padding: var(--spacing-section) 0;
+    /* no tint — clean dark */
   }
 
   .skills__header {
@@ -53,8 +54,8 @@ import SkillGraph from './SkillGraph';
   }
 
   @keyframes border-pulse {
-    0%, 100% { border-color: var(--color-border); }
-    50% { border-color: rgba(14, 165, 233, 0.12); }
+    0%, 100% { border-color: rgba(14, 165, 233, 0.10); }
+    50% { border-color: var(--color-border); }
   }
 
   @media (prefers-reduced-motion: reduce) {

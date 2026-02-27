@@ -46,9 +46,26 @@
   --color-green: #30d158;
   --color-red: #ff453a;
 
-  /* Borders — extremely subtle */
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.12);
+  /* Section tints — faint colored backgrounds */
+  --color-tint-work: rgba(14, 165, 233, 0.03);
+  --color-tint-skills: rgba(168, 85, 247, 0.03);
+  --color-tint-about: rgba(34, 197, 94, 0.025);
+  --color-tint-experience: rgba(249, 115, 22, 0.025);
+  --color-tint-contact: rgba(152, 120, 208, 0.03);
+
+  /* Category color alpha variants — for tags */
+  --color-cat-languages-bg: rgba(14, 165, 233, 0.08);
+  --color-cat-languages-border: rgba(14, 165, 233, 0.20);
+  --color-cat-ai-bg: rgba(168, 85, 247, 0.08);
+  --color-cat-ai-border: rgba(168, 85, 247, 0.20);
+  --color-cat-backend-bg: rgba(34, 197, 94, 0.08);
+  --color-cat-backend-border: rgba(34, 197, 94, 0.20);
+  --color-cat-frontend-bg: rgba(249, 115, 22, 0.08);
+  --color-cat-frontend-border: rgba(249, 115, 22, 0.20);
+
+  /* Borders — subtle but visible */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
   --color-border-glow: rgba(14, 165, 233, 0.15);
 
   /* Spacing */
@@ -90,7 +107,7 @@
 }
 
 ::selection {
-  background: rgba(14, 165, 233, 0.15);
+  background: rgba(14, 165, 233, 0.20);
   color: var(--color-text-primary);
 }
 
