@@ -1,0 +1,296 @@
+---
+const coursework = [
+  { name: 'Machine Learning', category: 'ai' },
+  { name: 'Intro to AI', category: 'ai' },
+  { name: 'Databases', category: 'systems' },
+  { name: 'Networking', category: 'systems' },
+  { name: 'Computer Systems I & II', category: 'systems' },
+  { name: 'Programming Languages', category: 'systems' },
+  { name: 'Data Structures & Algorithms', category: 'core' },
+  { name: 'Linear Algebra', category: 'core' },
+  { name: 'Engineering Analysis', category: 'core' },
+];
+
+const concentrations = [
+  {
+    label: 'Systems Concentration',
+    description: 'Low-level architecture, concurrency, and networking — the engineering foundation behind every production system I build.',
+    color: 'var(--color-accent)',
+  },
+  {
+    label: 'Cognitive Science Minor',
+    description: 'How people learn, perceive, and process information — the reason Axiom has three teaching personas calibrated to different learning styles.',
+    color: 'var(--color-cat-ai)',
+  },
+  {
+    label: 'ML & Data Science Minor',
+    description: 'Statistical learning, neural networks, and data pipelines — from PyTorch models to production RAG systems.',
+    color: 'var(--color-cat-backend)',
+  },
+];
+---
+
+<section class="education" id="education">
+  <div class="education__inner container">
+    <div class="education__header" data-reveal>
+      <span class="section-label">Education</span>
+      <h2 class="section-title education__title">Northwestern University</h2>
+      <p class="education__school">McCormick School of Engineering &middot; B.S. Computer Science</p>
+      <p class="education__dates">Class of 2027 &middot; Expected March 2027</p>
+    </div>
+
+    <div class="education__body">
+      <!-- Honors strip -->
+      <div class="education__honors" data-reveal>
+        <div class="education__honor education__honor--knight">
+          <span class="education__honor-name">Knight Scholar</span>
+          <span class="education__honor-desc">Merit-based engineering scholarship awarded to top incoming McCormick students</span>
+        </div>
+        <div class="education__honor">
+          <span class="education__honor-name">Ryan Scholar</span>
+        </div>
+        <div class="education__honor">
+          <span class="education__honor-name">Dean's List</span>
+        </div>
+      </div>
+
+      <!-- Concentrations -->
+      <div class="education__concentrations" data-reveal>
+        {concentrations.map((c) => (
+          <div class="education__concentration" style={`--accent: ${c.color}`}>
+            <span class="education__concentration-label">{c.label}</span>
+            <p class="education__concentration-desc">{c.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Coursework -->
+      <div class="education__coursework" data-reveal>
+        <span class="education__coursework-label">Relevant Coursework</span>
+        <div class="education__coursework-tags">
+          {coursework.map((course) => (
+            <span class={`education__course-tag education__course-tag--${course.category}`}>{course.name}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .education {
+    padding: var(--spacing-section) 0;
+  }
+
+  .education__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .education__title {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: 0.35rem;
+  }
+
+  .education__title.revealed {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .education__school {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .education__dates {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .education__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Honors */
+  .education__honors {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .education__honor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .education__honor:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .education__honor--knight {
+    border-color: rgba(14, 165, 233, 0.15);
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .education__honor--knight:hover {
+    border-color: rgba(14, 165, 233, 0.30);
+  }
+
+  .education__honor-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .education__honor--knight .education__honor-name {
+    color: var(--color-accent);
+  }
+
+  .education__honor-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.5;
+  }
+
+  /* Concentrations */
+  .education__concentrations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .education__concentration {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    border-top: 2px solid var(--accent);
+    transition: border-color 0.3s ease;
+  }
+
+  .education__concentration:hover {
+    border-color: var(--color-border-hover);
+    border-top-color: var(--accent);
+  }
+
+  .education__concentration-label {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .education__concentration-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Coursework */
+  .education__coursework {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .education__coursework-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .education__coursework-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .education__course-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-tertiary);
+    background: transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .education__course-tag:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-secondary);
+  }
+
+  .education__course-tag--ai {
+    border-color: var(--color-cat-ai-border);
+    color: var(--color-cat-ai);
+  }
+
+  .education__course-tag--systems {
+    border-color: var(--color-cat-languages-border);
+    color: var(--color-cat-languages);
+  }
+
+  .education__course-tag--core {
+    border-color: var(--color-border);
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 768px) {
+    .education__concentrations {
+      grid-template-columns: 1fr;
+    }
+
+    .education__honors {
+      flex-direction: column;
+    }
+
+    .education__honor--knight {
+      min-width: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .education__title {
+      clip-path: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const eduTitle = document.querySelector('.education__title');
+  if (eduTitle && !reducedMotion) {
+    ScrollTrigger.create({
+      trigger: eduTitle,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => eduTitle.classList.add('revealed'),
+    });
+  }
+</script>

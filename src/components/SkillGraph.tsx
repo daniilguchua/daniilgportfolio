@@ -56,27 +56,38 @@ export default function SkillGraph() {
     return () => ro.disconnect();
   }, []);
 
-  // Configure forces after graph mounts
+  // Configure forces after graph mounts — gentler to preserve brain layout
   useEffect(() => {
     const fg = graphRef.current;
     if (!fg) return;
 
-    // Stronger repulsion so nodes spread out
-    fg.d3Force('charge')?.strength(-150);
+    // Weaker charge so brain-region layout is preserved
+    fg.d3Force('charge')?.strength(-80);
 
     // Shorter link distances to keep connected nodes close
-    fg.d3Force('link')?.distance(55);
+    fg.d3Force('link')?.distance(45);
 
     // Collision to prevent overlapping
     const d3 = (window as any).d3;
     if (d3?.forceCollide) {
-      fg.d3Force('collide', d3.forceCollide(20));
+      fg.d3Force('collide', d3.forceCollide(18));
     }
+
+    // Reduce center force to preserve brain shape
+    fg.d3Force('center')?.strength(0.02);
   }, []);
 
-  // Zoom to fit when engine stops (nodes are settled)
+  // Zoom to fit when engine stops (nodes are settled), then release fixed positions for dragging
   const handleEngineStop = useCallback(() => {
     graphRef.current?.zoomToFit(600, 80);
+    // Release fixed positions so nodes become draggable
+    const nodes = graphRef.current?.graphData()?.nodes;
+    if (nodes) {
+      nodes.forEach((node: any) => {
+        node.fx = undefined;
+        node.fy = undefined;
+      });
+    }
   }, []);
 
   // Also do initial zoom after a delay as fallback
@@ -97,7 +108,7 @@ export default function SkillGraph() {
   }, [firingNode, firingTime]);
 
   const graphData = useMemo(() => ({
-    nodes: skillNodes.map(n => ({ ...n })),
+    nodes: skillNodes.map(n => ({ ...n, x: n.fx, y: n.fy })),
     links: skillLinks.map(l => ({ ...l })),
   }), []);
 

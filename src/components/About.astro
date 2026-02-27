@@ -1,12 +1,6 @@
 ---
-const aboutText = "I learned early that the way most people explain things doesn't work for everyone. That 'obvious' is never universal. That the gap between understanding and being understood is where the most important engineering happens. Growing up navigating that gap — watching systems fail the people they're supposed to serve — is what pulled me into CS. It's why Axiom Engine has three teaching personas. Why I obsess over reliability. Why every tool I build starts from the same question: does this actually meet people where they are? Systems, machine learning, and cognitive science aren't three separate concentrations. They're one thesis: build things that adapt to the person, not the other way around. The cognitive science isn't a side interest — it's why Axiom has three teaching personas calibrated to how different people actually learn.";
+const aboutText = "Most engineers build systems and hope people figure them out. I start from the other end — how do people actually think? That's not a soft question. It's a systems design constraint. My cognitive science training taught me that 'intuitive' isn't a vibe — it's a measurable property of information architecture. That's why Axiom Engine has three teaching personas. Why my repair pipeline escalates cheapest-first instead of retrying blindly. Why I chose Systems + CogSci + ML as one thesis, not three separate interests. I build infrastructure that adapts to the user, not the other way around.";
 const words = aboutText.split(' ');
-
-const coursework = [
-  'Machine Learning', 'Databases', 'Networking', 'Intro to AI',
-  'Programming Languages', 'Computer Systems I & II',
-  'Data Structures & Algorithms', 'Linear Algebra', 'Engineering Analysis',
-];
 
 ---
 
@@ -28,39 +22,7 @@ const coursework = [
       </div>
     </div>
 
-    <div class="about__credentials">
-      <!-- Education Card -->
-      <div class="about__card" data-reveal>
-        <div class="about__card-header">
-          <span class="about__card-overline">Education</span>
-          <span class="about__card-dates">2023 — 2027</span>
-        </div>
-        <h3 class="about__card-title">Northwestern University</h3>
-        <p class="about__card-subtitle">McCormick School of Engineering</p>
-        <p class="about__card-detail">B.S. Computer Science (Systems Concentration)</p>
-        <p class="about__card-detail">Minors: Cognitive Science &middot; ML & Data Science</p>
-      </div>
-
-      <!-- Honors -->
-      <div class="about__card" data-reveal>
-        <span class="about__card-overline">Honors</span>
-        <div class="about__badges">
-          <span class="about__badge">Knight Scholar</span>
-          <span class="about__badge">Ryan Scholar</span>
-          <span class="about__badge">Dean's List</span>
-        </div>
-      </div>
-
-      <!-- Coursework -->
-      <div class="about__card" data-reveal>
-        <span class="about__card-overline">Coursework</span>
-        <div class="about__coursework">
-          {coursework.map((course) => (
-            <span class="about__course-tag">{course}</span>
-          ))}
-        </div>
-      </div>
-
+    <div class="about__sidebar">
       <!-- GitHub -->
       <div class="about__card" data-reveal>
         <span class="about__card-overline">GitHub</span>
@@ -97,7 +59,7 @@ const coursework = [
 
   .about__inner {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 300px;
     gap: 4rem;
     align-items: start;
   }
@@ -146,8 +108,8 @@ const coursework = [
     color: var(--color-text-primary);
   }
 
-  /* ---- Credential Cards ---- */
-  .about__credentials {
+  /* ---- Sidebar ---- */
+  .about__sidebar {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -165,13 +127,6 @@ const coursework = [
     border-color: var(--color-border-hover);
   }
 
-  .about__card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
   .about__card-overline {
     font-family: var(--font-mono);
     font-size: 0.6rem;
@@ -180,65 +135,6 @@ const coursework = [
     text-transform: uppercase;
     display: block;
     margin-bottom: 0.5rem;
-  }
-
-  .about__card-dates {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-  }
-
-  .about__card-title {
-    font-family: var(--font-heading);
-    font-size: var(--text-base);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin-bottom: 0.15rem;
-  }
-
-  .about__card-subtitle {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    margin-bottom: 0.5rem;
-  }
-
-  .about__card-detail {
-    font-size: var(--text-sm);
-    color: var(--color-text-tertiary);
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  .about__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .about__badge {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--color-text-tertiary);
-    border: 1px solid var(--color-border);
-    background: transparent;
-    padding: 0.3rem 0.65rem;
-    border-radius: var(--radius-full);
-  }
-
-  .about__coursework {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .about__course-tag {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--color-text-tertiary);
-    border: 1px solid var(--color-border);
-    background: transparent;
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-sm);
   }
 
   .about__github-stats {

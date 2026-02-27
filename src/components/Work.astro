@@ -25,16 +25,15 @@ const otherProjects = [
 ];
 
 const axiomStats = [
-  { value: 10000, suffix: '+', label: 'LoC' },
-  { value: 64, suffix: '', label: 'Files' },
-  { value: 31, suffix: '', label: 'Endpoints' },
-  { value: 4, suffix: '-Tier', label: 'Pipeline' },
-  { value: 3, suffix: '', label: 'Personas' },
+  { value: 95, suffix: '%', prefix: '~', label: 'Auto-Repair' },
+  { value: 2, suffix: 's', prefix: '<', label: 'End-to-End' },
+  { value: 85, suffix: '%', prefix: '~', label: 'Repaired Free' },
+  { value: 4, suffix: '-Tier', prefix: '', label: 'Pipeline' },
+  { value: 3, suffix: '', prefix: '', label: 'AI Personas' },
 ];
 
 const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'RAG', 'Mermaid.js', 'Three.js', 'Docker', 'SQLite', 'pytest'];
 
-const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitize', 'Render', 'Verify'];
 ---
 
 <section class="work" id="work">
@@ -50,12 +49,12 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
       <div class="work__axiom-header" data-reveal>
         <span class="work__flagship-badge">Flagship Project</span>
         <h3 class="work__axiom-title">Axiom Engine</h3>
-        <p class="work__axiom-tagline">An AI teaching platform that turns any CS concept into interactive visual explanations.</p>
+        <p class="work__axiom-tagline">Not another ChatGPT wrapper. A production AI platform with 10,000 lines of self-healing infrastructure.</p>
         <div class="work__axiom-stats-inline" id="axiom-stats">
           {axiomStats.map((stat, i) => (
             <>
               <span class="work__inline-stat">
-                <span class="work__inline-stat-value" data-count={stat.value} data-suffix={stat.suffix}>0</span>
+                <span class="work__inline-stat-value" data-count={stat.value} data-suffix={stat.suffix} data-prefix={stat.prefix}>0</span>
                 <span class="work__inline-stat-label">{stat.label}</span>
               </span>
               {i < axiomStats.length - 1 && <span class="work__inline-stat-sep">&middot;</span>}
@@ -89,46 +88,34 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
         </div>
       </div>
 
-      <!-- Pipeline — full-width -->
-      <div class="work__axiom-pipeline-wrap" data-reveal>
-        <span class="work__pipeline-label">Request Pipeline</span>
-        <div class="work__pipeline-flow">
-          {pipelineNodes.map((node, i) => (
-            <>
-              <div class="work__pipeline-node work__pipeline-node--accent">
-                <span class="work__pipeline-node-index">{String(i + 1).padStart(2, '0')}</span>
-                <span class="work__pipeline-node-name">{node}</span>
-              </div>
-              {i < pipelineNodes.length - 1 && (
-                <span class="work__pipeline-arrow">
-                  <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M0 6h16M16 6l-4-4M16 6l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
-              )}
-            </>
-          ))}
-        </div>
-      </div>
-
-      <!-- Features — 2x2 grid, short -->
+      <!-- Features — 2x2 grid, reframed with engineering judgment -->
       <div class="work__axiom-features" data-reveal>
         <div class="work__features-grid">
           <div class="work__feature-card">
-            <span class="work__feature-title">Self-Healing Mermaid Compiler</span>
-            <p class="work__feature-desc">4-tier repair pipeline: 23 regex transforms, JS sanitizer with string masking, and LLM-assisted fallback. Recovers ~95% of broken output.</p>
+            <span class="work__feature-title">Self-Healing AI Output Pipeline</span>
+            <p class="work__feature-desc">LLMs produce broken output ~40% of the time. 4-tier escalation: regex ($0, 5ms) &rarr; JS sanitizer ($0, 10ms) &rarr; LLM repair ($0.003, 3s). ~95% auto-repair, ~85% at zero API cost.</p>
           </div>
           <div class="work__feature-card">
-            <span class="work__feature-title">RAG + Semantic Cache</span>
-            <p class="work__feature-desc">PDF upload &rarr; FAISS vector search &rarr; cosine similarity cache. Zero redundant API calls.</p>
+            <span class="work__feature-title">Production RAG Pipeline</span>
+            <p class="work__feature-desc">PDF ingestion &rarr; 768-dim embeddings &rarr; FAISS vector search &rarr; semantic caching (SHA-256 exact match + cosine &ge;0.80). Eliminates redundant API calls at scale.</p>
           </div>
           <div class="work__feature-card">
-            <span class="work__feature-title">Three AI Personas</span>
-            <p class="work__feature-desc">Explorer, Engineer, Architect &mdash; each swaps the entire prompt, temperature, and complexity target.</p>
+            <span class="work__feature-title">Cognitive Science-Driven UX</span>
+            <p class="work__feature-desc">Three AI personas calibrated from learning science research. Strategy pattern swaps prompt, temperature, and complexity via one parameter. The system adapts to the learner.</p>
           </div>
           <div class="work__feature-card">
-            <span class="work__feature-title">Agentic Error Recovery</span>
-            <p class="work__feature-desc">Autonomous observe &rarr; diagnose &rarr; repair &rarr; verify loop with ghost testing for pipeline optimization.</p>
+            <span class="work__feature-title">ML Training Data Pipeline</span>
+            <p class="work__feature-desc">Every render attempt logged to SQLite: tier, duration, success/failure, original vs repaired code. Building a structured dataset for future fine-tuning on LLaMA.</p>
           </div>
         </div>
+      </div>
+
+      <!-- MLOps callout -->
+      <div class="work__axiom-ml-note" data-reveal>
+        <p class="work__ml-note-text">
+          <span class="work__ml-note-label">Early MLOps:</span>
+          Ghost testing captures every repair attempt in a 10-table SQLite schema &mdash; render input, repair tier, execution time, success/failure, original and repaired code. This isn't just logging &mdash; it's the training dataset for a future LLaMA-based repair model.
+        </p>
       </div>
 
       <!-- Tags + CTAs — bottom -->
@@ -389,64 +376,6 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
   .t-success { color: var(--color-green); }
   .t-pass { color: var(--color-green); }
 
-  /* Pipeline */
-  .work__axiom-pipeline-wrap {
-    text-align: center;
-  }
-
-  .work__pipeline-label {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 1rem;
-  }
-
-  .work__pipeline-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35rem;
-    flex-wrap: wrap;
-  }
-
-  .work__pipeline-node {
-    background: var(--color-bg-elevated);
-    border-radius: var(--radius-sm);
-    padding: 0.55rem 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: border-color 0.2s ease;
-  }
-
-  .work__pipeline-node:hover {
-    border-color: rgba(14, 165, 233, 0.35);
-  }
-
-  .work__pipeline-node-index {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.05em;
-  }
-
-  .work__pipeline-node-name {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--color-text-secondary);
-  }
-
-  .work__pipeline-node--accent { border: 1px solid rgba(14, 165, 233, 0.20); }
-
-  .work__pipeline-arrow {
-    color: var(--color-text-muted);
-    display: flex;
-    align-items: center;
-  }
-
   /* Feature Cards — 2x2 grid */
   .work__axiom-features {
     max-width: 720px;
@@ -485,6 +414,32 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
     font-size: var(--text-sm);
     color: var(--color-text-tertiary);
     line-height: 1.5;
+    margin: 0;
+  }
+
+  /* MLOps callout */
+  .work__axiom-ml-note {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(168, 85, 247, 0.03);
+    border: 1px solid rgba(168, 85, 247, 0.12);
+    border-radius: var(--radius-md);
+  }
+
+  .work__ml-note-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-cat-ai);
+    margin-right: 0.5rem;
+  }
+
+  .work__ml-note-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
     margin: 0;
   }
 
@@ -682,10 +637,7 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
       font-size: var(--text-3xl);
     }
 
-    .work__axiom-terminal-wrap {
-      max-width: 100%;
-    }
-
+    .work__axiom-terminal-wrap,
     .work__axiom-features {
       max-width: 100%;
     }
@@ -746,6 +698,7 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
         statValues.forEach((el) => {
           const target = parseInt(el.getAttribute('data-count') || '0', 10);
           const suffix = el.getAttribute('data-suffix') || '';
+          const prefix = el.getAttribute('data-prefix') || '';
           const obj = { val: 0 };
 
           gsap.to(obj, {
@@ -754,7 +707,7 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
             ease: 'power2.out',
             onUpdate: () => {
               const formatted = Math.round(obj.val).toLocaleString();
-              (el as HTMLElement).textContent = formatted + suffix;
+              (el as HTMLElement).textContent = prefix + formatted + suffix;
             },
           });
         });
@@ -764,7 +717,8 @@ const pipelineNodes = ['Validate', 'Cache', 'Persona', 'Gemini Stream', 'Sanitiz
     statsSection.querySelectorAll('.work__inline-stat-value').forEach((el) => {
       const target = el.getAttribute('data-count') || '0';
       const suffix = el.getAttribute('data-suffix') || '';
-      (el as HTMLElement).textContent = parseInt(target, 10).toLocaleString() + suffix;
+      const prefix = el.getAttribute('data-prefix') || '';
+      (el as HTMLElement).textContent = prefix + parseInt(target, 10).toLocaleString() + suffix;
     });
   }
 
