@@ -42,14 +42,14 @@ export default function SkillGraph() {
     return map;
   }, []);
 
-  // Pre-build node lookup map to avoid .find() in hot render paths
+  // node lookup map for O(1) access in render
   const nodeMap = useMemo(() => {
     const map = new Map<string, SkillNode>();
     skillNodes.forEach(n => map.set(n.id, n));
     return map;
   }, []);
 
-  // Track container size — only mount graph after first valid measurement
+  // track container size
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -67,26 +67,24 @@ export default function SkillGraph() {
     return () => ro.disconnect();
   }, [mounted]);
 
-  // Configure forces after graph mounts — gentler to preserve brain layout
+  // tune forces
   useEffect(() => {
     const fg = graphRef.current;
     if (!fg) return;
 
-    // Weaker charge so brain-region layout is preserved
+    // gentle charge
     fg.d3Force('charge')?.strength(-80);
 
-    // Shorter link distances to keep connected nodes close
+    // short links
     fg.d3Force('link')?.distance(45);
 
-    // Reduce center force to preserve brain shape
+    // weak center
     fg.d3Force('center')?.strength(0.02);
   }, [mounted]);
 
-  // Zoom to fit when engine stops (nodes are settled), then release fixed positions for dragging
   const handleEngineStop = useCallback(() => {
     try {
       graphRef.current?.zoomToFit(600, 80);
-      // Release fixed positions so nodes become draggable
       const gd = graphRef.current?.graphData?.();
       if (gd?.nodes) {
         gd.nodes.forEach((node: any) => {
@@ -94,12 +92,10 @@ export default function SkillGraph() {
           node.fy = undefined;
         });
       }
-    } catch {
-      // graphRef may be stale during mount transitions — safe to ignore
-    }
+    } catch { /* noop */ }
   }, []);
 
-  // Also do initial zoom after a delay as fallback
+  // initial zoom fallback
   useEffect(() => {
     const timer = setTimeout(() => {
       graphRef.current?.zoomToFit(600, 80);
@@ -144,7 +140,7 @@ export default function SkillGraph() {
     return sourceId === nodeId || targetId === nodeId;
   }, []);
 
-  // Simplified node rendering — fewer draw calls
+  // custom node paint
   const paintNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x == null || node.y == null || !isFinite(node.x) || !isFinite(node.y)) return;
     const n = node as GraphNode;
@@ -269,7 +265,7 @@ export default function SkillGraph() {
     ctx.fill();
   }, []);
 
-  // Particles — only on hover/firing, not constantly
+  // particles on hover/click only
   const getParticleCount = useCallback((link: any) => {
     if (reducedMotion) return 0;
     if (firingNode && isLinkConnected(link, firingNode)) return 4;
