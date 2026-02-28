@@ -19,7 +19,8 @@ interface GraphNode extends SkillNode {
 export default function SkillGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<any>(null);
-  const [dimensions, setDimensions] = useState({ width: 800, height: 500 });
+  const [dimensions, setDimensions] = useState<{ width: number; height: number } | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [firingNode, setFiringNode] = useState<string | null>(null);
@@ -41,7 +42,14 @@ export default function SkillGraph() {
     return map;
   }, []);
 
-  // Track container size
+  // Pre-build node lookup map to avoid .find() in hot render paths
+  const nodeMap = useMemo(() => {
+    const map = new Map<string, SkillNode>();
+    skillNodes.forEach(n => map.set(n.id, n));
+    return map;
+  }, []);
+
+  // Track container size — only mount graph after first valid measurement
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -49,12 +57,15 @@ export default function SkillGraph() {
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-        setDimensions({ width, height });
+        if (width > 0 && height > 0) {
+          setDimensions({ width, height });
+          if (!mounted) setMounted(true);
+        }
       }
     });
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [mounted]);
 
   // Configure forces after graph mounts — gentler to preserve brain layout
   useEffect(() => {
@@ -67,26 +78,24 @@ export default function SkillGraph() {
     // Shorter link distances to keep connected nodes close
     fg.d3Force('link')?.distance(45);
 
-    // Collision to prevent overlapping
-    const d3 = (window as any).d3;
-    if (d3?.forceCollide) {
-      fg.d3Force('collide', d3.forceCollide(18));
-    }
-
     // Reduce center force to preserve brain shape
     fg.d3Force('center')?.strength(0.02);
-  }, []);
+  }, [mounted]);
 
   // Zoom to fit when engine stops (nodes are settled), then release fixed positions for dragging
   const handleEngineStop = useCallback(() => {
-    graphRef.current?.zoomToFit(600, 80);
-    // Release fixed positions so nodes become draggable
-    const nodes = graphRef.current?.graphData()?.nodes;
-    if (nodes) {
-      nodes.forEach((node: any) => {
-        node.fx = undefined;
-        node.fy = undefined;
-      });
+    try {
+      graphRef.current?.zoomToFit(600, 80);
+      // Release fixed positions so nodes become draggable
+      const gd = graphRef.current?.graphData?.();
+      if (gd?.nodes) {
+        gd.nodes.forEach((node: any) => {
+          node.fx = undefined;
+          node.fy = undefined;
+        });
+      }
+    } catch {
+      // graphRef may be stale during mount transitions — safe to ignore
     }
   }, []);
 
@@ -221,8 +230,8 @@ export default function SkillGraph() {
 
     const sourceId = sourceNode.id;
     const targetId = targetNode.id;
-    const sourceSkill = skillNodes.find(n => n.id === sourceId);
-    const targetSkill = skillNodes.find(n => n.id === targetId);
+    const sourceSkill = nodeMap.get(sourceId);
+    const targetSkill = nodeMap.get(targetId);
     if (!sourceSkill || !targetSkill) return;
 
     const sourceColor = categoryColors[sourceSkill.category];
@@ -250,7 +259,7 @@ export default function SkillGraph() {
     ctx.strokeStyle = gradient;
     ctx.lineWidth = isConnectedToFiring ? 2 / globalScale : isConnectedToHover ? 1.5 / globalScale : 0.8 / globalScale;
     ctx.stroke();
-  }, [hoveredNode, selectedNode, firingNode]);
+  }, [hoveredNode, selectedNode, firingNode, nodeMap]);
 
   const nodePointerAreaPaint = useCallback((node: any, color: string, ctx: CanvasRenderingContext2D) => {
     const radius = Math.sqrt((node as GraphNode).val) * 3 + 6;
@@ -281,16 +290,16 @@ export default function SkillGraph() {
 
   const getParticleColor = useCallback((link: any) => {
     const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-    const sourceNode = skillNodes.find(n => n.id === sourceId);
-    if (!sourceNode) return 'rgba(255,255,255,0.1)';
-    const color = categoryColors[sourceNode.category];
+    const sourceSkill = nodeMap.get(sourceId);
+    if (!sourceSkill) return 'rgba(255,255,255,0.1)';
+    const color = categoryColors[sourceSkill.category];
     if (firingNode && isLinkConnected(link, firingNode)) return `${color}cc`;
     return `${color}88`;
-  }, [firingNode, isLinkConnected]);
+  }, [firingNode, isLinkConnected, nodeMap]);
 
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
-      <ForceGraph2D
+      {mounted && dimensions && <ForceGraph2D
         ref={graphRef}
         graphData={graphData}
         width={dimensions.width}
@@ -308,16 +317,16 @@ export default function SkillGraph() {
         linkDirectionalParticleWidth={getParticleWidth}
         linkDirectionalParticleSpeed={getParticleSpeed}
         linkDirectionalParticleColor={getParticleColor}
-        d3AlphaDecay={reducedMotion ? 1 : 0.035}
-        d3VelocityDecay={0.5}
-        cooldownTicks={reducedMotion ? 0 : 300}
+        d3AlphaDecay={reducedMotion ? 1 : 0.06}
+        d3VelocityDecay={0.55}
+        cooldownTicks={reducedMotion ? 0 : 150}
         warmupTicks={100}
         enableZoomInteraction={true}
         enablePanInteraction={true}
         enableNodeDrag={true}
         minZoom={0.5}
         maxZoom={5}
-      />
+      />}
 
       {/* Legend */}
       <div style={{

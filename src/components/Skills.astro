@@ -1,17 +1,104 @@
 ---
 import SkillGraph from './SkillGraph';
+
+type Tier = 'daily' | 'comfortable' | 'exploring';
+
+const skillCategories = [
+  {
+    label: 'Languages',
+    color: 'var(--color-cat-languages)',
+    skills: [
+      { name: 'Python', tier: 'daily' as Tier },
+      { name: 'JavaScript', tier: 'daily' as Tier },
+      { name: 'TypeScript', tier: 'comfortable' as Tier },
+      { name: 'HTML/CSS', tier: 'daily' as Tier },
+      { name: 'SQL', tier: 'comfortable' as Tier },
+      { name: 'Rust', tier: 'comfortable' as Tier },
+      { name: 'C/C++', tier: 'exploring' as Tier },
+    ],
+  },
+  {
+    label: 'AI & Machine Learning',
+    color: 'var(--color-cat-ai)',
+    skills: [
+      { name: 'LangChain', tier: 'comfortable' as Tier },
+      { name: 'FAISS', tier: 'comfortable' as Tier },
+      { name: 'PyTorch', tier: 'comfortable' as Tier },
+      { name: 'RAG Pipelines', tier: 'comfortable' as Tier },
+      { name: 'Prompt Engineering', tier: 'comfortable' as Tier },
+      { name: 'Gemini API', tier: 'comfortable' as Tier },
+      { name: 'scikit-learn', tier: 'exploring' as Tier },
+      { name: 'NLP', tier: 'exploring' as Tier },
+      { name: 'NumPy', tier: 'comfortable' as Tier },
+      { name: 'Pandas', tier: 'comfortable' as Tier },
+    ],
+  },
+  {
+    label: 'Systems & Infrastructure',
+    color: 'var(--color-cat-backend)',
+    skills: [
+      { name: 'Flask', tier: 'daily' as Tier },
+      { name: 'REST APIs', tier: 'daily' as Tier },
+      { name: 'Docker', tier: 'daily' as Tier },
+      { name: 'Git', tier: 'daily' as Tier },
+      { name: 'Linux', tier: 'daily' as Tier },
+      { name: 'SQLite', tier: 'comfortable' as Tier },
+      { name: 'pytest', tier: 'comfortable' as Tier },
+      { name: 'GitHub Actions', tier: 'comfortable' as Tier },
+      { name: 'Pydantic', tier: 'comfortable' as Tier },
+      { name: 'AWS', tier: 'exploring' as Tier },
+      { name: 'Azure', tier: 'exploring' as Tier },
+      { name: 'Kubernetes', tier: 'exploring' as Tier },
+    ],
+  },
+  {
+    label: 'Frontend & Visualization',
+    color: 'var(--color-cat-frontend)',
+    skills: [
+      { name: 'React', tier: 'comfortable' as Tier },
+      { name: 'Astro', tier: 'comfortable' as Tier },
+      { name: 'Three.js', tier: 'comfortable' as Tier },
+      { name: 'GSAP', tier: 'comfortable' as Tier },
+      { name: 'WebGL', tier: 'exploring' as Tier },
+      { name: 'AutoCAD', tier: 'exploring' as Tier },
+    ],
+  },
+];
 ---
 
 <section class="skills" id="skills">
   <div class="skills__inner container">
     <div class="skills__header" data-reveal>
       <span class="section-label">Tech Stack</span>
-      <h2 class="section-title skills__title">Neural Architecture</h2>
-      <p class="skills__subtitle">How systems thinking, cognitive science, and ML converge. Click any neuron to explore. Drag to rearrange.</p>
+      <h2 class="section-title skills__title">What I Work With</h2>
+      <p class="skills__identity">I build production AI systems &mdash; RAG pipelines, self-healing compilers, semantic caching, agentic workflows &mdash; and apply cognitive science to make them adapt to how people actually think.</p>
+      <p class="skills__subtitle">Click any node to explore. Drag to rearrange.</p>
     </div>
 
     <div class="skills__graph-container" aria-label="Interactive skill tree showing technical skills and their relationships">
       <SkillGraph client:only="react" />
+    </div>
+
+    <!-- Static skills grid — always visible -->
+    <div class="skills__fallback-heading-wrap">
+      <span class="skills__fallback-heading">At a Glance</span>
+      <span class="skills__fallback-legend">
+        <span class="skills__legend-item"><span class="skills__legend-swatch skills__legend-swatch--daily"></span> Daily Driver</span>
+        <span class="skills__legend-item"><span class="skills__legend-swatch skills__legend-swatch--comfortable"></span> Comfortable</span>
+        <span class="skills__legend-item"><span class="skills__legend-swatch skills__legend-swatch--exploring"></span> Exploring</span>
+      </span>
+    </div>
+    <div class="skills__fallback" aria-label="Technical skills organized by category">
+      {skillCategories.map((cat) => (
+        <div class="skills__fallback-category">
+          <span class="skills__fallback-label" style={`color: ${cat.color}`}>{cat.label}</span>
+          <div class="skills__fallback-tags">
+            {cat.skills.map((skill) => (
+              <span class={`skills__fallback-tag skills__fallback-tag--${skill.tier}`} style={`border-color: ${cat.color}30; color: ${cat.color}`}>{skill.name}</span>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -35,10 +122,17 @@ import SkillGraph from './SkillGraph';
     clip-path: inset(0 0% 0 0);
   }
 
+  .skills__identity {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
   .skills__subtitle {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
-    margin-top: -1rem;
     margin-bottom: 0.5rem;
   }
 
@@ -56,6 +150,116 @@ import SkillGraph from './SkillGraph';
   @keyframes border-pulse {
     0%, 100% { border-color: rgba(14, 165, 233, 0.10); }
     50% { border-color: var(--color-border); }
+  }
+
+  /* At a Glance heading + legend */
+  .skills__fallback-heading-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skills__fallback-heading {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .skills__fallback-legend {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .skills__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  .skills__legend-swatch {
+    width: 12px;
+    height: 6px;
+    border-radius: 2px;
+  }
+
+  .skills__legend-swatch--daily {
+    background: var(--color-text-tertiary);
+  }
+
+  .skills__legend-swatch--comfortable {
+    background: var(--color-text-muted);
+  }
+
+  .skills__legend-swatch--exploring {
+    background: transparent;
+    border: 1px dashed var(--color-text-muted);
+  }
+
+  /* Static skills grid */
+  .skills__fallback {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .skills__fallback-category {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+
+  .skills__fallback-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .skills__fallback-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .skills__fallback-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    border: 1px solid;
+    background: transparent;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .skills__fallback-tag--daily {
+    border-width: 2px;
+  }
+
+  .skills__fallback-tag--comfortable {
+    border-width: 1px;
+  }
+
+  .skills__fallback-tag--exploring {
+    border-width: 1px;
+    border-style: dashed;
+  }
+
+  @media (max-width: 768px) {
+    .skills__fallback {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

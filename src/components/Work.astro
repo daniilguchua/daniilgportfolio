@@ -2,7 +2,7 @@
 const otherProjects = [
   {
     title: 'Physarum Polycephalum Simulation',
-    description: 'GPU-accelerated WebGL simulation of Physarum polycephalum — the slime mold that solves mazes. 100,000+ autonomous agents follow deposit-sense-turn rules on a pheromone diffusion field, producing emergent transport networks that rival human-designed infrastructure. Runs at 60fps using custom GLSL shaders for parallel agent computation and Gaussian blur diffusion.',
+    description: 'GPU-accelerated computational model of biological network formation — 100,000+ autonomous agents following local rules produce globally optimal transport networks. Demonstrates emergence, agent-based modeling, and high-performance parallel computation with custom GLSL shaders. Runs at 60fps.',
     tags: ['WebGL', 'GLSL', 'JavaScript', 'Agent-Based Modeling'],
     image: '/images/SlimeMoldCover.png',
     liveUrl: '#',
@@ -10,7 +10,7 @@ const otherProjects = [
   },
   {
     title: 'ML Sentence Autocomplete',
-    description: 'Sentence completion engine built from scratch — no pretrained transformers. Combines n-gram frequency models, word2vec embeddings, and beam search decoding to predict contextually relevant completions. Trained on 50K+ sentences, served via Flask API with sub-200ms inference.',
+    description: 'End-to-end ML pipeline built from scratch — no pretrained models. N-gram language modeling, word2vec embeddings (trained on 50K+ sentences), and beam search decoding. Full pipeline: data preprocessing → feature engineering → model training → inference API (Flask, sub-200ms). Demonstrates ML fundamentals without hiding behind frameworks.',
     tags: ['Python', 'NLTK', 'spaCy', 'Flask', 'NLP'],
     image: '/images/ml-autocomplete-cover.png',
     sourceUrl: 'https://github.com/daniilguchua/ml-sentence-autocomplete',
@@ -26,8 +26,8 @@ const otherProjects = [
 
 const axiomStats = [
   { value: 95, suffix: '%', prefix: '~', label: 'Auto-Repair' },
-  { value: 2, suffix: 's', prefix: '<', label: 'End-to-End' },
-  { value: 85, suffix: '%', prefix: '~', label: 'Repaired Free' },
+  { value: 31, suffix: '', prefix: '', label: 'API Endpoints' },
+  { value: 219, suffix: '', prefix: '', label: 'Tests' },
   { value: 4, suffix: '-Tier', prefix: '', label: 'Pipeline' },
   { value: 3, suffix: '', prefix: '', label: 'AI Personas' },
 ];
@@ -49,7 +49,7 @@ const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'R
       <div class="work__axiom-header" data-reveal>
         <span class="work__flagship-badge">Flagship Project</span>
         <h3 class="work__axiom-title">Axiom Engine</h3>
-        <p class="work__axiom-tagline">Not another ChatGPT wrapper. A production AI platform with 10,000 lines of self-healing infrastructure.</p>
+        <p class="work__axiom-tagline">Not another ChatGPT wrapper. A production AI platform with self-healing compilation, semantic caching, and 10,000 lines of tested infrastructure.</p>
         <div class="work__axiom-stats-inline" id="axiom-stats">
           {axiomStats.map((stat, i) => (
             <>
@@ -88,34 +88,53 @@ const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'R
         </div>
       </div>
 
-      <!-- Features — 2x2 grid, reframed with engineering judgment -->
+      <!-- Features — 3x2 grid -->
       <div class="work__axiom-features" data-reveal>
         <div class="work__features-grid">
           <div class="work__feature-card">
-            <span class="work__feature-title">Self-Healing AI Output Pipeline</span>
-            <p class="work__feature-desc">LLMs produce broken output ~40% of the time. 4-tier escalation: regex ($0, 5ms) &rarr; JS sanitizer ($0, 10ms) &rarr; LLM repair ($0.003, 3s). ~95% auto-repair, ~85% at zero API cost.</p>
+            <span class="work__feature-title">Self-Healing Mermaid Compiler</span>
+            <p class="work__feature-desc">Hand-written syntax repair compiler. 4-tier escalation: 23 ordered regex transforms (5ms, $0) &rarr; 13-phase JS sanitizer with string literal masking from compiler design (10ms, $0) &rarr; LLM-assisted repair. ~95% auto-repair, ~85% at zero cost. Cuts repair spend 83% vs naive retry.</p>
           </div>
           <div class="work__feature-card">
             <span class="work__feature-title">Production RAG Pipeline</span>
-            <p class="work__feature-desc">PDF ingestion &rarr; 768-dim embeddings &rarr; FAISS vector search &rarr; semantic caching (SHA-256 exact match + cosine &ge;0.80). Eliminates redundant API calls at scale.</p>
+            <p class="work__feature-desc">PyMuPDF extraction &rarr; LangChain RecursiveCharacterTextSplitter (1K chars, 100 overlap) &rarr; 768-dim Gemini embeddings &rarr; FAISS IndexFlatL2 vector search &rarr; top-6 retrieval with word-level deduplication (&gt;60% overlap filtering). 41 phrase-based intent triggers route across 4 response modes.</p>
           </div>
           <div class="work__feature-card">
-            <span class="work__feature-title">Cognitive Science-Driven UX</span>
-            <p class="work__feature-desc">Three AI personas calibrated from learning science research. Strategy pattern swaps prompt, temperature, and complexity via one parameter. The system adapts to the learner.</p>
+            <span class="work__feature-title">Semantic Caching System</span>
+            <p class="work__feature-desc">Two-tier cost optimization eliminating redundant Gemini API calls. SHA-256 exact hash match &rarr; embedding-based cosine similarity &ge;0.80. Broken simulation tracker with retry budget (max 3), 24h cooldown, permanent-broken status. Only verified-complete simulations cached.</p>
           </div>
           <div class="work__feature-card">
-            <span class="work__feature-title">ML Training Data Pipeline</span>
-            <p class="work__feature-desc">Every render attempt logged to SQLite: tier, duration, success/failure, original vs repaired code. Building a structured dataset for future fine-tuning on LLaMA.</p>
+            <span class="work__feature-title">AI Persona Engine (Strategy Pattern)</span>
+            <p class="work__feature-desc">Three personas from cognitive science research &mdash; Explorer (~6 nodes, temp 0.55), Engineer (9&ndash;12 nodes, 0.40), Architect (12&ndash;18 with subgraphs, 0.30). Single parameter swaps prompt, temperature, complexity, and pedagogy. 196-line Mermaid Syntax Firewall constrains output.</p>
+          </div>
+          <div class="work__feature-card">
+            <span class="work__feature-title">Security &amp; Concurrency</span>
+            <p class="work__feature-desc">11 compiled regex prompt injection detectors. Per-IP+session token bucket rate limiting. Thread-safe sessions with RLock, 60-min TTL, LRU eviction at 1,000 sessions, background daemon cleanup. Path traversal prevention. Input length enforcement (10K char max).</p>
+          </div>
+          <div class="work__feature-card">
+            <span class="work__feature-title">MLOps &amp; Training Data Pipeline</span>
+            <p class="work__feature-desc">Ghost testing captures every repair across 5 sanitization pipeline combinations. 10-table SQLite schema (WAL mode, auto-migration) storing supervised learning triples: (broken_input, tier, repaired_output). Building toward fine-tuning a LLaMA-based repair model.</p>
           </div>
         </div>
       </div>
 
-      <!-- MLOps callout -->
-      <div class="work__axiom-ml-note" data-reveal>
-        <p class="work__ml-note-text">
-          <span class="work__ml-note-label">Early MLOps:</span>
-          Ghost testing captures every repair attempt in a 10-table SQLite schema &mdash; render input, repair tier, execution time, success/failure, original and repaired code. This isn't just logging &mdash; it's the training dataset for a future LLaMA-based repair model.
-        </p>
+      <!-- What's Next -->
+      <div class="work__axiom-roadmap" data-reveal>
+        <span class="work__roadmap-label">What's Next</span>
+        <div class="work__roadmap-items">
+          <div class="work__roadmap-item">
+            <span class="work__roadmap-title">ML-Powered Repair Model</span>
+            <p class="work__roadmap-desc">Fine-tune LLaMA on the repair corpus already being collected. Target: replace hand-written regex with a learned repair function &mdash; faster, more generalizable.</p>
+          </div>
+          <div class="work__roadmap-item">
+            <span class="work__roadmap-title">WebSocket Streaming</span>
+            <p class="work__roadmap-desc">Replace HTTP streaming with true bidirectional WebSocket connections for real-time collaborative sessions and lower continuation latency.</p>
+          </div>
+          <div class="work__roadmap-item">
+            <span class="work__roadmap-title">Adaptive Learning Engine</span>
+            <p class="work__roadmap-desc">Use collected feedback data + session analytics to automatically suggest persona and complexity &mdash; personalized difficulty progression per student.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Tags + CTAs — bottom -->
@@ -378,14 +397,14 @@ const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'R
 
   /* Feature Cards — 2x2 grid */
   .work__axiom-features {
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto;
     width: 100%;
   }
 
   .work__features-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 
@@ -417,30 +436,57 @@ const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'R
     margin: 0;
   }
 
-  /* MLOps callout */
-  .work__axiom-ml-note {
+  /* What's Next Roadmap */
+  .work__axiom-roadmap {
     max-width: 720px;
     margin: 0 auto;
     width: 100%;
-    padding: 1rem 1.5rem;
-    background: rgba(168, 85, 247, 0.03);
-    border: 1px solid rgba(168, 85, 247, 0.12);
-    border-radius: var(--radius-md);
   }
 
-  .work__ml-note-label {
+  .work__roadmap-label {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     font-weight: 600;
-    color: var(--color-cat-ai);
-    margin-right: 0.5rem;
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.75rem;
   }
 
-  .work__ml-note-text {
+  .work__roadmap-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .work__roadmap-item {
+    background: rgba(14, 165, 233, 0.03);
+    border: 1px solid rgba(14, 165, 233, 0.10);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+  }
+
+  .work__roadmap-title {
+    font-family: var(--font-heading);
     font-size: var(--text-sm);
-    color: var(--color-text-tertiary);
-    line-height: 1.6;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .work__roadmap-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: 1.5;
     margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .work__roadmap-items {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Tags + CTAs footer */
@@ -629,6 +675,13 @@ const axiomTags = ['Python', 'Flask', 'Gemini 2.5 Pro', 'LangChain', 'FAISS', 'R
 
   .work__card-link:hover {
     color: var(--color-text-primary);
+  }
+
+  /* ---- Tablet ---- */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .work__features-grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   /* ---- Mobile ---- */

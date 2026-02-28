@@ -64,6 +64,8 @@ export const skillNodes: SkillNode[] = [
   { id: 'scikit', name: 'scikit-learn', category: 'ai-ml', proficiency: 'exploring', emoji: '📊', description: 'Classical ML algorithms. Classification, regression, clustering for coursework and data analysis.', val: 3, fx: -65, fy: -40 },
   { id: 'nlp', name: 'NLP', category: 'ai-ml', proficiency: 'exploring', emoji: '💬', description: 'Tokenization, n-grams, embeddings, contextual analysis. Built ML Autocomplete using NLTK and spaCy.', val: 3, fx: 65, fy: -45 },
   { id: 'embeddings', name: 'Embeddings', category: 'ai-ml', proficiency: 'exploring', emoji: '🧮', description: 'Vector representations of text. Used in FAISS indexing, semantic search, and similarity scoring.', val: 3, fx: 30, fy: -115 },
+  { id: 'numpy', name: 'NumPy', category: 'ai-ml', proficiency: 'comfortable', emoji: '🔢', description: 'Numerical computing foundation. Used across ML coursework, embedding operations, and cosine similarity computation in Axiom.', val: 4, fx: -30, fy: -55 },
+  { id: 'pandas', name: 'Pandas', category: 'ai-ml', proficiency: 'comfortable', emoji: '🐼', description: 'Data manipulation and analysis. Used for feature engineering, data preprocessing, and exploratory analysis in ML pipelines.', val: 4, fx: 30, fy: -55 },
 
   // === Systems & Infrastructure === (Left hemisphere — lower, logical)
   { id: 'flask', name: 'Flask', category: 'backend', proficiency: 'daily', emoji: '🧪', description: "Built Axiom's 31-endpoint API across 8 blueprints. REST design, middleware, streaming SSE responses.", val: 5, fx: -140, fy: 60 },
@@ -74,6 +76,10 @@ export const skillNodes: SkillNode[] = [
   { id: 'sqlite', name: 'SQLite', category: 'backend', proficiency: 'comfortable', emoji: '💾', description: "Axiom's persistence layer. WAL mode, 10 tables, auto-migration, schema evolution on startup.", val: 3, fx: -140, fy: 85 },
   { id: 'pytest', name: 'pytest', category: 'backend', proficiency: 'comfortable', emoji: '✅', description: '219 tests across 10 modules for Axiom. Fixtures, parametrization, mocking, coverage reporting.', val: 3, fx: -100, fy: 130 },
   { id: 'gh-actions', name: 'GitHub Actions', category: 'backend', proficiency: 'comfortable', emoji: '🔄', description: 'CI/CD pipelines. Automated testing (ruff + pytest), linting, Docker builds.', val: 3, fx: -185, fy: 150 },
+  { id: 'aws', name: 'AWS', category: 'backend', proficiency: 'exploring', emoji: '☁️', description: 'Cloud platform exposure. EC2, S3, Lambda — building toward production deployment skills.', val: 4, fx: -220, fy: 110 },
+  { id: 'azure', name: 'Azure', category: 'backend', proficiency: 'exploring', emoji: '🔵', description: 'Microsoft cloud platform. Exposure through enterprise IT and cloud services coursework.', val: 3, fx: -220, fy: 145 },
+  { id: 'kubernetes', name: 'Kubernetes', category: 'backend', proficiency: 'exploring', emoji: '⎈', description: 'Container orchestration. Learning cluster management, pod deployment, and service networking.', val: 3, fx: -140, fy: 150 },
+  { id: 'pydantic', name: 'Pydantic', category: 'backend', proficiency: 'comfortable', emoji: '✔️', description: 'Runtime data validation and settings management. Used in Axiom Engine for type-safe configuration.', val: 3, fx: -100, fy: 95 },
 
   // === Frontend & Visualization === (Right hemisphere — creative/visual)
   { id: 'react', name: 'React', category: 'frontend', proficiency: 'comfortable', emoji: '⚛️', description: 'Component-driven UIs. This portfolio uses React 19 islands within Astro for interactive features.', val: 5, fx: 110, fy: 15 },
@@ -126,4 +132,19 @@ export const skillLinks: SkillLink[] = [
   // Systems
   { source: 'c-cpp', target: 'rust' },
   { source: 'c-cpp', target: 'linux' },
+
+  // New skill connections
+  { source: 'python', target: 'numpy' },
+  { source: 'python', target: 'pandas' },
+  { source: 'numpy', target: 'pytorch' },
+  { source: 'numpy', target: 'scikit' },
+  { source: 'pandas', target: 'scikit' },
+  { source: 'pandas', target: 'numpy' },
+  { source: 'docker', target: 'kubernetes' },
+  { source: 'docker', target: 'aws' },
+  { source: 'aws', target: 'azure' },
+  { source: 'kubernetes', target: 'aws' },
+  { source: 'flask', target: 'pydantic' },
+  { source: 'pydantic', target: 'python' },
+  { source: 'linux', target: 'aws' },
 ];
