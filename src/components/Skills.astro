@@ -71,7 +71,7 @@ const skillCategories = [
     <div class="skills__header" data-reveal>
       <span class="section-label">Tech Stack</span>
       <h2 class="section-title skills__title">What I Work With</h2>
-      <p class="skills__identity">I build production AI systems &mdash; RAG pipelines, self-healing compilers, semantic caching, agentic workflows &mdash; and apply cognitive science to make them adapt to how people actually think.</p>
+      <p class="skills__identity">The tools below are what I reach for. What I bring is the ability to choose the right one, build with it in production, and explain why &mdash; to engineers, executives, and users.</p>
       <p class="skills__subtitle">Click any node to explore. Drag to rearrange.</p>
     </div>
 
@@ -99,6 +99,16 @@ const skillCategories = [
           </div>
         </div>
       ))}
+      <div class="skills__fallback-category skills__fallback-category--soft">
+        <span class="skills__fallback-label skills__fallback-label--soft">Beyond the Stack</span>
+        <div class="skills__fallback-tags">
+          <span class="skills__fallback-tag skills__fallback-tag--soft">Cross-functional Communication</span>
+          <span class="skills__fallback-tag skills__fallback-tag--soft">Executive Presentations</span>
+          <span class="skills__fallback-tag skills__fallback-tag--soft">Team Leadership</span>
+          <span class="skills__fallback-tag skills__fallback-tag--soft">User Research</span>
+          <span class="skills__fallback-tag skills__fallback-tag--soft">Collaborative Problem-Solving</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -254,6 +264,21 @@ const skillCategories = [
   .skills__fallback-tag--exploring {
     border-width: 1px;
     border-style: dashed;
+  }
+
+  .skills__fallback-category--soft {
+    grid-column: 1 / -1;
+  }
+
+  .skills__fallback-label--soft {
+    color: var(--color-text-muted);
+  }
+
+  .skills__fallback-tag--soft {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    color: var(--color-text-tertiary);
   }
 
   @media (max-width: 768px) {

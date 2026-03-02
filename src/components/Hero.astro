@@ -13,7 +13,8 @@ import AuroraBackground from './AuroraBackground.astro';
     <div class="hero__statement" id="hero-statement">
       <p class="hero__statement-line hero__statement-line--thin">I built an AI platform</p>
       <p class="hero__statement-line hero__statement-line--iridescent iridescent-text">that heals its own code.</p>
-      <p class="hero__statement-sub">Ryan Scholar. I build production AI systems &mdash; RAG pipelines, self-healing infrastructure, semantic caching, agentic workflows &mdash; and apply cognitive science to make them adapt to how people actually think. Looking for software engineering and AI/ML roles &mdash; internships now, full-time March 2027.</p>
+      <p class="hero__motto" id="hero-motto">I think like a cognitive scientist. I build like an engineer.</p>
+      <p class="hero__statement-sub">Ryan Scholar. Most engineers optimize for the machine. I also optimize for the person &mdash; CS and cognitive science together mean I design systems around how people actually think. I&rsquo;ve presented to CIOs and built agentic pipelines in the same internship. Seeking software engineering, AI/ML, and data science roles &mdash; internships now, full-time March 2027.</p>
     </div>
 
     <div class="hero__evidence" id="hero-evidence">
@@ -33,7 +34,7 @@ import AuroraBackground from './AuroraBackground.astro';
           <path d="M8 3V13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <a href="/Daniil_Guchua_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hero__cta hero__cta--ghost">
+      <a href={`${import.meta.env.BASE_URL}Daniil_Guchua_Resume.pdf`} target="_blank" rel="noopener noreferrer" class="hero__cta hero__cta--ghost">
         <span>Read Resume</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -106,6 +107,15 @@ import AuroraBackground from './AuroraBackground.astro';
 
   .hero__statement-line--iridescent {
     font-weight: 500;
+  }
+
+  .hero__motto {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.06em;
+    margin-top: 0.75rem;
+    opacity: 0;
   }
 
   .hero__statement-sub {
@@ -291,6 +301,14 @@ import AuroraBackground from './AuroraBackground.astro';
       ease: 'power3.out',
       startAt: { y: 30 },
     }, '-=0.3')
+    // Motto
+    .to('#hero-motto', {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power2.out',
+      startAt: { y: 10 },
+    }, '-=0.2')
     // Statement sub
     .to('.hero__statement-sub', {
       opacity: 1,

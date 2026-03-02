@@ -26,6 +26,7 @@ const experiences = [
     title: 'Project Member — Vestibular Rehab Device',
     org: 'Shirley Ryan AbilityLab',
     period: 'Mar — Jun 2024',
+    pullQuote: 'Conducted user research alongside clinicians — patient data directly shaped every design decision.',
     bullets: [
       'Designed and prototyped a medical device for vestibular rehabilitation patients — interchangeable foam inserts with adjustable weights to progressively challenge balance recovery. Built 3 iterative prototypes using CAD modeling and manual fabrication.',
       'Conducted user research alongside clinicians at the AbilityLab: observed therapy sessions, interviewed PTs, validated assumptions against real patient data. Findings directly shaped the weight distribution and insert geometry.',
@@ -35,6 +36,7 @@ const experiences = [
     title: 'Project Lead — Learning Tool',
     org: 'Misericordia Home',
     period: 'Sept — Dec 2023',
+    pullQuote: 'Led a cross-functional team of four. The prototype was adopted by staff for ongoing resident engagement.',
     bullets: [
       'Led a 4-person team to design and build an interactive learning tool for residents with developmental disabilities. Conducted needs assessments with caregivers, defined learning objectives, and managed a 10-week development timeline.',
       'Managed project scope, stakeholder communication, and weekly demos. Delivered a functional prototype that was adopted by staff for ongoing resident engagement.',
@@ -47,7 +49,8 @@ const experiences = [
   <div class="experience__inner container">
     <div class="experience__header" data-reveal>
       <span class="section-label">Experience</span>
-      <h2 class="section-title experience__section-title">Where I've Contributed</h2>
+      <h2 class="section-title experience__section-title">What I've Delivered</h2>
+      <p class="experience__subtitle">From enterprise AI workflows to medical device prototypes &mdash; always with the same commitment to clear communication and craft.</p>
     </div>
 
     <div class="experience__timeline">
@@ -88,6 +91,14 @@ const experiences = [
 
   .experience__header {
     margin-bottom: 3rem;
+  }
+
+  .experience__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    max-width: 560px;
+    margin-top: 0.25rem;
+    line-height: 1.5;
   }
 
   .experience__section-title {

@@ -18,7 +18,7 @@ const { Content } = await render(project);
   <article class="project-page">
     <div class="project-page__hero">
       <div class="container">
-        <a href="/#work" class="project-page__back">
+        <a href={`${import.meta.env.BASE_URL}#work`} class="project-page__back">
           &larr; Back to Work
         </a>
         <div class="project-page__meta">

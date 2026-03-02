@@ -1,17 +1,18 @@
 ---
+const base = import.meta.env.BASE_URL;
 const navLinks = [
-  { label: 'Work', href: '/#work' },
-  { label: 'Education', href: '/#education' },
-  { label: 'Skills', href: '/#skills' },
-  { label: 'About', href: '/#about' },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Work', href: `${base}#work` },
+  { label: 'Education', href: `${base}#education` },
+  { label: 'Skills', href: `${base}#skills` },
+  { label: 'About', href: `${base}#about` },
+  { label: 'Experience', href: `${base}#experience` },
+  { label: 'Contact', href: `${base}#contact` },
 ];
 ---
 
 <nav class="nav" id="main-nav" aria-label="Main navigation">
   <div class="nav__inner container">
-    <a href="/" class="nav__logo" aria-label="Go to homepage">
+    <a href={base} class="nav__logo" aria-label="Go to homepage">
       <span class="nav__logo-text">DG</span>
     </a>
 
@@ -24,8 +25,8 @@ const navLinks = [
     </ul>
 
     <div class="nav__actions">
-      <a href="/Daniil_Guchua_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav__resume">Resume</a>
-      <a href="/#contact" class="nav__cta">Let's Talk</a>
+      <a href={`${base}Daniil_Guchua_Resume.pdf`} target="_blank" rel="noopener noreferrer" class="nav__resume">Resume</a>
+      <a href={`${base}#contact`} class="nav__cta">Let's Talk</a>
     </div>
 
     <button
@@ -49,10 +50,10 @@ const navLinks = [
         </li>
       ))}
       <li>
-        <a href="/Daniil_Guchua_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav__mobile-link">Resume</a>
+        <a href={`${base}Daniil_Guchua_Resume.pdf`} target="_blank" rel="noopener noreferrer" class="nav__mobile-link">Resume</a>
       </li>
       <li>
-        <a href="/#contact" class="nav__mobile-cta">Let's Talk</a>
+        <a href={`${base}#contact`} class="nav__mobile-cta">Let's Talk</a>
       </li>
     </ul>
   </div>
