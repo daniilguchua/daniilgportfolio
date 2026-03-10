@@ -25,7 +25,6 @@ const navLinks = [
     </ul>
 
     <div class="nav__actions">
-      <a href={`${base}Daniil_Guchua_Resume.pdf`} target="_blank" rel="noopener noreferrer" class="nav__resume">Resume</a>
       <a href={`${base}#contact`} class="nav__cta">Let's Talk</a>
     </div>
 
@@ -49,9 +48,6 @@ const navLinks = [
           <a href={href} class="nav__mobile-link">{label}</a>
         </li>
       ))}
-      <li>
-        <a href={`${base}Daniil_Guchua_Resume.pdf`} target="_blank" rel="noopener noreferrer" class="nav__mobile-link">Resume</a>
-      </li>
       <li>
         <a href={`${base}#contact`} class="nav__mobile-cta">Let's Talk</a>
       </li>
@@ -151,20 +147,7 @@ const navLinks = [
     gap: 0.75rem;
   }
 
-  .nav__resume {
-    font-family: var(--font-heading);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--color-text-tertiary);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .nav__resume:hover {
-    color: var(--color-text-primary);
-  }
-
-  .nav__cta {
+.nav__cta {
     font-family: var(--font-heading);
     font-size: var(--text-sm);
     font-weight: 500;
